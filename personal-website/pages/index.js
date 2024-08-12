@@ -1,4 +1,4 @@
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import { useState } from 'react';
