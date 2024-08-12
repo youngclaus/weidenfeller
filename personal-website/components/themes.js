@@ -1,37 +1,50 @@
 export const lightTheme = {
-    mode: 'light',
+  mode: 'light',
 
-    headerBg: '#000',
-    headerText: '#fff',
-    buttonBg: '#666',
-    buttonBorder: '#000',
-    buttonText: '#fff',
+  headerBg: '#fff',
+  headerText: '#000',
+  buttonBg: '#eef',
+  buttonBorder: '#000',
+  buttonText: '#fff',
 
-    bodyBg: '#fff',
-    text: '#000',
-  };
-  
-  export const darkTheme = {
-    mode: 'dark',
+  bodyBg: '#fff',
+  text: '#000',
+};
 
-    headerBg: '#444',
-    headerText: '#ecdcc6',
-    buttonBg: '#333',
-    buttonBorder: '#905d5d',
-    buttonText: '#ecdcc6',
+export const darkTheme = {
+  mode: 'dark',
 
-    bodyBg: '#905d5d',
-    text: '#ecdcc6',
-  };
+  headerBg: '#000',
+  headerText: '#fff',
+  buttonBg: '#333',
+  buttonBorder: '#000',
+  buttonText: '#fff',
 
-  export const blackAndWhiteTheme = {
-    mode: 'toggled',
-    headerBg: '#905d5d',
-    headerText: '#ecdcc6',
-    buttonBg: '#a67575',
-    buttonBorder: 'rgba(0, 0, 0, 0.2)',
-    buttonText: '#333',
+  bodyBg: '#222',
+  text: '#eee',
+};
 
-    bodyBg: '#ecdcc6',
-    text: '#905d5d',
-  };
+export const altrock = {
+  mode: 'toggled',
+  headerBg: '#905d5d',
+  headerText: '#ecdcc6',
+  buttonBg: '#a67575',
+  buttonBorder: 'rgba(0, 0, 0, 0.2)',
+  buttonText: '#333',
+
+  bodyBg: '#ecdcc6',
+  text: '#905d5d',
+};
+
+/*
+  mode: 'dark',
+
+  headerBg: '#444',
+  headerText: '#ecdcc6',
+  buttonBg: '#333',
+  buttonBorder: '#905d5d',
+  buttonText: '#ecdcc6',
+
+  bodyBg: '#905d5d',
+  text: '#ecdcc6',
+*/

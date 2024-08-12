@@ -11,7 +11,7 @@ const Header = ({ toggleTheme, currentTheme }) => {
       <ThemeToggleContainer>
           <ThemeToggleSwitch onClick={toggleTheme}>
               <ThemeToggleSlider theme={currentTheme.mode}>
-                {currentTheme.mode === 'light' ? '🔆' : currentTheme.mode === 'dark' ? '🌙' : '🔆🌙'}
+                {currentTheme.mode === 'light' ? '🔆' : currentTheme.mode === 'dark' ? '🌙' : '🔆 🌙'}
               </ThemeToggleSlider>
           </ThemeToggleSwitch>
       </ThemeToggleContainer>

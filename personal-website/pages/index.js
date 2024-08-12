@@ -1,7 +1,5 @@
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from '../components/Header';
-import Left from '../components/Left';
-import Right from '../components/Right';
 import Hero from '../components/Hero';
 import { useState } from 'react';
 import {lightTheme, darkTheme} from '../components/themes';
@@ -35,4 +33,6 @@ export default Home;
 
 const Container = styled.div`
   font-family: Arial, sans-serif;
+  user-select: none;
+  -webkit-user-drag: none;
 `;
