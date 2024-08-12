@@ -4,13 +4,6 @@ import Hero from '../components/Hero';
 import { useState } from 'react';
 import {lightTheme, darkTheme} from '../components/themes';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color: ${({ theme }) => theme.bodyBg};
-    color: ${({ theme }) => theme.text};
-  }
-`;
-
 const Home = () => {
   const [theme, setTheme] = useState(lightTheme);
 
@@ -20,7 +13,6 @@ const Home = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
       <Container>
         <Header toggleTheme={toggleTheme} currentTheme={theme}/>
         <Hero toggleTheme={toggleTheme} currentTheme={theme} setTheme={setTheme}/>
