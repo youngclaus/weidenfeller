@@ -1,11 +1,29 @@
-import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
-import { blackAndWhiteTheme } from './themes';
+import styled, { keyframes } from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+import { altrock } from './themes';
 
 const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
   const imageRef = useRef(null);
   const angleRef = useRef(0);
   const animationFrameId = useRef(null);
+  const [currentLine, setCurrentLine] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+
+  const commandLines = [
+    "Software Developer",
+    "Artificial Intelligence Engineer",
+    "Licensed Bartender",
+    "Unhealthy Amounts of Music Listener",
+    "Long-time Borussia Dortmund Supporter",
+    "Unique Shoe Collector",
+    "New York Yankees Supporter",
+    "Soccer Player",
+    "Decent Golf Player",
+    "Vinyl Collector",
+    "Master Lego Builder",
+    "Avid Arizona Iced Tea Drinker",
+    "Large Beanbag Enjoyer",
+  ];
 
   useEffect(() => {
     const img = imageRef.current;
@@ -27,6 +45,21 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (currentLine < commandLines.length && !isTyping) {
+      const timeout = setTimeout(() => {
+        setIsTyping(true);
+        setCurrentLine(currentLine + 1);
+      }, 1000); // Short delay between lines
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isTyping, currentLine, commandLines.length]);
+
+  const handleAnimationEnd = () => {
+    setIsTyping(false);
+  };
+
   return (
     <Container>
       <Code>
@@ -40,9 +73,19 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
           <img ref={imageRef} src="/blackyellow.png" alt="record" />
         </Record>
       </RecordPlayer>
-      <ThemeSwitcher>
-        <ThemeImage onClick={() => setTheme(blackAndWhiteTheme)} src="/mixtape_altrock.png" alt="altrock theme" />
-      </ThemeSwitcher> 
+      <Text>
+        <Title>chris youngclaus</Title>
+      </Text>
+      <CommandLine>
+        {isTyping && (
+          <CommandText
+            onAnimationEnd={handleAnimationEnd}
+            key={currentLine}
+          >
+            {`> console.log("${commandLines[currentLine]}")`}
+          </CommandText>
+        )}
+      </CommandLine>
     </Container>
   );
 };
@@ -53,13 +96,13 @@ const Container = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  width 100vw;
+  width: 100vw;
   height: 100vh;
   background-color: ${({ theme }) => theme.bodyBg};
 `;
 
 const Code = styled.div`
-  opacity: 0.1;
+  opacity: 0.3;
   filter: blur(3px);
   position: absolute;
 `;
@@ -78,32 +121,66 @@ const Tonearm = styled.div`
 `;
 
 const Record = styled.div`
-    position: absolute;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  transform: translate(-50%, -50%);
 `;
 
-const ThemeSwitcher = styled.div`
+const Text = styled.div`
   position: absolute;
   display: flex;
-  width: 50vw;
-  height: 100vh;
-  left: 100px;
-  justify-content: left;
-  margin-top: 20px;
-  gap: 20px;
-  z-index: 40;
+  flex-direction: column;
+  width: 100vw;
+  height: 80vh;
+  align-items: center;
 `;
 
-const ThemeImage = styled.img`
-  position: absolute;
-  width: 100px;
-  height: auto;
+const Title = styled.div`
+  position: static;
+  font-family: "DM Mono", monospace;
+  font-weight: bold;
+  font-size: 9vw;
+`;
+
+const CommandLine = styled.div`
+  position: fixed;
   bottom: 0;
-  transform: translate(0%, 10%);
-  cursor: pointer;
-  scale: 3;
-  transition: transform 0.3s ease-in-out;
-  &:hover {
-    transform: translate(0%, -10%);
-  }
+  width: 100%;
+  height: 15px;
+  background-color: #111;
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 50;
+`;
+
+const typing = keyframes`
+  from { width: 0ch; }
+  to { width: ${props => props.children.length}ch; }
+`;
+
+const blinkCaret = keyframes`
+  from, to { border-color: transparent; }
+  50% { border-color: white; }
+`;
+
+const fadeOut = keyframes`
+  from { width: ${props => props.children.length}ch; }
+  to { width: 0ch; }
+`;
+
+const CommandText = styled.span`
+  margin: 0;
+  overflow: hidden;
+  border-right: .15em solid white;
+  white-space: nowrap;
+  font-size: 16px;
+  color: #fff;
+  animation: 
+    ${typing} 3.5s steps(${props => props.children.length}, end),
+    ${blinkCaret} .75s step-end infinite,
+    ${fadeOut} 2s steps(${props => props.children.length}, end) 5.5s forwards;
+  width: ${props => props.children.length}ch;
 `;
