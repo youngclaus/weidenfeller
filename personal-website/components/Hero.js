@@ -8,12 +8,13 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
   const animationFrameId = useRef(null);
   const [currentLine, setCurrentLine] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
+  const [floatingWords, setFloatingWords] = useState([]);
 
   const commandLines = [
     "Software Developer",
     "Artificial Intelligence Engineer",
     "Licensed Bartender",
-    "Unhealthy Amounts of Music Listener",
+    "Dedicated Music Listener",
     "Long-time Borussia Dortmund Supporter",
     "Unique Shoe Collector",
     "New York Yankees Supporter",
@@ -46,18 +47,21 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
   }, []);
 
   useEffect(() => {
-    if (currentLine < commandLines.length && !isTyping) {
+    if (!isTyping) {
       const timeout = setTimeout(() => {
         setIsTyping(true);
-        setCurrentLine(currentLine + 1);
-      }, 1000); // Short delay between lines
+        setCurrentLine(prevLine => (prevLine + 1) % commandLines.length);
+      }, 500); // Short delay between lines
 
       return () => clearTimeout(timeout);
     }
-  }, [isTyping, currentLine, commandLines.length]);
+  }, [isTyping, commandLines.length]);
 
   const handleAnimationEnd = () => {
     setIsTyping(false);
+
+    const randomLeft = `${20 + Math.floor(Math.random() * 60)}%`;
+    setFloatingWords([...floatingWords, { text: commandLines[currentLine], position: randomLeft }]);
   };
 
   return (
@@ -86,6 +90,11 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
           </CommandText>
         )}
       </CommandLine>
+      {floatingWords.map((word, index) => (
+        <FloatingWord key={index} style={{ left: word.position }}>
+          {word.text}
+        </FloatingWord>
+      ))}
     </Container>
   );
 };
@@ -116,13 +125,13 @@ const RecordPlayer = styled.div`
 const Tonearm = styled.div`
   position: absolute;
   scale: 250%;
-  transform: translate(20%, -57%);
+  transform: translate(137%, -57%);
   z-index: 20;
 `;
 
 const Record = styled.div`
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translate(25%, -50%);
 `;
 
 const Text = styled.div`
@@ -132,6 +141,7 @@ const Text = styled.div`
   width: 100vw;
   height: 80vh;
   align-items: center;
+  color: ${({ theme }) => theme.headerText};
 `;
 
 const Title = styled.div`
@@ -147,7 +157,6 @@ const CommandLine = styled.div`
   width: 100%;
   height: 15px;
   background-color: #111;
-  color: #fff;
   font-family: 'Courier New', Courier, monospace;
   padding: 10px;
   display: flex;
@@ -171,8 +180,13 @@ const fadeOut = keyframes`
   to { width: 0ch; }
 `;
 
+const fadeOutUpwards = keyframes`
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+`;
+
 const CommandText = styled.span`
-  margin: 0;
+  margin: 10px;
   overflow: hidden;
   border-right: .15em solid white;
   white-space: nowrap;
@@ -183,4 +197,15 @@ const CommandText = styled.span`
     ${blinkCaret} .75s step-end infinite,
     ${fadeOut} 2s steps(${props => props.children.length}, end) 5.5s forwards;
   width: ${props => props.children.length}ch;
+`;
+
+const FloatingWord = styled.div`
+  position: fixed;
+  bottom: 40px; /* Just above the command line */
+  font-family: "DM Mono", monospace;
+  font-size: 2vh;
+  color: ${({ theme }) => theme.text};
+  white-space: nowrap;
+  opacity: 1;
+  animation: ${fadeOutUpwards} 3s ease-out forwards;
 `;
