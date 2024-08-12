@@ -77,7 +77,6 @@ const ThemeToggleSlider = styled.div`
   width: 25px;
   height: 25px;
   background-color: ${({ theme }) => theme.buttonBg};
-  border-radius: 50%;
   transition: left 0.3s;
   display: flex;
   align-items: center;

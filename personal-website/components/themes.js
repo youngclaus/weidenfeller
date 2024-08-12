@@ -3,8 +3,7 @@ export const lightTheme = {
 
   headerBg: '#fff',
   headerText: '#000',
-  buttonBg: '#eef',
-  buttonBorder: '#000',
+  buttonBg: '#ebebeb',
   buttonText: '#fff',
 
   bodyBg: '#fff',
@@ -17,7 +16,6 @@ export const darkTheme = {
   headerBg: '#000',
   headerText: '#fff',
   buttonBg: '#333',
-  buttonBorder: '#000',
   buttonText: '#fff',
 
   bodyBg: '#222',
@@ -29,7 +27,6 @@ export const altrock = {
   headerBg: '#905d5d',
   headerText: '#ecdcc6',
   buttonBg: '#a67575',
-  buttonBorder: 'rgba(0, 0, 0, 0.2)',
   buttonText: '#333',
 
   bodyBg: '#ecdcc6',
