@@ -32,6 +32,7 @@ const HeaderContainer = styled.header`
   color: ${({ theme }) => theme.headerText};
   position: fixed;
   font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-weight: 450;
   z-index: 100;
 `;
 

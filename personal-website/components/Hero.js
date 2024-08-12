@@ -207,5 +207,5 @@ const FloatingWord = styled.div`
   color: ${({ theme }) => theme.text};
   white-space: nowrap;
   opacity: 1;
-  animation: ${fadeOutUpwards} 3s ease-out forwards;
+  animation: 5s ${fadeOutUpwards} 3s ease-out forwards;
 `;
