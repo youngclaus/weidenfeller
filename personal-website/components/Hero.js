@@ -13,14 +13,16 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
   const commandLines = [
     "Software Developer",
     "Artificial Intelligence Engineer",
+    "Masters Degree Receiver",
     "Licensed Bartender",
     "Dedicated Music Listener",
-    "Long-time Borussia Dortmund Supporter",
+    "Lifelong Borussia Dortmund Supporter",
     "Unique Shoe Collector",
     "New York Yankees Supporter",
     "Soccer Player",
     "Decent Golf Player",
     "Vinyl Collector",
+    "Manga Enjoyer",
     "Master Lego Builder",
     "Avid Arizona Iced Tea Drinker",
     "Large Beanbag Enjoyer",
@@ -67,19 +69,37 @@ const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
   return (
     <Container>
       <Code>
-        <img src="/code.png" alt="code" />
+        <img src="/Hero/code.png" alt="code" />
       </Code>
       <RecordPlayer>
         <Tonearm>
-          <img src="turntable.png" alt="turntable" />
+          <img src="/Hero/turntable.png" alt="turntable" />
         </Tonearm>
         <Record>
-          <img ref={imageRef} src="/blackyellow.png" alt="record" />
+          <img ref={imageRef} src="/Hero/blackyellow.png" alt="record" />
         </Record>
       </RecordPlayer>
       <Text>
         <Title>chris youngclaus</Title>
       </Text>
+      <CircleContainer>
+      <Circle>
+          <img src="/Hero/chris.png" alt="image1" />
+          <CircleText>About Me</CircleText>
+        </Circle>
+        <Circle>
+          <img src="/Hero/map.png" alt="image1" />
+          <CircleText>Allergenics</CircleText>
+        </Circle>
+        <Circle>
+          <img src="/Hero/spotify.png" alt="image1" />
+          <CircleText>Music</CircleText>
+        </Circle>
+        <Circle>
+          <img src="/Hero/dortmund.png" alt="image1" />
+          <CircleText>Hobbies</CircleText>
+        </Circle>
+      </CircleContainer>
       <CommandLine>
         {isTyping && (
           <CommandText
@@ -140,6 +160,7 @@ const Text = styled.div`
   flex-direction: column;
   width: 100vw;
   height: 80vh;
+  top: 100px;
   align-items: center;
   color: ${({ theme }) => theme.headerText};
 `;
@@ -148,7 +169,55 @@ const Title = styled.div`
   position: static;
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  font-size: 9vw;
+  font-size: 7vw;
+`;
+
+const CircleContainer = styled.div`
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 20vh;
+  transform: translate(0, -20%);
+  justify-content: center;
+  align-items: center;
+`;
+
+const Circle = styled.div`
+  position: relative;
+  width: 9vw;
+  height: 9vw;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  margin-left: 20px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.1s ease-in-out;
+  }
+
+  &:hover img {
+    filter: brightness(50%);
+  }
+
+  &:hover div {
+    opacity: 1;
+  }
+`;
+
+const CircleText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: "DM Mono", monospace;
+  font-size: 1.2rem;
+  opacity: 0;
+  white-space: nowrap;
+  transition: all 0.3s ease-in-out;
 `;
 
 const CommandLine = styled.div`
@@ -203,7 +272,7 @@ const FloatingWord = styled.div`
   position: fixed;
   bottom: 40px; /* Just above the command line */
   font-family: "DM Mono", monospace;
-  font-size: 2vh;
+  font-size: 100%;
   color: ${({ theme }) => theme.text};
   white-space: nowrap;
   opacity: 1;
