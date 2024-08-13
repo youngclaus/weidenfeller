@@ -1,17 +1,20 @@
 import styled from 'styled-components';
+import { useTheme } from '../components/ThemeContext.js';
 
-const Header = ({ toggleTheme, currentTheme }) => {
+const Header = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <HeaderContainer>
       <Nav>
-        <NavItem href="#home">Home</NavItem>
-        <NavItem href="#about">About</NavItem>
-        <NavItem href="#projects">Projects</NavItem>
+        <NavItem href="/home">Home</NavItem>
+        <NavItem href="/about">About</NavItem>
+        <NavItem>Projects</NavItem>
       </Nav>
       <ThemeToggleContainer>
           <ThemeToggleSwitch onClick={toggleTheme}>
-              <ThemeToggleSlider theme={currentTheme.mode}>
-                {currentTheme.mode === 'light' ? '🔆' : currentTheme.mode === 'dark' ? '🌙' : '🔆 🌙'}
+              <ThemeToggleSlider theme={theme.mode}>
+                {theme.mode === 'light' ? '🔆' : theme.mode === 'dark' ? '🌙' : '🔆 🌙'}
               </ThemeToggleSlider>
           </ThemeToggleSwitch>
       </ThemeToggleContainer>

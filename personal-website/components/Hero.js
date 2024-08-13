@@ -1,8 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
-import { altrock } from './themes';
 
-const Hero = ({ toggleTheme, currentTheme, setTheme }) => {
+const Hero = () => {
   const imageRef = useRef(null);
   const angleRef = useRef(0);
   const animationFrameId = useRef(null);
@@ -159,7 +158,7 @@ const Text = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  height: 80vh;
+  height: 20vh;
   top: 100px;
   align-items: center;
   color: ${({ theme }) => theme.headerText};
