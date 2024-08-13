@@ -11,6 +11,7 @@ const Hero = () => {
 
   const commandLines = [
     "Software Developer",
+    "Ambitious Full-Stacker",
     "Artificial Intelligence Engineer",
     "Masters Degree Receiver",
     "Licensed Bartender",
@@ -78,27 +79,27 @@ const Hero = () => {
           <img ref={imageRef} src="/Hero/blackyellow.png" alt="record" />
         </Record>
       </RecordPlayer>
-      <Text>
+      <ContentContainer>
         <Title>chris youngclaus</Title>
-      </Text>
-      <CircleContainer>
-      <Circle>
-          <img src="/Hero/chris.png" alt="image1" />
-          <CircleText>About Me</CircleText>
-        </Circle>
+        <CircleContainer>
         <Circle>
-          <img src="/Hero/map.png" alt="image1" />
-          <CircleText>Allergenics</CircleText>
-        </Circle>
-        <Circle>
-          <img src="/Hero/spotify.png" alt="image1" />
-          <CircleText>Music</CircleText>
-        </Circle>
-        <Circle>
-          <img src="/Hero/dortmund.png" alt="image1" />
-          <CircleText>Hobbies</CircleText>
-        </Circle>
-      </CircleContainer>
+            <img src="/Hero/chris.png" alt="image1" />
+            <CircleText>About Me</CircleText>
+          </Circle>
+          <Circle>
+            <img src="/Hero/map.png" alt="image1" />
+            <CircleText>Allergenics</CircleText>
+          </Circle>
+          <Circle>
+            <img src="/Hero/spotify.png" alt="image1" />
+            <CircleText>Music</CircleText>
+          </Circle>
+          <Circle>
+            <img src="/Hero/dortmund.png" alt="image1" />
+            <CircleText>Hobbies</CircleText>
+          </Circle>
+        </CircleContainer>
+      </ContentContainer>
       <CommandLine>
         {isTyping && (
           <CommandText
@@ -153,32 +154,35 @@ const Record = styled.div`
   transform: translate(25%, -50%);
 `;
 
-const Text = styled.div`
-  position: absolute;
+const ContentContainer = styled.div`
   display: flex;
+  position: absolute;
   flex-direction: column;
-  width: 100vw;
-  height: 20vh;
-  top: 100px;
-  align-items: center;
-  color: ${({ theme }) => theme.headerText};
-`;
+  align-items: left;
+  width: auto;
+  max-width: 70vw;
+  height: 80vh;
+  top: 60px;
+  left: 0px;
+`
 
 const Title = styled.div`
+  color: ${({ theme }) => theme.text};
   position: static;
   font-family: "DM Mono", monospace;
   font-weight: bold;
   font-size: 7vw;
+  margin-left: 20px;
+  margin-top: 20px;
+  white-space: nowrap;
 `;
 
 const CircleContainer = styled.div`
   display: flex;
-  position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 20vh;
-  transform: translate(0, -20%);
+  margin-top: 10px;
   justify-content: center;
-  align-items: center;
 `;
 
 const Circle = styled.div`
@@ -186,10 +190,11 @@ const Circle = styled.div`
   width: 9vw;
   height: 9vw;
   border-radius: 50%;
+  border: 4px solid ${({ theme }) => theme.circleBg};
+  margin: 10px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
-  margin-left: 20px;
   img {
     width: 100%;
     height: 100%;
@@ -211,9 +216,9 @@ const CircleText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: ${({ theme }) => theme.circleText};
   font-family: "DM Mono", monospace;
-  font-size: 1.2rem;
+  font-size: 1vw;
   opacity: 0;
   white-space: nowrap;
   transition: all 0.3s ease-in-out;

@@ -8,6 +8,8 @@ export const lightTheme = {
 
   bodyBg: '#fff',
   text: '#000',
+  circleBg: '#000',
+  circleText: '#fff'
 };
 
 export const darkTheme = {
@@ -19,7 +21,9 @@ export const darkTheme = {
   buttonText: '#fff',
 
   bodyBg: '#222',
-  text: '#eee',
+  text: '#ccc',
+  circleBg: '#ccc',
+  circleText: '#fff'
 };
 
 export const altrock = {
