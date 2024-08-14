@@ -192,6 +192,7 @@ const Circle = styled.div`
   border-radius: 50%;
   border: 4px solid ${({ theme }) => theme.circleBg};
   margin: 10px;
+  left: -10px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.1s ease-in-out;

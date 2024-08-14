@@ -27,13 +27,14 @@ const Header = () => {
         <NavItem href="/about">About</NavItem>
         <NavItem href="/projects">Projects</NavItem>
         <ContactNavItem onClick={handleContactClick}>Contact</ContactNavItem>
-      </Nav>
-      {showContact && (
+        {showContact && (
         <ContactInfo isFlipping={isFlipping}>
           <span>chrisyoungclaus19@gmail.com</span>
           <span>201-615-9109</span>
         </ContactInfo>
       )}
+      </Nav>
+      
       <ThemeToggleContainer>
           <ThemeToggleSwitch onClick={toggleTheme}>
               <ThemeToggleSlider theme={theme.mode}>
@@ -64,6 +65,8 @@ const HeaderContainer = styled.header`
 
 const Nav = styled.nav`
   display: flex;
+  height: 60px;
+  align-items: center;
   justify-content: space-between;
   flex-direction: row;
   gap: 50px;
@@ -111,11 +114,13 @@ const flipOut = keyframes`
 
 const ContactInfo = styled.div`
   display: flex;
+  position: inherit;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding-left: 20px;
   flex-direction: column;
-  font-size: 1.5vw;
+  white-space: nowrap;
+  font-size: 1vw;
   ${({ isFlipping }) =>
     isFlipping
       ? css`
