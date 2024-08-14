@@ -25,7 +25,7 @@ const Header = () => {
       <Nav>
         <NavItem href="/">Home</NavItem>
         <NavItem href="/about">About</NavItem>
-        <NavItem>Projects</NavItem>
+        <NavItem href="/projects">Projects</NavItem>
         <ContactNavItem onClick={handleContactClick}>Contact</ContactNavItem>
       </Nav>
       {showContact && (
