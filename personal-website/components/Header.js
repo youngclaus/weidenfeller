@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Nav>
-        <NavItem href="/home">Home</NavItem>
+        <NavItem href="/">Home</NavItem>
         <NavItem href="/about">About</NavItem>
         <NavItem>Projects</NavItem>
       </Nav>

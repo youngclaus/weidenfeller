@@ -73,7 +73,7 @@ const Hero = () => {
       </Code>
       <RecordPlayer>
         <Tonearm>
-          <img src="/Hero/turntable.png" alt="turntable" />
+          <img src="/Hero/tonearm.png" alt="turntable" />
         </Tonearm>
         <Record>
           <img ref={imageRef} src="/Hero/blackyellow.png" alt="record" />
@@ -145,7 +145,7 @@ const RecordPlayer = styled.div`
 const Tonearm = styled.div`
   position: absolute;
   scale: 250%;
-  transform: translate(137%, -57%);
+  transform: translate(80%, 40%);
   z-index: 20;
 `;
 

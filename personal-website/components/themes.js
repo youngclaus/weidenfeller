@@ -9,7 +9,10 @@ export const lightTheme = {
   bodyBg: '#fff',
   text: '#000',
   circleBg: '#000',
-  circleText: '#fff'
+  circleText: '#fff',
+
+  timelineCircleBg: '#fff',
+  timelineYear: '#000',
 };
 
 export const darkTheme = {
@@ -23,7 +26,10 @@ export const darkTheme = {
   bodyBg: '#222',
   text: '#ccc',
   circleBg: '#ccc',
-  circleText: '#fff'
+  circleText: '#fff',
+
+  timelineCircleBg: '#000',
+  timelineYear: '#fff',
 };
 
 export const altrock = {
