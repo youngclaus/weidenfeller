@@ -55,7 +55,6 @@ const NavItem = styled.a`
   &:hover {
     transform: scale(1.2);
     font-weight: bold;
-    color: #ecdcc6;
   }
 `;
 

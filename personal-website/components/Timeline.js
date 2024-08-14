@@ -6,9 +6,9 @@ const Timeline = () => {
   return (
     <TimelineContainer>
       {years.map((year, index) => (
-        <YearContainer key={index}>
+        <YearSection key={index}>
           <Year>{year}</Year>
-        </YearContainer>
+        </YearSection>
       ))}
     </TimelineContainer>
   );
@@ -17,28 +17,30 @@ const Timeline = () => {
 export default Timeline;
 
 const TimelineContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
   height: 100vh;
-  scroll-snap-type: y mandatory; /* Enables vertical scroll snapping */
   overflow-y: scroll; /* Enables scrolling */
-  scroll-behavior: smooth; /* Smooth scrolling behavior */
+  scroll-snap-type: y mandatory; /* Enables vertical scroll snapping */
+  -ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer and Edge */
+  scrollbar-width: none;  /* Hide scrollbar in Firefox */
+  &::-webkit-scrollbar {
+    display: none;  /* Hide scrollbar in WebKit browsers */
+  }
 `;
 
-const YearContainer = styled.div`
+const YearSection = styled.div`
+  width: 100vw;
+  height: 100vh; /* Each section takes up the full viewport height */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Each year takes up the full viewport height */
-  scroll-snap-align: start; /* Ensures each year snaps into view */
-  width: 100%; /* Make sure the container takes up the full width */
+  scroll-snap-align: start; /* Ensures each section snaps into view */
+  background-color: ${({ theme }) => theme.bodyBg};
 `;
 
 const Year = styled.h2`
   font-family: "DM Mono", monospace;
-  font-size: 5rem;
+  font-size: 6rem;
   color: ${({ theme }) => theme.text};
   margin: 0;
 `;
