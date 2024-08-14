@@ -1,8 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+import { useState } from 'react';
 import { useTheme } from '../components/ThemeContext.js';
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
+  const [showContact, setShowContact] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
+
+
+  const handleContactClick = () => {
+    if (showContact) {
+      setIsFlipping(true);
+      setTimeout(() => {
+        setShowContact(false);
+        setIsFlipping(false);
+      }, 500); // Duration of the flipOut animation
+    } else {
+      setShowContact(true);
+    }
+  };
 
   return (
     <HeaderContainer>
@@ -10,7 +26,14 @@ const Header = () => {
         <NavItem href="/">Home</NavItem>
         <NavItem href="/about">About</NavItem>
         <NavItem>Projects</NavItem>
+        <ContactNavItem onClick={handleContactClick}>Contact</ContactNavItem>
       </Nav>
+      {showContact && (
+        <ContactInfo isFlipping={isFlipping}>
+          <span>chrisyoungclaus19@gmail.com</span>
+          <span>201-615-9109</span>
+        </ContactInfo>
+      )}
       <ThemeToggleContainer>
           <ThemeToggleSwitch onClick={toggleTheme}>
               <ThemeToggleSlider theme={theme.mode}>
@@ -55,6 +78,55 @@ const NavItem = styled.a`
   &:hover {
     transform: scale(1.2);
     font-weight: bold;
+  }
+`;
+
+const ContactNavItem = styled(NavItem)`
+  @media (max-width: 800px) {
+    display: none; /* Hide the Contact button when the screen is too small */
+  }
+`;
+
+const flipIn = keyframes`
+  from {
+    transform: rotateX(90deg); /* Start with a 90-degree flip */
+    opacity: 0; /* Start with opacity 0 */
+  }
+  to {
+    transform: rotateX(0deg); /* End with no rotation */
+    opacity: 1; /* End with full opacity */
+  }
+`;
+
+const flipOut = keyframes`
+  from {
+    transform: rotateX(0deg); /* Start with no rotation */
+    opacity: 1; /* Start with full opacity */
+  }
+  to {
+    transform: rotateX(90deg); /* End with a 90-degree flip */
+    opacity: 0; /* End with opacity 0 */
+  }
+`
+
+const ContactInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  flex-direction: column;
+  font-size: 1.5vw;
+  ${({ isFlipping }) =>
+    isFlipping
+      ? css`
+          animation: ${flipOut} 0.5s ease-out;
+        `
+      : css`
+          animation: ${flipIn} 0.5s ease-out;
+        `}
+
+  @media (max-width: 800px) {
+    display: none; /* Hide the contact info when the screen is too small */
   }
 `;
 

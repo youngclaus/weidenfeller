@@ -19,22 +19,22 @@ export default Timeline;
 const TimelineContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  overflow-y: scroll; /* Enables scrolling */
-  scroll-snap-type: y mandatory; /* Enables vertical scroll snapping */
-  -ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer and Edge */
-  scrollbar-width: none;  /* Hide scrollbar in Firefox */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
-    display: none;  /* Hide scrollbar in WebKit browsers */
+    display: none;
   }
 `;
 
 const YearSection = styled.div`
   width: 100vw;
-  height: 100vh; /* Each section takes up the full viewport height */
+  height: 100vh; 
   display: flex;
   align-items: center;
   justify-content: center;
-  scroll-snap-align: start; /* Ensures each section snaps into view */
+  scroll-snap-align: start;
   background-color: ${({ theme }) => theme.bodyBg};
 `;
 

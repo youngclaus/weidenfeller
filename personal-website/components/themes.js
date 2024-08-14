@@ -6,7 +6,7 @@ export const lightTheme = {
   buttonBg: '#ebebeb',
   buttonText: '#fff',
 
-  bodyBg: '#fff',
+  bodyBg: '#f5f5f5',
   text: '#000',
   circleBg: '#000',
   circleText: '#fff',
