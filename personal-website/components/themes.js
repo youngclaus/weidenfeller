@@ -11,6 +11,8 @@ export const lightTheme = {
   circleBg: '#000',
   circleText: '#fff',
 
+  aboutOpacity: '1',
+
   timelineCircleBg: '#fff',
   timelineYear: '#000',
 };
@@ -27,6 +29,8 @@ export const darkTheme = {
   text: '#ccc',
   circleBg: '#ccc',
   circleText: '#fff',
+
+  aboutOpacity: '0.7',
 
   timelineCircleBg: '#000',
   timelineYear: '#fff',

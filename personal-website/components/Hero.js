@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 const Hero = () => {
   const imageRef = useRef(null);
@@ -82,10 +83,12 @@ const Hero = () => {
       <ContentContainer>
         <Title>chris youngclaus</Title>
         <CircleContainer>
-        <Circle>
-            <img src="/Hero/chris.png" alt="image1" />
-            <CircleText>About Me</CircleText>
-          </Circle>
+          <Link href="/about">
+            <Circle>
+              <img src="/Hero/chris.png" alt="image1" />
+              <CircleText>My Room</CircleText>
+            </Circle>
+          </Link>
           <Circle>
             <img src="/Hero/map.png" alt="image1" />
             <CircleText>Allergenics</CircleText>
