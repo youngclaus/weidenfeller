@@ -21,7 +21,7 @@ const About = () => {
                     All GlowContainers set to fit-content
 
                 */}
-                <Background>
+                <Background style={{width: 'fit-content'}}>
                     <img src='/About/background.png' alt='background' style={{transform: 'translate(-50%, 50%)'}}/>
                 </Background>
                 <GlowContainer style={{transform: 'translate(-50%, 15%)'}}>
@@ -115,7 +115,7 @@ const ImageContainer = styled.div`
     width: 100vw;
     height: calc(100vh - 60px);
     top: 60px;
-    overflow: hidden; 
+    overflow-y: hidden; 
     opacity: ${({ theme }) => theme.aboutOpacity};
 `;
 
