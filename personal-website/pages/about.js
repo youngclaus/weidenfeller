@@ -10,8 +10,7 @@ const About = () => {
             <Header />
             <ImageContainer>
                 {/*Organizing css movement on screen
-                    Glow Containers set to center of viewport to keep assets 
-                        on same x and y axis and prevent movement
+                    Glow Containers measure from Left in px
                     Glow Containers inline style controls placement on screen
 
                     GlowImages set size to scale with other images
@@ -21,36 +20,13 @@ const About = () => {
                     All GlowContainers set to fit-content
 
                 */}
-                <Background style={{width: 'fit-content'}}>
-                    <img src='/About/background.png' alt='background' style={{transform: 'translate(-50%, 50%)'}}/>
+                <Background style={{width: 'fit-content', height: 'fit-content', left: 0}}>
+                    <img src='/About/background.png' alt='background' style={{transform: 'translateY(50%)'}}/>
                 </Background>
-                <GlowContainer style={{transform: 'translate(-50%, 15%)'}}>
-                    <GlowImage 
-                        alt='window.png'
-                        id='window'
-                        style={{
-                            width: '300px',
-                            height: 'auto',
-                        }}
-                    />
-                    <TextBox>I had my own balcony with a view of Hoboken in college</TextBox>
-                </GlowContainer>
-                <GlowContainer style={{transform: 'translate(160%, -230%)'}}>
-                    <GlowImage
-                        src='/About/records/1975.png'
-                        alt='record_1975'
-                        style={{
-                            width: '110px',
-                            height: 'auto'
-                        }}
-                        onClick={() => switchTheme('altrock')}
-                    />
-                    <TextBox>ILIWYSFYASBYSU - The 1975</TextBox>
-                </GlowContainer>
-                <Table style={{transform: 'translate(-125%, 120%)'}}>
+                <Table style={{left: '10px', bottom: '110px'}}>
                     <img src='/About/table.png' alt='table' style={{width: '500px', height: 'auto'}}/>
                 </Table>
-                <GlowContainer style={{transform: 'translate(-143%, 50%)'}}>
+                <GlowContainer style={{left: '50px', bottom: '280px'}}>
                     <GlowImage
                         src='/About/stereo.png'
                         alt='stereo.png'
@@ -59,9 +35,9 @@ const About = () => {
                             height: 'auto'
                         }}
                     />
-                    <TextBox>The Perfect Christmas Gift: My Stereo System</TextBox>
+                    <TextBox>The Perfect Christmas Gift for a Music Junkie</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(-470%, 210%)'}}>
+                <GlowContainer style={{left: '420px', bottom: '150px'}}>
                     <GlowImage
                         src='/About/ps5.png'
                         alt='ps5'
@@ -72,7 +48,7 @@ const About = () => {
                     />
                     <TextBox>I was an Xbox kid until high school</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(-382%, 220%)'}}>
+                <GlowContainer style={{left: '62px', bottom: '150px'}}>
                     <GlowImage
                         src='/About/records.png'
                         alt='records'
@@ -81,9 +57,20 @@ const About = () => {
                             height: 'auto'
                         }}
                     />
-                    <TextBox>Click on the records to change the theme!</TextBox>
+                    <TextBox style={{left: '160px'}}>Click on the records to change the theme!</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(100%, 200%)'}}>
+                <GlowContainer style={{left: '500px', bottom: '300px'}}>
+                    <GlowImage 
+                        alt='window.png'
+                        id='window'
+                        style={{
+                            width: '300px',
+                            height: 'auto',
+                        }}
+                    />
+                    <TextBox>I had my own balcony with a view of Hoboken in college</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{left: '800px', bottom: '50px'}}>
                     <GlowImage 
                         src='/About/whitedog.png' 
                         alt='dog'
@@ -94,6 +81,36 @@ const About = () => {
                     />
                     <TextBox>I have always wanted a Husky</TextBox>
                 </GlowContainer>
+
+                {/* --------- Records Section ---------- */}
+                <GlowContainer style={{left: '830px', bottom: '600px'}}>
+                    <GlowImage
+                        src='/About/records/1975.png'
+                        alt='record_1975'
+                        style={{
+                            width: '110px',
+                            height: 'auto'
+                        }}
+                        onClick={() => switchTheme('the1975')}
+                    />
+                    <TextBox>ILIWYSFYASBYSU - The 1975</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{left: '970px', bottom: '600px'}}>
+                    <GlowImage
+                        src='/About/records/basement.png'
+                        alt='record_1975'
+                        style={{
+                            width: '110px',
+                            height: 'auto'
+                        }}
+                        onClick={() => switchTheme('basement')}
+                    />
+                    <TextBox>ILIWYSFYASBYSU - The 1975</TextBox>
+                </GlowContainer>
+                
+                
+                
+                
             </ImageContainer>
         </Container>
     )
@@ -134,8 +151,6 @@ const GlowContainer = styled.div`
     justify-content: center;
     width: fit-content;
     height: fit-content;
-    left: 50%;
-    bottom: 50%;
 `;
 
 const GlowImage = styled.img`

@@ -26,7 +26,22 @@ export const darkTheme = {
   timelineCircleBg: '#000', timelineYear: '#fff',
 };
 
-export const altrock = {
+export const the1975 = {
+  mode: 'toggled',
+
+  headerBg: '#ffbdc9', headerText: '#fff',
+  buttonBg: '#ffabba', buttonText: '#fff',
+
+  bodyBg: '#ffbdc9', text: '#000',
+  circleBg: '#ccc', circleText: '#fff',
+
+  aboutOpacity: '0.7', aboutGlow: 'rgba(255, 171, 186, 0.8)',
+
+  timelineCircleBg: '#000', timelineYear: '#fff', 
+
+}
+
+export const basement = {
   mode: 'toggled',
 
   headerBg: '#905d5d', headerText: '#ecdcc6',
