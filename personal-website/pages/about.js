@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
+import { useContext } from 'react';
+import { useTheme } from '../components/ThemeContext';
 
 const About = () => {
+    const { theme, switchTheme } = useTheme();
     return (
         <Container>
             <Header />
@@ -31,6 +34,18 @@ const About = () => {
                         }}
                     />
                     <TextBox>I had my own balcony with a view of Hoboken in college</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{transform: 'translate(160%, -230%)'}}>
+                    <GlowImage
+                        src='/About/records/1975.png'
+                        alt='record_1975'
+                        style={{
+                            width: '110px',
+                            height: 'auto'
+                        }}
+                        onClick={() => switchTheme('altrock')}
+                    />
+                    <TextBox>ILIWYSFYASBYSU - The 1975</TextBox>
                 </GlowContainer>
                 <Table style={{transform: 'translate(-125%, 120%)'}}>
                     <img src='/About/table.png' alt='table' style={{width: '500px', height: 'auto'}}/>

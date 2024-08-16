@@ -26,19 +26,21 @@ export const darkTheme = {
   timelineCircleBg: '#000', timelineYear: '#fff',
 };
 
-/*
 export const altrock = {
   mode: 'toggled',
-  headerBg: '#905d5d',
-  headerText: '#ecdcc6',
-  buttonBg: '#a67575',
-  buttonText: '#333',
 
-  bodyBg: '#ecdcc6',
-  text: '#905d5d',
+  headerBg: '#905d5d', headerText: '#ecdcc6',
+  buttonBg: '#a67575', buttonText: '#333',
+
+  bodyBg: '#f0b35d', text: '#905d5d',
+  circleBg: '#ccc', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(209, 197, 86, 0.5)',
+
+  timelineCircleBg: '#000', timelineYear: '#fff', 
 };
 
-
+/*
   mode: 'dark',
 
   headerBg: '#444',

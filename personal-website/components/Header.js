@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { useTheme } from '../components/ThemeContext.js';
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, switchTheme } = useTheme();  // Use switchTheme instead of toggleTheme
   const [showContact, setShowContact] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
-
 
   const handleContactClick = () => {
     if (showContact) {
@@ -20,6 +19,10 @@ const Header = () => {
     }
   };
 
+  const handleThemeToggle = () => {
+    switchTheme(theme.mode === 'light' ? 'dark' : 'light');  // Toggle between light and dark modes
+  };
+
   return (
     <HeaderContainer>
       <Nav>
@@ -28,19 +31,19 @@ const Header = () => {
         <NavItem href="/projects">Projects</NavItem>
         <ContactNavItem onClick={handleContactClick}>Contact</ContactNavItem>
         {showContact && (
-        <ContactInfo isFlipping={isFlipping}>
-          <span>chrisyoungclaus19@gmail.com</span>
-          <span>201-615-9109</span>
-        </ContactInfo>
-      )}
+          <ContactInfo isFlipping={isFlipping}>
+            <span>chrisyoungclaus19@gmail.com</span>
+            <span>201-615-9109</span>
+          </ContactInfo>
+        )}
       </Nav>
       
       <ThemeToggleContainer>
-          <ThemeToggleSwitch onClick={toggleTheme}>
-              <ThemeToggleSlider theme={theme.mode}>
-                {theme.mode === 'light' ? '🔆' : theme.mode === 'dark' ? '🌙' : '🔆 🌙'}
-              </ThemeToggleSlider>
-          </ThemeToggleSwitch>
+        <ThemeToggleSwitch onClick={handleThemeToggle}>
+          <ThemeToggleSlider theme={theme.mode}>
+            {theme.mode === 'light' ? '🔆' : theme.mode === 'dark' ? '🌙' : '🔆 🌙'}
+          </ThemeToggleSlider>
+        </ThemeToggleSwitch>
       </ThemeToggleContainer>
     </HeaderContainer>
   );
@@ -110,7 +113,7 @@ const flipOut = keyframes`
     transform: rotateX(90deg); /* End with a 90-degree flip */
     opacity: 0; /* End with opacity 0 */
   }
-`
+`;
 
 const ContactInfo = styled.div`
   display: flex;
@@ -164,4 +167,3 @@ const ThemeToggleSlider = styled.div`
   font-size: 20px;
   white-space: nowrap;
 `;
-
