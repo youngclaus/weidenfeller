@@ -6,18 +6,69 @@ const About = () => {
         <Container>
             <Header />
             <ImageContainer>
-                <GlowContainer style={{left: '50%', bottom: '34%'}}>
+                {/*Organizing css movement on screen
+                    Glow Containers set to center of viewport to keep assets 
+                        on same x and y axis and prevent movement
+                    Glow Containers inline style controls placement on screen
+
+                    GlowImages set size to scale with other images
+                        Preset to 300px wide each
+
+                    GlowImages set to center of container (reassure central position)
+                    All GlowContainers set to fit-content
+
+                */}
+                <Background>
+                    <img src='/About/background.png' alt='background' style={{transform: 'translate(-50%, 50%)'}}/>
+                </Background>
+                <GlowContainer style={{transform: 'translate(-50%, 15%)'}}>
                     <GlowImage 
                         alt='window.png'
                         id='window'
                         style={{
-                            width: '250px',
+                            width: '300px',
                             height: 'auto',
                         }}
                     />
                     <TextBox>I had my own balcony with a view of Hoboken in college</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{left: '70%', bottom: '25%'}}>
+                <Table style={{transform: 'translate(-125%, 120%)'}}>
+                    <img src='/About/table.png' alt='table' style={{width: '500px', height: 'auto'}}/>
+                </Table>
+                <GlowContainer style={{transform: 'translate(-143%, 50%)'}}>
+                    <GlowImage
+                        src='/About/stereo.png'
+                        alt='stereo.png'
+                        style={{
+                            width: '400px',
+                            height: 'auto'
+                        }}
+                    />
+                    <TextBox>The Perfect Christmas Gift: My Stereo System</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{transform: 'translate(-470%, 210%)'}}>
+                    <GlowImage
+                        src='/About/ps5.png'
+                        alt='ps5'
+                        style={{
+                            width: '45px',
+                            height: 'auto'
+                        }}
+                    />
+                    <TextBox>I was an Xbox kid until high school</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{transform: 'translate(-382%, 220%)'}}>
+                    <GlowImage
+                        src='/About/records.png'
+                        alt='records'
+                        style={{
+                            width: '150px',
+                            height: 'auto'
+                        }}
+                    />
+                    <TextBox>Click on the records to change the theme!</TextBox>
+                </GlowContainer>
+                <GlowContainer style={{transform: 'translate(100%, 200%)'}}>
                     <GlowImage 
                         src='/About/whitedog.png' 
                         alt='dog'
@@ -50,12 +101,15 @@ const ImageContainer = styled.div`
     height: calc(100vh - 60px);
     top: 60px;
     overflow: hidden; 
-    background-image: url('/About/background.png');
-    background-size: 1920px 1080px;
-    background-repeat: repeat-x;
-    background-position: bottom center;
     opacity: ${({ theme }) => theme.aboutOpacity};
 `;
+
+const Background = styled.div`
+    position: absolute;
+    display: static;
+    left: 50%;
+    bottom: 50%;
+`
 
 const GlowContainer = styled.div`
     position: absolute;
@@ -65,7 +119,8 @@ const GlowContainer = styled.div`
     justify-content: center;
     width: fit-content;
     height: fit-content;
-    transform: translate(-50%, -50%);
+    left: 50%;
+    bottom: 50%;
 `;
 
 const GlowImage = styled.img`
@@ -80,7 +135,7 @@ const GlowImage = styled.img`
     `}
 
     &:hover {
-        filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
     }
 
     &:hover + div {
@@ -104,3 +159,12 @@ const TextBox = styled.div`
     pointer-events: none;
     z-index: 1;
 `;
+
+const Table = styled.div`
+    position: absolute;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    left: 50%;
+    bottom: 50%;
+`

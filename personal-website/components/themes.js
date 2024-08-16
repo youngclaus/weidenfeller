@@ -1,41 +1,32 @@
 export const lightTheme = {
   mode: 'light',
 
-  headerBg: '#fff',
-  headerText: '#000',
-  buttonBg: '#ebebeb',
-  buttonText: '#fff',
+  headerBg: '#fff', headerText: '#000',
+  buttonBg: '#ebebeb', buttonText: '#fff',
 
-  bodyBg: '#f5f5f5',
-  text: '#000',
-  circleBg: '#000',
-  circleText: '#fff',
+  bodyBg: '#f5f5f5', text: '#000',
+  circleBg: '#000', circleText: '#fff',
 
-  aboutOpacity: '1',
+  aboutOpacity: '1', aboutGlow: 'rgba(255, 255, 255, 0.3)',
 
-  timelineCircleBg: '#fff',
-  timelineYear: '#000',
+  timelineCircleBg: '#fff', timelineYear: '#000',
 };
 
 export const darkTheme = {
   mode: 'dark',
 
-  headerBg: '#000',
-  headerText: '#fff',
-  buttonBg: '#333',
-  buttonText: '#fff',
+  headerBg: '#000', headerText: '#fff',
+  buttonBg: '#333', buttonText: '#fff',
 
-  bodyBg: '#222',
-  text: '#ccc',
-  circleBg: '#ccc',
-  circleText: '#fff',
+  bodyBg: '#222', text: '#ccc',
+  circleBg: '#ccc', circleText: '#fff',
 
-  aboutOpacity: '0.7',
+  aboutOpacity: '0.6', aboutGlow: 'rgba(209, 197, 86, 0.5)',
 
-  timelineCircleBg: '#000',
-  timelineYear: '#fff',
+  timelineCircleBg: '#000', timelineYear: '#fff',
 };
 
+/*
 export const altrock = {
   mode: 'toggled',
   headerBg: '#905d5d',
@@ -47,7 +38,7 @@ export const altrock = {
   text: '#905d5d',
 };
 
-/*
+
   mode: 'dark',
 
   headerBg: '#444',
