@@ -282,6 +282,7 @@ const FloatingWord = styled.div`
   font-family: "DM Mono", monospace;
   font-size: 100%;
   color: ${({ theme }) => theme.text};
+  font-weight: bold;
   white-space: nowrap;
   opacity: 1;
   animation: 5s ${fadeOutUpwards} 3s ease-out forwards;

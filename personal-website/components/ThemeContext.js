@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { lightTheme, darkTheme, the1975, basement } from './themes';
+import { lightTheme, darkTheme, the1975, basement, beck, blink, borns, imagine } from './themes';
 
 const ThemeContext = createContext();
 
@@ -34,6 +34,18 @@ export const ThemeProvider = ({ children }) => {
         break;
       case 'basement':
         newTheme = basement;
+        break;
+      case 'beck':
+        newTheme = beck;
+        break;
+      case 'blink':
+        newTheme = blink;
+        break;
+      case 'borns':
+        newTheme = borns;
+        break;
+      case 'imagine':
+        newTheme = imagine;
         break;
       case 'light':
       default:
