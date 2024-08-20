@@ -269,7 +269,7 @@ const CommandText = styled.span`
   overflow: hidden;
   border-right: .15em solid white;
   white-space: nowrap;
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
   animation: 
     ${typing} 3.5s steps(${props => props.children.length}, end),
