@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import { useRef, useEffect } from 'react';
 import { useTheme } from '../components/ThemeContext';
+import Link from 'next/link';
 
 const About = () => {
     const { theme, switchTheme } = useTheme();
@@ -36,15 +37,18 @@ const About = () => {
                     zIndex: 2,
                 }}/>
                 <GlowContainer style={{transform: 'translate(20%, 93%)'}}>
-                    <GlowImage
-                        src='/About/stereo.png'
-                        alt='stereo.png'
-                        style={{
-                            width: 'auto',
-                            height: '70%'
-                        }}
-                    />
+                    <Link href="/music">
+                        <GlowImage
+                            src='/About/stereo.png'
+                            alt='stereo.png'
+                            style={{
+                                width: 'auto',
+                                height: '70%'
+                            }}
+                        />
+                    
                     <TextBox>Click Here to go to Music</TextBox>
+                    </Link>
                 </GlowContainer>
                 <GlowContainer style={{transform: 'translate(930%, 168%)'}}>
                     <GlowImage
