@@ -5,7 +5,7 @@ export const lightTheme = {
   buttonBg: '#90cef9', buttonText: '#fff',
 
   bodyBg: '#f5f5f5', text: '#000',
-  circleBg: '#000', circleText: '#fff',
+  circleBg: '#90cef9', circleText: '#fff',
 
   aboutOpacity: '1', aboutGlow: 'rgba(255, 255, 255, 0.3)',
 
@@ -64,7 +64,7 @@ export const beck = {
   bodyBg: '#008ef9', text: '#fff',
   circleBg: '#f9e14e', circleText: '#fff',
 
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 142, 249, 0.7)',
+  aboutOpacity: '0.9', aboutGlow: 'rgba(0, 142, 249, 0.7)',
 
   timelineCircleBg: '#000', timelineYear: '#fff', 
 }
@@ -89,12 +89,82 @@ export const borns = {
   headerBg: '#c1b8a2', headerText: '#725a4e',
   buttonBg: '#464354', buttonText: '#464354',
 
-  bodyBg: 'c1b8a2', text: '#725a4e',
+  bodyBg: '#c1b8a2', text: '#725a4e',
   circleBg: '#4d4c5b', circleText: '#fff',
 
   aboutOpacity: '0.8', aboutGlow: 'rgba(181, 164, 98, 0.7)',
 
   timelineCircleBg: '#000', timelineYear: '#fff',
+}
+
+export const catfish = {
+  mode: 'toggled',
+
+  headerBg: '#000', headerText: '#797979',
+  buttonBg: '#000', buttonText: '#fff',
+
+  bodyBg: '#000', text: '#333333',
+  circleBg: '#000', circleText: '#fff',
+
+  aboutOpacity: '0.5', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#000', timelineYear: '#fff',
+}
+
+export const coldplay = {
+  mode: 'toggled',
+
+  headerBg: '#6A6A56', headerText: '#CFBCDF',
+  buttonBg: '#A43B2A', buttonText: '#fff',
+
+  bodyBg: '#6A6A56', text: '#CFBCDF',
+  circleBg: '#A43B2A', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(207, 188, 223, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
+export const coldplay2 = {
+  mode: 'toggled',
+
+  headerBg: '#000054', headerText: '#F8F2DC',
+  buttonBg: '#81ADC8', buttonText: '#fff',
+
+  bodyBg: '#000054', text: '#D66853',
+  circleBg: '#D66853', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
+export const daft = {
+  mode: 'toggled',
+
+  headerBg: '#000', headerText: '#FFD700',
+  buttonBg: '#C0C0C0', buttonText: '#fff',
+
+  bodyBg: '#313131', text: '#FFD700',
+  circleBg: '#FFD700', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(255, 215, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
+export const glass = {
+  mode: 'toggled',
+
+  headerBg: '#E84D86', headerText: '#B0CAE8',
+  buttonBg: '#99398D', buttonText: '#fff',
+
+  bodyBg: '#E84D86', text: '#99398D',
+  circleBg: '#D9B6EA', circleText: '#fff',
+
+  aboutOpacity: '0.7', aboutGlow: 'rgba(232, 77, 134, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
 }
 
 export const imagine = {
@@ -111,15 +181,58 @@ export const imagine = {
   timelineCircleBg: '#000', timelineYear: '#fff',
 }
 
-/*
-  mode: 'dark',
+export const mckenna = {
+  mode: 'toggled',
 
-  headerBg: '#444',
-  headerText: '#ecdcc6',
-  buttonBg: '#333',
-  buttonBorder: '#905d5d',
-  buttonText: '#ecdcc6',
+  headerBg: '#81A263', headerText: '#E7D37F',
+  buttonBg: '#FD9B63', buttonText: '#464354',
 
-  bodyBg: '#905d5d',
-  text: '#ecdcc6',
-*/
+  bodyBg: '#FD9B63', text: '#FD9B63',
+  circleBg: '#365E32', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(129, 162, 99, 0.9)',
+
+  timelineCircleBg: '#000', timelineYear: '#fff',
+}
+
+export const monkeys = {
+  mode: 'toggled',
+
+  headerBg: '#353535', headerText: '#D2D2D2',
+  buttonBg: '#303030', buttonText: '#fff',
+
+  bodyBg: '#353535', text: '#D2D2D2',
+  circleBg: '#D2D2D2', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
+export const paramore = {
+  mode: 'toggled',
+
+  headerBg: '#fff', headerText: '#fff',
+  buttonBg: '#fff', buttonText: '#fff',
+
+  bodyBg: '#fff', text: '#fff',
+  circleBg: '#fff', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
+export const xx = {
+  mode: 'toggled',
+
+  headerBg: '#fff', headerText: '#fff',
+  buttonBg: '#fff', buttonText: '#fff',
+
+  bodyBg: '#fff', text: '#fff',
+  circleBg: '#fff', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}

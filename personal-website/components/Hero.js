@@ -124,7 +124,7 @@ const Hero = () => {
 
 export default Hero;
 
-const Container = styled.section`
+const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,6 +137,8 @@ const Code = styled.div`
   opacity: 0.3;
   filter: blur(3px);
   position: absolute;
+  width: 100vw;
+  height: auto;
 `;
 
 const RecordPlayer = styled.div`
