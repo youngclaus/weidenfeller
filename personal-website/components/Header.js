@@ -27,7 +27,6 @@ const Header = () => {
     <HeaderContainer>
       <Nav>
         <NavItem href="/">Home</NavItem>
-        <NavItem href="/about">About</NavItem>
         <NavItem href="/projects">Projects</NavItem>
         <ContactNavItem onClick={handleContactClick}>Contact</ContactNavItem>
         {showContact && (
@@ -88,30 +87,30 @@ const NavItem = styled.a`
 `;
 
 const ContactNavItem = styled(NavItem)`
-  @media (max-width: 800px) {
-    display: none; /* Hide the Contact button when the screen is too small */
+  @media (max-width: 750px) {
+    display: none;
   }
 `;
 
 const flipIn = keyframes`
   from {
-    transform: rotateX(90deg); /* Start with a 90-degree flip */
-    opacity: 0; /* Start with opacity 0 */
+    transform: rotateX(90deg);
+    opacity: 0;
   }
   to {
-    transform: rotateX(0deg); /* End with no rotation */
-    opacity: 1; /* End with full opacity */
+    transform: rotateX(0deg);
+    opacity: 1;
   }
 `;
 
 const flipOut = keyframes`
   from {
-    transform: rotateX(0deg); /* Start with no rotation */
-    opacity: 1; /* Start with full opacity */
+    transform: rotateX(0deg); 
+    opacity: 1;
   }
   to {
-    transform: rotateX(90deg); /* End with a 90-degree flip */
-    opacity: 0; /* End with opacity 0 */
+    transform: rotateX(90deg);
+    opacity: 0;
   }
 `;
 
@@ -123,7 +122,7 @@ const ContactInfo = styled.div`
   padding-left: 20px;
   flex-direction: column;
   white-space: nowrap;
-  font-size: 1vw;
+  font-size: 16px;
   ${({ isFlipping }) =>
     isFlipping
       ? css`
@@ -133,8 +132,8 @@ const ContactInfo = styled.div`
           animation: ${flipIn} 0.5s ease-out;
         `}
 
-  @media (max-width: 800px) {
-    display: none; /* Hide the contact info when the screen is too small */
+  @media (max-width: 620px) {
+    display: none;
   }
 `;
 
