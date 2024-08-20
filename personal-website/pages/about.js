@@ -34,264 +34,166 @@ const About = () => {
                     width: 'auto', 
                     height: '30%',
                     transform: 'translate(5%, 160%)',
-                    zIndex: 2,
                 }}/>
-                <GlowContainer style={{transform: 'translate(20%, 93%)'}}>
-                    <Link href="/music">
-                        <GlowImage
-                            src='/About/stereo.png'
-                            alt='stereo.png'
-                            style={{
-                                width: 'auto',
-                                height: '70%'
-                            }}
-                        />
-                    
-                    <TextBox>Click Here to go to Music</TextBox>
-                    </Link>
+                <GlowContainer style={{height: '40%',transform: 'translate(1%, 2%)'}}>
+                    <GlowImage  src='/About/flag.png' alt='flag' />
+                    <TextBox>I've been a Borussia Dortmund fan since 2012</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(930%, 168%)'}}>
+                <Link href="/music" passHref>
+                    <GlowContainer style={{height: '20%', transform: 'translate(25%, 170%)'}}>
+                        <GlowImage src='/About/stereo.png' alt='stereo.png'/>
+                        <TextBox>Click Here to go to Music</TextBox>
+                    </GlowContainer>
+                </Link>
+                <GlowContainer style={{height: '15%', transform: 'translate(950%, 385%)'}}>
                     <GlowImage
                         src='/About/ps5.png'
                         alt='ps5'
-                        style={{
-                            width: 'auto',
-                            height: '50%'
-                        }}
                     />
                     <TextBox>I was an Xbox kid until high school</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(45%, 168%)'}}>
-                    <GlowImage
-                        src='/About/records.png'
-                        alt='records'
-                        style={{
-                            width: 'auto',
-                            height: '50%'
-                        }}
-                    />
+                <GlowContainer style={{height: '15%', transform: 'translate(45%, 385%)'}}>
+                    <GlowImage src='/About/records.png' alt='records' />
                     <TextBox style={{left: '160px'}}>Click on the records to change the theme!</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{zIndex: 1, transform: 'translate(175%, 52%)'}}>
-                    <GlowImage 
-                        alt='window.png'
-                        id='window'
-                        style={{
-                            width: 'auto',
-                            height: '200%',
-                        }}
-                    />
+                <GlowContainer style={{height: '50%', transform: 'translate(210%, 5%)'}}>
+                    <GlowImage alt='window.png' id='window' />
                     <TextBox>I had a balcony with a view of Hoboken in college</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(300%, 220%)'}}>
-                    <GlowImage 
-                        src='/About/whitedog.png' 
-                        alt='dog'
-                        style={{
-                            width: 'auto',
-                            height: '70%',
-                        }}
-                    />
+                <GlowContainer style={{height: '20%', transform: 'translate(300%, 350%)'}}>
+                    <GlowImage src='/About/whitedog.png' alt='dog' />
                     <TextBox>I have always wanted a Husky</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(568%, 60%)'}}>
-                    <GlowImage 
-                        src='/About/jersey.png'
-                        alt='jersey'
-                        style={{
-                            width: 'auto',
-                            height: '90%',
-                            zIndex: 1
-                        }}
-                    />
+                <GlowContainer style={{height: '29%', transform: 'translate(500%, 57%)'}}>
+                    <GlowImage src='/About/jersey.png' alt='jersey' />
                     <TextBox>Sigma Nu</TextBox>
                 </GlowContainer>
 
 
                 {/*-------------- Records Section --------------}
                 { Horizontal: 120px           Vertical: 120px*/}
-                <GlowContainer style={{transform: 'translate(1050%, -10%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1000%, 30%)'}}>
                     <GlowImage
                         src='/About/records/1975.png'
                         alt='record_1975'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('the1975')}
                     />
-                    <TextBox>ILIWYSFYASBYSU - The 1975</TextBox>
+                    <TextBox style={{zIndex: 1000}}>ILIWYSFYASBYSU - The 1975</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1170%, -10%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1120%, 30%)'}}>
                     <GlowImage
                         src='/About/records/beck.png'
                         alt='record_beck'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('beck')}
                     />
                     <TextBox>Colors - Beck</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1290%, -10%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1240%, 30%)'}}>
                     <GlowImage
                         src='/About/records/mckenna.png'
                         alt='record_mckenna'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('mckenna')}
                     />
                     <TextBox>What Do You Think About the Car? - Declan McKenna</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1410%, -10%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1360%, 30%)'}}>
                     <GlowImage
                         src='/About/records/paramore.png'
                         alt='record_paramore'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('paramore')}
                     />
                     <TextBox>RIOT! - Paramore</TextBox>
                 </GlowContainer>
 
                 {/* ----- Second Row ----- */}
-                <GlowContainer style={{transform: 'translate(1230%, 35%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1180%, 150%)'}}>
                     <GlowImage
                         src='/About/records/basement.png'
                         alt='record_basement'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('basement')}
                     />
                     <TextBox>colourmeinkindess - basement</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1350%, 35%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1300%, 150%)'}}>
                     <GlowImage
                         src='/About/records/borns.png'
                         alt='record_borns'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('borns')}
                     />
                     <TextBox>Dopamine - Borns</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1470%, 35%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1420%, 150%)'}}>
                     <GlowImage
                         src='/About/records/coldplay.png'
                         alt='record_coldplay'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('coldplay')}
                     />
                     <TextBox>Viva la Vida - Coldplay</TextBox>
                 </GlowContainer>
                 
                 {/* ----- Third Row ----- */}
-                <GlowContainer style={{transform: 'translate(1230%, 85%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1180%, 270%)'}}>
                     <GlowImage
                         src='/About/records/coldplay2.png'
                         alt='record_coldplay2'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('coldplay2')}
                     />
                     <TextBox>X&Y - Coldplay</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1350%, 85%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1300%, 270%)'}}>
                     <GlowImage
                         src='/About/records/glass.png'
                         alt='record_glass'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('glass')}
                     />
                     <TextBox>Dreamland - Glass Animals</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1470%, 85%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1420%, 270%)'}}>
                     <GlowImage
                         src='/About/records/imagine.png'
                         alt='record_imagine'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('imagine')}
                     />
                     <TextBox>Night Visions - Imagine Dragons</TextBox>
                 </GlowContainer>
 
                 {/* ----- Fourth Row ----- */}
-                <GlowContainer style={{transform: 'translate(1050%, 130%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1000%, 390%)'}}>
                     <GlowImage
                         src='/About/records/blink.png'
                         alt='record_blink'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('blink')}
                     />
                     <TextBox>Take Off Your Pants and Jacket - blink-182</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1170%, 130%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1120%, 390%)'}}>
                     <GlowImage
                         src='/About/records/catfish.png'
                         alt='record_catfish'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('catfish')}
                     />
                     <TextBox>The Balcony - Catfish & the Bottlemen</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1290%, 130%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1240%, 390%)'}}>
                     <GlowImage
                         src='/About/records/daft.png'
                         alt='record_daft'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('daft')}
                     />
                     <TextBox>Random Access Memories - Daft Punk</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1410%, 130%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1360%, 390%)'}}>
                     <GlowImage
                         src='/About/records/monkeys.png'
                         alt='record_monkeys'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('monkeys')}
                     />
                     <TextBox>AM - Arctic Monkeys</TextBox>
                 </GlowContainer>
-                <GlowContainer style={{transform: 'translate(1530%, 130%)'}}>
+                <GlowContainer style={{height: '12%', transform: 'translate(1480%, 390%)'}}>
                     <GlowImage
                         src='/About/records/xx.png'
                         alt='record_xx'
-                        style={{
-                            width: 'auto',
-                            height: '40%'
-                        }}
                         onClick={() => switchTheme('xx')}
                     />
                     <TextBox>xx - The xx</TextBox>
@@ -342,39 +244,6 @@ const ImageContainer = styled.div`
     }
 `;
 
-const GlowContainer = styled.div`
-    position: absolute;
-    display: flex;
-    
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: 30%;
-    margin: 0;
-    padding: 0;
-    z-index: 5;
-`;
-
-const GlowImage = styled.img`
-    display: flex;
-    transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    
-    z-index: 2;
-
-    ${({ id, theme }) => 
-        id === 'window' && `
-        content: url(${theme.mode === 'light' ? '/About/window_day.png' : theme.mode === 'dark' ? '/About/window_night.png' : '/About/window_sunset.png'});
-    `}
-
-    &:hover {
-        filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
-    }
-
-    &:hover + div {
-        opacity: 1;
-    }
-`;
-
 const TextBox = styled.div`
     position: absolute;
     top: 15%;
@@ -389,5 +258,39 @@ const TextBox = styled.div`
     white-space: nowrap;
     transition: opacity 0.3s ease-in-out;
     pointer-events: none;
-    z-index: 100;
+    z-index: 1000;
 `;
+
+const GlowContainer = styled.div`
+    position: absolute;
+    display: flex;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 30%;
+`;
+
+const GlowImage = styled.img`
+    display: block;
+    transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    width: auto;
+    height: 100%;
+    z-index: 2;
+    ${({ id, theme }) => 
+        id === 'window' && `
+        content: url(${theme.mode === 'light' ? '/About/window_day.png' : theme.mode === 'dark' ? '/About/window_night.png' : '/About/window_sunset.png'});
+    `}
+
+    &:hover {
+        filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
+        z-index: 3;
+    }
+
+    &:hover + div {
+        opacity: 1;
+        z-index: 1000;
+    }
+`;
+
+
