@@ -104,7 +104,14 @@ const About = () => {
                     />
                     <TextBox>RIOT! - Paramore</TextBox>
                 </GlowContainer>
-
+                <GlowContainer style={{height: '12%', transform: 'translate(1480%, 30%)'}}>
+                    <GlowImage
+                        src='/About/records/coldplay3.png'
+                        alt='record_coldplay3'
+                        onClick={() => switchTheme('coldplay3')}
+                    />
+                    <TextBox>A Rush of Blood to the Head - Coldplay</TextBox>
+                </GlowContainer>
                 {/* ----- Second Row ----- */}
                 <GlowContainer style={{height: '12%', transform: 'translate(1180%, 150%)'}}>
                     <GlowImage

@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { lightTheme, darkTheme, the1975, basement, beck, blink, borns, catfish, coldplay, coldplay2, daft, glass, imagine, mckenna, monkeys, paramore, xx } from './themes';
+import { lightTheme, darkTheme, the1975, basement, beck, blink, borns, catfish, coldplay, coldplay2, coldplay3, daft, glass, imagine, mckenna, monkeys, paramore, xx } from './themes';
 
 const ThemeContext = createContext();
 
@@ -52,6 +52,9 @@ export const ThemeProvider = ({ children }) => {
         break;
       case 'coldplay2':
         newTheme = coldplay2;
+        break;
+      case 'coldplay3':
+        newTheme = coldplay3;
         break;
       case 'daft':
         newTheme = daft;
