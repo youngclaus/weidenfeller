@@ -139,6 +139,20 @@ export const coldplay2 = {
   timelineCircleBg: '#fff', timelineYear: '#fff',
 }
 
+export const coldplay3 = {
+  mode: 'toggled',
+
+  headerBg: '#000054', headerText: '#F8F2DC',
+  buttonBg: '#81ADC8', buttonText: '#fff',
+
+  bodyBg: '#000054', text: '#D66853',
+  circleBg: '#D66853', circleText: '#fff',
+
+  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
+
+  timelineCircleBg: '#fff', timelineYear: '#fff',
+}
+
 export const daft = {
   mode: 'toggled',
 
