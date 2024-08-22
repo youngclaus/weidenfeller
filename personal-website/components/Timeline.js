@@ -214,11 +214,11 @@ const Image = styled.img`
   max-height: 50vh;
   border-radius: 10px;
   border: 4px solid ${({ theme }) => theme.buttonBg};
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 
   &#linkimage:hover {
     transform: scale(1.01);
-    filter: brightness(0.9) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
+    filter: brightness(0.95) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
   }
 `;
 
