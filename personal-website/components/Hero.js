@@ -89,10 +89,12 @@ const Hero = () => {
               <CircleText>My Room</CircleText>
             </Circle>
           </Link>
-          <Circle>
-            <img src="/Hero/map.png" alt="image1" />
-            <CircleText>Allergenics</CircleText>
-          </Circle>
+          <Link href="/projects#2023">
+            <Circle>
+              <img src="/Hero/map.png" alt="image1" />
+              <CircleText>Allergenics</CircleText>
+            </Circle>
+          </Link>
           <Link href="/music">
             <Circle>
               <img src="/Hero/spotify.png" alt="image1" />

@@ -213,6 +213,7 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.bodyBg};
     user-select: none;
     -webkit-user-drag: none;
+    z-index: 1;
 `;
 
 const ImageContainer = styled.div`
@@ -221,6 +222,7 @@ const ImageContainer = styled.div`
     width: 100vw;
     height: calc(100vh - 60px);
     top: 60px;
+    z-index: 10;
 
     opacity: ${({ theme }) => theme.aboutOpacity};
     overflow-x: auto;
@@ -246,10 +248,9 @@ const ImageContainer = styled.div`
 
 const TextBox = styled.div`
     position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: translateY(-200%);
     font-family: "DM Mono", monospace;
+    font-size: 2vh;
     opacity: 0;
     background: rgba(0, 0, 0, 0.5);
     color: white;
@@ -258,13 +259,12 @@ const TextBox = styled.div`
     white-space: nowrap;
     transition: opacity 0.3s ease-in-out;
     pointer-events: none;
-    z-index: 1000;
+    z-index: 10000;
 `;
 
 const GlowContainer = styled.div`
     position: absolute;
     display: flex;
-    z-index: 1;
     align-items: center;
     justify-content: center;
     width: auto;
@@ -272,7 +272,7 @@ const GlowContainer = styled.div`
 `;
 
 const GlowImage = styled.img`
-    display: block;
+    display: flex;
     transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     width: auto;
     height: 100%;
