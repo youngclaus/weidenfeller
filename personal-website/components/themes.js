@@ -201,7 +201,7 @@ export const mckenna = {
   headerBg: '#81A263', headerText: '#E7D37F',
   buttonBg: '#FD9B63', buttonText: '#464354',
 
-  bodyBg: '#FD9B63', text: '#FD9B63',
+  bodyBg: '#FD9B63', text: '#E7D37F',
   circleBg: '#365E32', circleText: '#fff',
 
   aboutOpacity: '0.8', aboutGlow: 'rgba(129, 162, 99, 0.9)',
@@ -226,11 +226,11 @@ export const monkeys = {
 export const paramore = {
   mode: 'toggled',
 
-  headerBg: '#fff', headerText: '#fff',
-  buttonBg: '#fff', buttonText: '#fff',
+  headerBg: '#fff', headerText: 'orange',
+  buttonBg: '#fff', buttonText: '#orange',
 
-  bodyBg: '#fff', text: '#fff',
-  circleBg: '#fff', circleText: '#fff',
+  bodyBg: 'orange', text: '#fff',
+  circleBg: 'orange', circleText: '#fff',
 
   aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
 
@@ -240,11 +240,11 @@ export const paramore = {
 export const xx = {
   mode: 'toggled',
 
-  headerBg: '#fff', headerText: '#fff',
+  headerBg: 'black', headerText: '#fff',
   buttonBg: '#fff', buttonText: '#fff',
 
-  bodyBg: '#fff', text: '#fff',
-  circleBg: '#fff', circleText: '#fff',
+  bodyBg: 'black', text: '#fff',
+  circleBg: '#black', circleText: '#fff',
 
   aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
 
