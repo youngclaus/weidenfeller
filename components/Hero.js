@@ -95,14 +95,12 @@ const Hero = () => {
               <CircleText>Allergenics</CircleText>
             </Circle>
           </Link>
-          <Circle>
-            <img src="/Hero/spotify.png" alt="image1" />
-            <CircleText>Music</CircleText>
-          </Circle>
-          <Circle>
-            <img src="/Hero/dortmund.png" alt="image1" />
-            <CircleText>Hobbies</CircleText>
-          </Circle>
+          <Link href="/music">
+            <Circle>
+              <img src="/Hero/spotify.png" alt="image1" />
+              <CircleText>Music</CircleText>
+            </Circle>
+          </Link>
         </CircleContainer>
       </ContentContainer>
       <CommandLine>
