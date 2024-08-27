@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <Container theme={theme}>
       <Header />
-      <Text>Nothing to see here yet</Text>
+      <Text>Nothing to see here (yet)</Text>
     </Container>
   );
 };

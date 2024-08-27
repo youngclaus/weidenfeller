@@ -83,7 +83,14 @@ const Timeline = () => {
     {
       year: 2024,
       text: [
-        
+        { src: '/Projects/icon_c++.png', alt: 'C++' },
+        { src: '/Projects/icon_solidworks.png', alt: 'SolidWorks' },
+        { src: '/Projects/icon_arduino.png', alt: 'Arduino' },
+        { src: '/Projects/icon_python.png', alt: 'Python' },
+        { src: '/Projects/icon_react.png', alt: 'react' },
+        { src: '/Projects/icon_css.png', alt: 'css' },
+        { src: '/Projects/icon_mongodb.png', alt: 'mongo' },
+        { src: '/Projects/icon_matlab.png', alt: 'matlab' },
       ],
     },
   ];
@@ -169,7 +176,6 @@ const TextBox = styled.div`
 const IconImage = styled.img`
   width: 50px;
   height: auto;
-  transform: translate(-25%);
 `;
 
 const ImageContainer = styled.div`
