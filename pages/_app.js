@@ -1,12 +1,15 @@
 import { ThemeProvider as CustomThemeProvider, useTheme } from '../components/ThemeContext.js';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.css';
 
 function App({ Component, pageProps }) {
   return (
-    <CustomThemeProvider>
-      <ThemedApp Component={Component} pageProps={pageProps} />
-    </CustomThemeProvider>
+    <Analytics>
+      <CustomThemeProvider>
+        <ThemedApp Component={Component} pageProps={pageProps} />
+      </CustomThemeProvider>
+    </Analytics>
   );
 }
 
