@@ -5,11 +5,12 @@ import '../styles/globals.css';
 
 function App({ Component, pageProps }) {
   return (
-    <Analytics>
+    
       <CustomThemeProvider>
         <ThemedApp Component={Component} pageProps={pageProps} />
+        <Analytics />
       </CustomThemeProvider>
-    </Analytics>
+    
   );
 }
 
