@@ -1,38 +1,51 @@
-import styled from 'styled-components';
-import Header from '../components/Header';
-import { useTheme } from '../components/ThemeContext';
+import { useSpotifyAuth } from '../src/script';
+import { useEffect, useState } from 'react';
 
-const Home = () => {
-  const { theme } = useTheme();
+export default function Music() {
+  const [profile, setProfile] = useState(null);
+
+  useSpotifyAuth();
+
+  const getSpotifyProfile = async () => {
+    if (typeof window !== 'undefined') {
+      let token = window.localStorage.getItem('spotify-token');
+      if (!token) {
+        console.log('No token found in LocalStorage. You may need to authenticate.');
+        return;
+      }
+
+      try {
+        const response = await fetch('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log('User Profile:', data);
+          setProfile(data);
+        } else {
+          console.error('Failed to fetch profile:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getSpotifyProfile();
+  }, []);
 
   return (
-    <Container theme={theme}>
-      <Header />
-      <Text>Nothing to see here (yet)</Text>
-    </Container>
+    <div>
+      <h1>Spotify Profile</h1>
+      {profile ? (
+        <p>Welcome, {profile.display_name}</p>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
   );
-};
-
-export default Home;
-
-const Container = styled.div`
-  font-family: Arial, sans-serif;
-  user-select: none;
-  -webkit-user-drag: none;
-`;
-
-const Text = styled.h3`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  font-family: "DM Mono", monospace;
-  font-size: 2rem;
-  color: ${({ theme }) => theme.text};
-  margin: 0;
-  z-index: 3;
-
-  &:hover {
-    font-style: oblique;
-  }
-`;
+}
