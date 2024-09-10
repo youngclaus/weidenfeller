@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import { useTheme } from './ThemeContext.js';
 import Link from 'next/link';
 
 const Hero = () => {
@@ -9,6 +10,11 @@ const Hero = () => {
   const [currentLine, setCurrentLine] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [floatingWords, setFloatingWords] = useState([]);
+  const { theme, switchTheme } = useTheme();
+
+  const handleThemeToggle = () => {
+    switchTheme(theme.mode === 'light' ? 'dark' : 'light');  // Toggle between light and dark modes
+  };
 
   const commandLines = [
     "Ambitious Software Developer",
@@ -81,8 +87,11 @@ const Hero = () => {
           <img ref={imageRef} src="/Hero/blackyellow.png" alt="record" />
         </Record>
       </RecordPlayer>
+      
       <ContentContainer>
-        <Title>chris youngclaus</Title>
+        <TitleContainer>
+          <Title>chris youngclaus</Title>
+        </TitleContainer>
         <CircleContainer>
           <Link href="/about">
             <Circle>
@@ -90,11 +99,23 @@ const Hero = () => {
               <CircleText>My Room</CircleText>
             </Circle>
           </Link>
-          <Link href="/projects#2023">
+          <SmallCircle onClick={handleThemeToggle}>
+            <SmallCircleText>
+              ☀️🌙
+            </ SmallCircleText>
+          </SmallCircle>
+          <Link href="/projects">
             <Circle>
               <img src="/Hero/map.png" alt="image1" />
-              <CircleText>Allergenics</CircleText>
+              <CircleText>Projects</CircleText>
             </Circle>
+          </Link>
+          <Link href="https://github.com/youngclaus">
+            <SmallCircle>
+              <SmallCircleText>
+                <img src="/Hero/github.png" />
+              </SmallCircleText>
+            </SmallCircle>
           </Link>
           <Link href="/music">
             <Circle>
@@ -104,6 +125,7 @@ const Hero = () => {
           </Link>
         </CircleContainer>
       </ContentContainer>
+
       <CommandLine>
         {isTyping && (
           <CommandText
@@ -167,9 +189,13 @@ const ContentContainer = styled.div`
   align-items: left;
   width: auto;
   max-width: 70vw;
-  height: 80vh;
-  top: 60px;
+  height: 100vh;
   left: 0px;
+`
+
+const TitleContainer = styled.div`
+  width: 100vw;
+  font-size: 8vw;
 `
 
 const Title = styled.div`
@@ -177,7 +203,7 @@ const Title = styled.div`
   position: static;
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  font-size: 7vw;
+  font-size: 100%;
   margin-left: 20px;
   margin-top: 20px;
   white-space: nowrap;
@@ -185,20 +211,19 @@ const Title = styled.div`
 
 const CircleContainer = styled.div`
   display: flex;
-  width: 100%;
-  height: 20vh;
   margin-top: 10px;
-  justify-content: center;
+  margin-left: 40px;
+  align-items: center;
 `;
 
 const Circle = styled.div`
   position: relative;
-  width: 9vw;
-  height: 9vw;
+  width: 13vw;
+  aspect-ratio: 1/1;
+  max-width: 150px;
+  margin-left: 20px;
   border-radius: 50%;
-  border: 4px solid ${({ theme }) => theme.circleBg};
-  margin: 10px;
-  left: -10px;
+  border: 0px solid ${({ theme }) => theme.circleBg};
   overflow: hidden;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
@@ -207,6 +232,7 @@ const Circle = styled.div`
     height: 100%;
     object-fit: cover;
     transition: all 0.1s ease-in-out;
+    filter: brightness(100%);
   }
 
   &:hover img {
@@ -214,7 +240,24 @@ const Circle = styled.div`
   }
 
   &:hover div {
-    opacity: 1;
+    opacity: 100;
+  }
+`;
+
+const SmallCircle = styled.div`
+  position: relative;
+  width: 4vw;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  min-width: 25px;
+  max-width: 75px;
+  margin-left: 20px;
+  background-color: ${({ theme }) => theme.circleBg};
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    filter: brightness(90%);
   }
 `;
 
@@ -225,10 +268,22 @@ const CircleText = styled.div`
   transform: translate(-50%, -50%);
   color: ${({ theme }) => theme.circleText};
   font-family: "DM Mono", monospace;
-  font-size: 1vw;
-  opacity: 0;
+  font-size: 1.5vw;
   white-space: nowrap;
+  opacity: 50%;
   transition: all 0.3s ease-in-out;
+`;
+
+const SmallCircleText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  color: ${({ theme }) => theme.circleText};
+  font-family: "DM Mono", monospace;
+  font-size: 1vw;
+  text-decoration: none;
 `;
 
 const CommandLine = styled.div`

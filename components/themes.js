@@ -5,7 +5,7 @@ export const lightTheme = {
   buttonBg: '#90cef9', buttonText: '#fff',
 
   bodyBg: '#f5f5f5', text: '#000',
-  circleBg: '#90cef9', circleText: '#fff',
+  circleBg: '#f5f5f5', circleText: '#fff',
 
   aboutOpacity: '1', aboutGlow: 'rgba(255, 255, 255, 0.3)',
 
