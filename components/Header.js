@@ -40,7 +40,7 @@ const Header = () => {
       <ThemeToggleContainer>
         <ThemeToggleSwitch onClick={handleThemeToggle}>
           <ThemeToggleSlider theme={theme.mode}>
-            {theme.mode === 'light' ? '🔆' : theme.mode === 'dark' ? '🌙' : '🔆 🌙'}
+            {theme.mode === 'light' ? '☀️' : theme.mode === 'dark' ? '🌙' : '☀️ 🌙'}
           </ThemeToggleSlider>
         </ThemeToggleSwitch>
       </ThemeToggleContainer>
