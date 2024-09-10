@@ -241,6 +241,7 @@ const Circle = styled.div`
 
   &:hover div {
     opacity: 100;
+    font-size: 1.6vw;
   }
 `;
 
@@ -257,7 +258,7 @@ const SmallCircle = styled.div`
   transition: all 0.1s ease-in-out;
 
   &:hover {
-    filter: brightness(90%);
+    transform: scale(1.1);
   }
 `;
 
@@ -270,7 +271,7 @@ const CircleText = styled.div`
   font-family: "DM Mono", monospace;
   font-size: 1.5vw;
   white-space: nowrap;
-  opacity: 50%;
+  opacity: 100%;
   transition: all 0.3s ease-in-out;
 `;
 
