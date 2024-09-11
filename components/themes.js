@@ -1,6 +1,6 @@
 export const lightTheme = {
   mode: 'light',
-  c1: '#fff', 
+  c1: '#ddd', 
   c2: '#f5f5f5',  
   c3: '#90cef9', 
   c4: '#000', 

@@ -90,7 +90,8 @@ const Hero = () => {
       
       <ContentContainer>
         <TitleContainer>
-          <Title>chris youngclaus</Title>
+          <Title>chris</Title>
+          <Title>youngclaus</Title>
         </TitleContainer>
         <CircleContainer>
           <Link href="/about">
@@ -186,27 +187,28 @@ const ContentContainer = styled.div`
   display: flex;
   position: absolute;
   flex-direction: column;
-  align-items: left;
-  width: auto;
-  max-width: 70vw;
+  width: 100vw;
   height: 100vh;
   left: 0px;
 `
 
 const TitleContainer = styled.div`
-  width: 100vw;
-  font-size: 8vw;
+  position: absolute;
+  width: 60vw;
+  height: auto;
+  flex-direction: column;
+  right: 0px;
+  font-size: 10vw;
 `
 
 const Title = styled.div`
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 20px;
   color: ${({ theme }) => theme.c4};
-  position: static;
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  font-size: 100%;
-  margin-left: 20px;
-  margin-top: 20px;
-  white-space: nowrap;
+  opacity: 40%;
 `;
 
 const CircleContainer = styled.div`
