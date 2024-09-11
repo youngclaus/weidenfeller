@@ -146,7 +146,7 @@ const YearSection = styled.div`
   height: 100vh; 
   position: relative;
   scroll-snap-align: start;
-  background-color: ${({ theme }) => theme.bodyBg};
+  background-color: ${({ theme }) => theme.c1};
 `;
 
 const Year = styled.h2`
@@ -156,7 +156,7 @@ const Year = styled.h2`
   transform: translate(-50%, -50%);
   font-family: "DM Mono", monospace;
   font-size: 6rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   margin: 0;
   z-index: 1;
 `;
@@ -168,7 +168,7 @@ const TextBox = styled.div`
   transform: translate(-50%, 0);
   display: flex;
   gap: 10px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   margin: 0;
   z-index: 2;
 `;
@@ -198,7 +198,7 @@ const ImageContainer = styled.div`
   }
 
   img {
-    border: 2px solid ${({ theme }) => theme.buttonBg};
+    border: 2px solid ${({ theme }) => theme.c2};
     border-radius: 8px;
     width: 100%;
     height: auto;
@@ -210,7 +210,7 @@ const ImageContainer = styled.div`
     margin: 0;
     font-family: "DM Mono", monospace;
     font-size: 1.2rem;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.c4};
     text-align: center;
   }
 `;
@@ -219,12 +219,12 @@ const Image = styled.img`
   max-width: 80%;
   max-height: 50vh;
   border-radius: 10px;
-  border: 4px solid ${({ theme }) => theme.buttonBg};
+  border: 4px solid ${({ theme }) => theme.c2};
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 
   &#linkimage:hover {
     transform: scale(1.01);
-    filter: brightness(0.95) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
+    filter: brightness(0.95) drop-shadow(0 0 20px ${({ theme }) => theme.glow });
   }
 `;
 
@@ -232,7 +232,7 @@ const Description = styled.p`
   margin-top: 10px;
   font-family: "DM Mono", monospace;
   font-size: 1.2rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   text-align: center;
 `;
 
@@ -243,7 +243,7 @@ const Text = styled.h3`
   transform: translate(-50%, 0);
   font-family: "DM Mono", monospace;
   font-size: 2rem;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   margin: 0;
   z-index: 3;
 

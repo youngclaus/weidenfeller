@@ -1,252 +1,179 @@
 export const lightTheme = {
   mode: 'light',
-
-  headerBg: '#fff', headerText: '#000',
-  buttonBg: '#90cef9', buttonText: '#fff',
-
-  bodyBg: '#f5f5f5', text: '#000',
-  circleBg: '#f5f5f5', circleText: '#fff',
-
-  aboutOpacity: '1', aboutGlow: 'rgba(255, 255, 255, 0.3)',
-
-  timelineCircleBg: '#f5f5f5', timelineYear: '#000',
+  c1: '#fff', 
+  c2: '#f5f5f5',  
+  c3: '#90cef9', 
+  c4: '#000', 
+  opacity: '1',
+  glow: 'rgba(255, 255, 255, 0.3)',
 };
 
 export const darkTheme = {
   mode: 'dark',
-
-  headerBg: '#000', headerText: '#fff',
-  buttonBg: '#333', buttonText: '#fff',
-
-  bodyBg: '#222', text: '#ccc',
-  circleBg: '#ccc', circleText: '#fff',
-
-  aboutOpacity: '0.6', aboutGlow: 'rgba(209, 197, 86, 0.5)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#222',
+  c2: '#000',
+  c3: '#333',
+  c4: '#ccc',
+  opacity: '0.6',
+  glow: 'rgba(209, 197, 86, 0.5)',
 };
 
 export const the1975 = {
   mode: 'toggled',
-
-  headerBg: '#ffbdc9', headerText: '#fff',
-  buttonBg: '#d199a2', buttonText: '#fff',
-
-  bodyBg: '#ffbdc9', text: '#a6839e',
-  circleBg: '#a6839e', circleText: '#fff',
-
-  aboutOpacity: '0.7', aboutGlow: 'rgba(255, 171, 186, 0.8)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff', 
-
+  c1: '#ffbdc9', 
+  c2: '#d199a2',  
+  c3: '#fff', 
+  c4: '#a6389e', 
+  opacity: '0.7',
+  glow: 'rgba(255, 171, 186, 0.8)',
 }
 
 export const basement = {
   mode: 'toggled',
-
-  headerBg: '#905d5d', headerText: '#ecdcc6',
-  buttonBg: '#a67575', buttonText: '#333',
-
-  bodyBg: '#f0b35d', text: '#905d5d',
-  circleBg: '#905d5d', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(209, 197, 86, 0.5)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff', 
+  c1: '#f0b35d', 
+  c2: '#a67575',  
+  c3: '#f0b35d', 
+  c4: '#905d5d', 
+  opacity: '0.8',
+  glow: 'rgba(209, 197, 86, 0.5)',
 };
 
 export const beck = {
   mode: 'toggled',
-
-  headerBg: '#008ef9', headerText: '#f9e14e',
-  buttonBg: '#f9e14e', buttonText: '#333',
-
-  bodyBg: '#008ef9', text: '#fff',
-  circleBg: '#f9e14e', circleText: '#fff',
-
-  aboutOpacity: '0.9', aboutGlow: 'rgba(0, 142, 249, 0.7)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff', 
+  c1: '#008ef9', 
+  c2: '#f9e14e',  
+  c3: '#333', 
+  c4: '#fff',
+  opacity: '0.9',
+  glow: 'rgba(0, 142, 249, 0.7)',
 }
 
 export const blink = {
   mode: 'toggled',
-
-  headerBg: '#ae403b', headerText: '#fdaf4b',
-  buttonBg: '#608b34', buttonText: '#fff',
-
-  bodyBg: 'black', text: '#fdaf4b',
-  circleBg: '#608b34', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(249, 225, 78, 0.7)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#000', 
+  c2: '#ae403b',  
+  c3: '#608b34', 
+  c4: '#fdaf4b', 
+  opacity: '0.8',
+  glow: 'rgba(249, 225, 78, 0.7)',
 }
 
 export const borns = {
   mode: 'toggled',
-
-  headerBg: '#c1b8a2', headerText: '#725a4e',
-  buttonBg: '#464354', buttonText: '#464354',
-
-  bodyBg: '#c1b8a2', text: '#725a4e',
-  circleBg: '#4d4c5b', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(181, 164, 98, 0.7)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#c1b8a2', 
+  c2: '#4d4c5b',  
+  c3: '#464354', 
+  c4: '#725a4e', 
+  opacity: '0.8',
+  glow: 'rgba(181, 164, 98, 0.7)',
 }
 
 export const catfish = {
   mode: 'toggled',
-
-  headerBg: '#000', headerText: '#797979',
-  buttonBg: '#000', buttonText: '#fff',
-
-  bodyBg: '#000', text: '#333333',
-  circleBg: '#000', circleText: '#fff',
-
-  aboutOpacity: '0.5', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#000', 
+  c2: '#797979',  
+  c3: '#333', 
+  c4: '#333', 
+  opacity: '0.5',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }
 
 export const coldplay = {
   mode: 'toggled',
-
-  headerBg: '#6A6A56', headerText: '#CFBCDF',
-  buttonBg: '#A43B2A', buttonText: '#fff',
-
-  bodyBg: '#6A6A56', text: '#CFBCDF',
-  circleBg: '#A43B2A', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(207, 188, 223, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#6a6a56', 
+  c2: '#a43b2a',  
+  c3: '#fff', 
+  c4: '#cfbcdf', 
+  opacity: '0.8',
+  glow: 'rgba(207, 188, 223, 0.9)',
 }
 
 export const coldplay2 = {
   mode: 'toggled',
-
-  headerBg: '#000054', headerText: '#F8F2DC',
-  buttonBg: '#81ADC8', buttonText: '#fff',
-
-  bodyBg: '#000054', text: '#D66853',
-  circleBg: '#D66853', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#00054', 
+  c2: '#81acd8',  
+  c3: '#f8f2dc', 
+  c4: '#d66853',
+  opacity: '0.8',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }
 
 export const coldplay3 = {
   mode: 'toggled',
-
-  headerBg: '#000054', headerText: '#F8F2DC',
-  buttonBg: '#81ADC8', buttonText: '#fff',
-
-  bodyBg: '#000054', text: '#D66853',
-  circleBg: '#D66853', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#fff', 
+  c2: '#000054',  
+  c3: '#ddd', 
+  c4: '#ddd', 
+  opacity: '0.8',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }
 
 export const daft = {
   mode: 'toggled',
-
-  headerBg: '#000', headerText: '#FFD700',
-  buttonBg: '#C0C0C0', buttonText: '#fff',
-
-  bodyBg: '#313131', text: '#FFD700',
-  circleBg: '#FFD700', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(255, 215, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#313131', 
+  c2: '#000',  
+  c3: '#ffd700', 
+  c4: '#ffd700', 
+  opacity: '0.8',
+  glow: 'rgba(255, 215, 0, 0.9)',
 }
 
 export const glass = {
   mode: 'toggled',
-
-  headerBg: '#E84D86', headerText: '#B0CAE8',
-  buttonBg: '#99398D', buttonText: '#fff',
-
-  bodyBg: '#E84D86', text: '#99398D',
-  circleBg: '#D9B6EA', circleText: '#fff',
-
-  aboutOpacity: '0.7', aboutGlow: 'rgba(232, 77, 134, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#99398d', 
+  c2: '#99398d',  
+  c3: '#b0cae8', 
+  c4: '#e84d86', 
+  opacity: '0.7',
+  glow: 'rgba(232, 77, 134, 0.9)',
 }
 
 export const imagine = {
   mode: 'toggled',
-
-  headerBg: '#825b63', headerText: '#b6b2a7',
-  buttonBg: '#3a3249', buttonText: '#fff',
-
-  bodyBg: '#3a3249', text: '#b6b2a7',
-  circleBg: '#bb8b84', circleText: '#fff',
-
-  aboutOpacity: '0.6', aboutGlow: 'rgba(187, 139, 132, 0.7)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#3a3249', 
+  c2: '#3a3249',  
+  c3: '#825b63', 
+  c4: '#b6b2a7', 
+  opacity: '0.6',
+  glow: 'rgba(187, 139, 132, 0.7)',
 }
 
 export const mckenna = {
   mode: 'toggled',
-
-  headerBg: '#81A263', headerText: '#E7D37F',
-  buttonBg: '#FD9B63', buttonText: '#464354',
-
-  bodyBg: '#FD9B63', text: '#E7D37F',
-  circleBg: '#365E32', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(129, 162, 99, 0.9)',
-
-  timelineCircleBg: '#000', timelineYear: '#fff',
+  c1: '#fd9b63', 
+  c2: '#fd9b63',  
+  c3: '#81A263', 
+  c4: '#e7d37f',
+  opacity: '0.8',
+  glow: 'rgba(129, 162, 99, 0.9)',
 }
 
 export const monkeys = {
   mode: 'toggled',
-
-  headerBg: '#353535', headerText: '#D2D2D2',
-  buttonBg: '#303030', buttonText: '#fff',
-
-  bodyBg: '#353535', text: '#D2D2D2',
-  circleBg: '#D2D2D2', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: '#353535', 
+  c2: '#303030',  
+  c3: '#fff', 
+  c4: '#d2d2d2',
+  opacity: '0.8',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }
 
 export const paramore = {
   mode: 'toggled',
-
-  headerBg: '#fff', headerText: 'orange',
-  buttonBg: '#fff', buttonText: '#orange',
-
-  bodyBg: 'orange', text: '#fff',
-  circleBg: 'orange', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: 'orange', 
+  c2: 'orange',  
+  c3: 'white', 
+  c4: 'white',
+  opacity: '0.8',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }
 
 export const xx = {
   mode: 'toggled',
-
-  headerBg: 'black', headerText: '#fff',
-  buttonBg: '#fff', buttonText: '#fff',
-
-  bodyBg: 'black', text: '#fff',
-  circleBg: '#black', circleText: '#fff',
-
-  aboutOpacity: '0.8', aboutGlow: 'rgba(0, 0, 0, 0.9)',
-
-  timelineCircleBg: '#fff', timelineYear: '#fff',
+  c1: 'black', 
+  c2: 'gray',  
+  c3: 'white', 
+  c4: 'white',
+  opacity: '0.8',
+  glow: 'rgba(0, 0, 0, 0.9)',
 }

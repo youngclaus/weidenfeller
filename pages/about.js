@@ -217,7 +217,7 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     position: relative;
-    background-color: ${({ theme }) => theme.bodyBg};
+    background-color: ${({ theme }) => theme.c1};
     user-select: none;
     -webkit-user-drag: none;
     z-index: 1;
@@ -231,7 +231,7 @@ const ImageContainer = styled.div`
     top: 60px;
     z-index: 10;
 
-    opacity: ${({ theme }) => theme.aboutOpacity};
+    opacity: ${({ theme }) => theme.opacity};
     overflow-x: auto;
     overflow-y: hidden;
     justify-content: left;
@@ -245,11 +245,11 @@ const ImageContainer = styled.div`
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: ${({ theme }) => theme.headerBg}; 
+        background-color: ${({ theme }) => theme.c2}; 
     }
 
     &::-webkit-scrollbar-track {
-        background-color: ${({ theme }) => theme.buttonBg}; 
+        background-color: ${({ theme }) => theme.c4}; 
     }
 `;
 
@@ -290,7 +290,7 @@ const GlowImage = styled.img`
     `}
 
     &:hover {
-        filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.aboutGlow });
+        filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.glow });
         z-index: 3;
     }
 

@@ -153,7 +153,7 @@ const Container = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.bodyBg};
+  background-color: ${({ theme }) => theme.c1};
 `;
 
 const Code = styled.div`
@@ -199,7 +199,7 @@ const TitleContainer = styled.div`
 `
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   position: static;
   font-family: "DM Mono", monospace;
   font-weight: bold;
@@ -223,7 +223,7 @@ const Circle = styled.div`
   max-width: 150px;
   margin-left: 20px;
   border-radius: 50%;
-  border: 0px solid ${({ theme }) => theme.circleBg};
+  border: 2px solid ${({ theme }) => theme.c2};
   overflow: hidden;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
@@ -250,10 +250,11 @@ const SmallCircle = styled.div`
   width: 4vw;
   aspect-ratio: 1/1;
   border-radius: 50%;
+  border: 1px solid ${({ theme }) => theme.c2};
   min-width: 25px;
   max-width: 75px;
   margin-left: 20px;
-  background-color: ${({ theme }) => theme.circleBg};
+  background-color: ${({ theme }) => theme.c3};
   cursor: pointer;
   transition: all 0.1s ease-in-out;
 
@@ -267,7 +268,7 @@ const CircleText = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: ${({ theme }) => theme.circleText};
+  color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
   font-size: 1.5vw;
   white-space: nowrap;
@@ -281,7 +282,7 @@ const SmallCircleText = styled.div`
   left: 50%;
   white-space: nowrap;
   transform: translate(-50%, -50%);
-  color: ${({ theme }) => theme.circleText};
+  color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
   font-size: 1vw;
   text-decoration: none;
@@ -340,7 +341,7 @@ const FloatingWord = styled.div`
   bottom: 40px; /* Just above the command line */
   font-family: "DM Mono", monospace;
   font-size: 100%;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.c4};
   font-weight: bold;
   white-space: nowrap;
   opacity: 1;

@@ -57,8 +57,8 @@ const HeaderContainer = styled.header`
   padding-left: 40px;
   width: 100vw;
   height: 60px;
-  background-color: ${({ theme }) => theme.headerBg};
-  color: ${({ theme }) => theme.headerText};
+  background-color: ${({ theme }) => theme.c2};
+  color: ${({ theme }) => theme.c4};
   position: fixed;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   font-weight: 450;
@@ -147,7 +147,7 @@ const ThemeToggleSwitch = styled.div`
   width: 60px;
   height: 30px;
   margin-right: 80px;
-  background-color: ${({ theme }) => theme.buttonBg};
+  background-color: ${({ theme }) => theme.c3};
   border-radius: 50px;
   cursor: pointer;
 `;
@@ -158,7 +158,7 @@ const ThemeToggleSlider = styled.div`
   left: ${({ theme }) => (theme === 'light' ? '4px' : theme === 'dark' ? '30px' : '17px')};
   width: 25px;
   height: 25px;
-  background-color: ${({ theme }) => theme.buttonBg};
+  background-color: ${({ theme }) => theme.c3};
   transition: left 0.3s;
   display: flex;
   align-items: center;
