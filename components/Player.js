@@ -130,9 +130,9 @@ const PlaybackControls = styled.div`
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 5rem;
-    box-shadow: 0px 0px 5px black;
+    background-color: ${({ theme }) => theme.c3};
+    border-radius: 15px;
+    box-shadow: -2px 1px 5px ${({ theme }) => theme.c2};
     backdrop-filter: blur(5px);
 `;
 

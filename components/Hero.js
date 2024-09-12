@@ -64,7 +64,7 @@ const Hero = () => {
   const handleAnimationEnd = () => {
     setIsTyping(false);
 
-    const randomLeft = `${20 + Math.floor(Math.random() * 60)}%`;
+    const randomLeft = `${20 + Math.floor(Math.random() * 40)}%`;
     setFloatingWords([...floatingWords, { text: commandLines[currentLine], position: randomLeft }]);
   };
 
@@ -138,8 +138,8 @@ const ContentContainer = styled.div`
   height: calc(100vh - 35px);
   align-items: center;
   z-index: 5;
-
   display: flex;
+  justify-content: space-between;
 
   @media (min-width: 1220px) {
     flex-direction: row;  
@@ -152,18 +152,17 @@ const TitleContainer = styled.div`
   width: 0px;
   height: 0px;
 
-  @media (min-width: 1220px) {
-    transform: rotate(0deg); 
-    width: 100%;
+  @media (min-width: 800px) {
+    width: 60%;
     height: auto;
     display: flex;
     flex-direction: column;
-    padding-right: 40px;
+    padding-left: 20px;
   }
 `
 
 const Title = styled.div`
-  text-align: right;
+  text-align: left;
   color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
   font-weight: bold;
@@ -171,20 +170,22 @@ const Title = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: clamp(1rem, 10vw, 10rem);
+  font-size: clamp(1rem, 8vw, 9rem);
 `;
 
 const PlayerContainer = styled.div`
-  width: fit-content;
+  width: 40%;
   height: fit-content;
   display: flex;
-  justify-content: center;
+  justify-content: right;
+  padding-right: 20px;
   align-items: center;
-  padding-left: 4vw;
   z-index: 10;
 
-  @media (max-width: 1220px) {
+  @media (max-width: 800px) {
     position: absolute;
+    width: 100%;
+    justify-content: center;
     left: 50%;
     transform: translateX(-50%);
     padding: 0;
