@@ -200,7 +200,6 @@ const PlayerContainer = styled.div`
       height: 100%;
       justify-content: center;
       left: 50%;
-      top: 55%;
       transform: translate(-50%);
       padding: 0;
     }
