@@ -14,14 +14,17 @@ const Player = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 1220) {
-                if (window.innerHeight < 550) {
+            if (window.innerWidth < 950) {
+                if (window.innerHeight < 600) {
                     setTitle('Break Stuff');
                     setArtist('Limp Bizkit');
                 } else {
                     setTitle('welcome to the portfolio')
                     setArtist('chris youngclaus');
                 }
+            } else if (window.innerHeight < 600) {
+                setTitle('Break Stuff');
+                setArtist('Limp Bizkit');
             } else {
                 setTitle('welcome to the portfolio');
                 setArtist('claus');
@@ -65,18 +68,13 @@ export default Player;
 
 const PlayerContainer = styled.div`
     width: 100%;
-    height: 70%;
+    height: 500px;
     max-width: 300px;
-    max-height: 500px;
     backdrop-filter: blur(15px);
     padding: 20px;
     border-radius: 15px;
     box-shadow: -2px 1px 5px ${({ theme }) => theme.c2};
     font-family: "DM Mono", monospace;
-
-    @media (max-width: 700px) {
-        width: 550px;
-    }
 `;
 
 const AlbumContainer = styled.div`
@@ -89,10 +87,10 @@ const AlbumContainer = styled.div`
 
 const AlbumArt = styled.div`
     width: 100%;
-    height: 100%;
+    height: auto;
     img {
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
     }
 `;
@@ -119,7 +117,6 @@ const Artist = styled.h3`
     font-size: .9rem;
     color: ${({ theme }) => theme.c4};
     margin: 0;
-    padding-bottom: 10px;
     white-space: nowrap;
 `;
 
@@ -133,7 +130,7 @@ const PlaybackControls = styled.div`
     background-color: ${({ theme }) => theme.c3};
     border-radius: 15px;
     box-shadow: -2px 1px 5px ${({ theme }) => theme.c2};
-    backdrop-filter: blur(5px);
+    margin-top: 20px;
 `;
 
 const Button = styled.button`

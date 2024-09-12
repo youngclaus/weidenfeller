@@ -134,35 +134,33 @@ const Code = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  @media (max-width: 799px) {
+  @media (max-width: 949px) {
     width: 100vw;
     height: calc(100vh - 35px);
     align-items: center;
+    justify-content: center;
     z-index: 5;
-    display: flex;
-    justify-content: space-between;
   }
 
-  @media (min-width: 800px) {
+  @media (min-width: 950px) {
+    display: flex;
     width: 100vw;
     height: calc(100vh - 35px);
     align-items: center;
     z-index: 5;
-    display: flex;
     justify-content: space-between;
     flex-direction: row;  
-    z-index: 5;
   }
 `
 
 const TitleContainer = styled.div`
-  @media (max-width: 799px) {
+  @media (max-width: 949px) {
     display: none;
     width: 0px;
     height: 0px;
   }
 
-  @media (min-width: 800px) {
+  @media (min-width: 950px) {
     width: 60%;
     height: auto;
     display: flex;
@@ -184,21 +182,23 @@ const Title = styled.div`
 `;
 
 const PlayerContainer = styled.div`
-  @media (max-width: 799px) {
+  @media (max-width: 949px) {
     position: absolute;
     display: flex;
     width: 100%;
-    height: fit-content;
+    height: 100%;
     justify-content: center;
     left: 50%;
-    transform: translateX(-50%);
+    top: 55%;
+    transform: translate(-50%, -50%);
     padding: 0;
   }
 
-  @media (min-width: 800px) {
-    width: 40%;
-    height: fit-content;
+  @media (min-width: 950px) {
     display: flex;
+    width: 40%;
+    height: 100%;
+
     justify-content: right;
     padding-right: 20px;
     align-items: center;
