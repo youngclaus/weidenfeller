@@ -111,6 +111,9 @@ const SongTitle = styled.h2`
     color: ${({ theme }) => theme.c4};
     margin: 10px;
     white-space: nowrap;
+    @supports (-webkit-touch-callout: none) {
+        font-size: 1rem;
+    }
 `;
 
 const Artist = styled.h3`
