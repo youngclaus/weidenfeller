@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
-import { useTheme } from './ThemeContext.js';
-import Link from 'next/link';
+import Player from './Player.js';
 
 const Hero = () => {
   const imageRef = useRef(null);
@@ -10,11 +9,6 @@ const Hero = () => {
   const [currentLine, setCurrentLine] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [floatingWords, setFloatingWords] = useState([]);
-  const { theme, switchTheme } = useTheme();
-
-  const handleThemeToggle = () => {
-    switchTheme(theme.mode === 'light' ? 'dark' : 'light');  // Toggle between light and dark modes
-  };
 
   const commandLines = [
     "Ambitious Software Developer",
@@ -76,55 +70,20 @@ const Hero = () => {
 
   return (
     <Container>
-      <Code>
-        <img src="/Hero/code.png" alt="code" />
-      </Code>
-      <RecordPlayer>
-        <Tonearm>
-          <img src="/Hero/tonearm.png" alt="turntable" />
-        </Tonearm>
-        <Record>
-          <img ref={imageRef} src="/Hero/blackyellow.png" alt="record" />
-        </Record>
-      </RecordPlayer>
-      
+      <BackgroundContainer>
+        <Code>
+          <img src="/Hero/code.png" alt="code" />
+        </Code>
+      </BackgroundContainer>
+
       <ContentContainer>
+        <PlayerContainer>
+          <Player />
+        </PlayerContainer>
         <TitleContainer>
           <Title>chris</Title>
           <Title>youngclaus</Title>
         </TitleContainer>
-        <CircleContainer>
-          <Link href="/about">
-            <Circle>
-              <img src="/Hero/chris.png" alt="image1" />
-              <CircleText>My Room</CircleText>
-            </Circle>
-          </Link>
-          <SmallCircle onClick={handleThemeToggle}>
-            <SmallCircleText>
-              ☀️🌙
-            </ SmallCircleText>
-          </SmallCircle>
-          <Link href="/projects">
-            <Circle>
-              <img src="/Hero/map.png" alt="image1" />
-              <CircleText>Projects</CircleText>
-            </Circle>
-          </Link>
-          <Link href="https://github.com/youngclaus">
-            <SmallCircle>
-              <SmallCircleText>
-                <img src="/Hero/github.png" />
-              </SmallCircleText>
-            </SmallCircle>
-          </Link>
-          <Link href="/music">
-            <Circle>
-              <img src="/Hero/spotify.png" alt="image1" />
-              <CircleText>Music</CircleText>
-            </Circle>
-          </Link>
-        </CircleContainer>
       </ContentContainer>
 
       <CommandLine>
@@ -149,146 +108,88 @@ const Hero = () => {
 export default Hero;
 
 const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.c1};
+  z-index: 0;
+`;
+
+const BackgroundContainer = styled.div`
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.c1};
-`;
+`
 
 const Code = styled.div`
   opacity: 0.3;
-  filter: blur(3px);
+  filter: blur(5px);
   position: absolute;
   width: 100vw;
   height: auto;
-`;
-
-const RecordPlayer = styled.div`
-  width: 100;
-  height: 100;
-  opacity: 0.2;
-`;
-
-const Tonearm = styled.div`
-  position: absolute;
-  scale: 250%;
-  transform: translate(80%, 40%);
-  z-index: 20;
-`;
-
-const Record = styled.div`
-  position: absolute;
-  transform: translate(25%, -50%);
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const ContentContainer = styled.div`
-  display: flex;
-  position: absolute;
-  flex-direction: column;
   width: 100vw;
-  height: 100vh;
-  left: 0px;
+  height: calc(100vh - 35px);
+  align-items: center;
+  z-index: 5;
+
+  display: flex;
+
+  @media (min-width: 1220px) {
+    flex-direction: row;  
+    z-index: 5;
+  }
 `
 
 const TitleContainer = styled.div`
-  position: absolute;
-  width: 60vw;
-  height: auto;
-  flex-direction: column;
-  right: 0px;
-  font-size: 10vw;
+  display: none;
+  width: 0px;
+  height: 0px;
+
+  @media (min-width: 1220px) {
+    transform: rotate(0deg); 
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-right: 40px;
+  }
 `
 
 const Title = styled.div`
   text-align: right;
-  margin-top: 20px;
-  margin-right: 20px;
   color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  opacity: 40%;
-`;
-
-const CircleContainer = styled.div`
-  display: flex;
-  margin-top: 10px;
-  margin-left: 40px;
-  align-items: center;
-`;
-
-const Circle = styled.div`
-  position: relative;
-  width: 13vw;
-  aspect-ratio: 1/1;
-  max-width: 150px;
-  margin-left: 20px;
-  border-radius: 50%;
-  border: 2px solid ${({ theme }) => theme.c2};
+  opacity: 70%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.1s ease-in-out;
-    filter: brightness(100%);
-  }
-
-  &:hover img {
-    filter: brightness(50%);
-  }
-
-  &:hover div {
-    opacity: 100;
-    font-size: 1.6vw;
-  }
+  font-size: clamp(1rem, 10vw, 10rem);
 `;
 
-const SmallCircle = styled.div`
-  position: relative;
-  width: 4vw;
-  aspect-ratio: 1/1;
-  border-radius: 50%;
-  border: 1px solid ${({ theme }) => theme.c2};
-  min-width: 25px;
-  max-width: 75px;
-  margin-left: 20px;
-  background-color: ${({ theme }) => theme.c3};
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
+const PlayerContainer = styled.div`
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 4vw;
+  z-index: 10;
 
-  &:hover {
-    transform: scale(1.1);
+  @media (max-width: 1220px) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
   }
-`;
-
-const CircleText = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: ${({ theme }) => theme.c4};
-  font-family: "DM Mono", monospace;
-  font-size: 1.5vw;
-  white-space: nowrap;
-  opacity: 100%;
-  transition: all 0.3s ease-in-out;
-`;
-
-const SmallCircleText = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-  color: ${({ theme }) => theme.c4};
-  font-family: "DM Mono", monospace;
-  font-size: 1vw;
-  text-decoration: none;
-`;
+`
 
 const CommandLine = styled.div`
   position: fixed;
@@ -340,7 +241,7 @@ const CommandText = styled.span`
 
 const FloatingWord = styled.div`
   position: fixed;
-  bottom: 40px; /* Just above the command line */
+  bottom: 40px;
   font-family: "DM Mono", monospace;
   font-size: 100%;
   color: ${({ theme }) => theme.c4};
