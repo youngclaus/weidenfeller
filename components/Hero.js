@@ -134,23 +134,33 @@ const Code = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  width: 100vw;
-  height: calc(100vh - 35px);
-  align-items: center;
-  z-index: 5;
-  display: flex;
-  justify-content: space-between;
+  @media (max-width: 799px) {
+    width: 100vw;
+    height: calc(100vh - 35px);
+    align-items: center;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+  }
 
-  @media (min-width: 1220px) {
+  @media (min-width: 800px) {
+    width: 100vw;
+    height: calc(100vh - 35px);
+    align-items: center;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
     flex-direction: row;  
     z-index: 5;
   }
 `
 
 const TitleContainer = styled.div`
-  display: none;
-  width: 0px;
-  height: 0px;
+  @media (max-width: 799px) {
+    display: none;
+    width: 0px;
+    height: 0px;
+  }
 
   @media (min-width: 800px) {
     width: 60%;
@@ -174,21 +184,25 @@ const Title = styled.div`
 `;
 
 const PlayerContainer = styled.div`
-  width: 40%;
-  height: fit-content;
-  display: flex;
-  justify-content: right;
-  padding-right: 20px;
-  align-items: center;
-  z-index: 10;
-
-  @media (max-width: 800px) {
+  @media (max-width: 799px) {
     position: absolute;
+    display: flex;
     width: 100%;
+    height: fit-content;
     justify-content: center;
     left: 50%;
     transform: translateX(-50%);
     padding: 0;
+  }
+
+  @media (min-width: 800px) {
+    width: 40%;
+    height: fit-content;
+    display: flex;
+    justify-content: right;
+    padding-right: 20px;
+    align-items: center;
+    z-index: 10;
   }
 `
 
