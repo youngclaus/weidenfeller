@@ -192,6 +192,18 @@ const PlayerContainer = styled.div`
     top: 55%;
     transform: translate(-50%, -50%);
     padding: 0;
+
+    @supports (-webkit-touch-callout: none) {
+      position: absolute;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%);
+      padding: 0;
+    }
   }
 
   @media (min-width: 950px) {
