@@ -78,7 +78,7 @@ export const ThemeProvider = ({ children }) => {
         newTheme = xx;
         break;
       case 'light':
-        newTheme= light;
+        newTheme= lightTheme;
         break;
       default:
         newTheme = darkTheme;
