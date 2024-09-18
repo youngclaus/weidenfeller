@@ -78,8 +78,10 @@ export const ThemeProvider = ({ children }) => {
         newTheme = xx;
         break;
       case 'light':
+        newTheme= light;
+        break;
       default:
-        newTheme = lightTheme;
+        newTheme = darkTheme;
         break;
     }
 
