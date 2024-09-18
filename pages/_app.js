@@ -1,6 +1,7 @@
 import { ThemeProvider as CustomThemeProvider, useTheme } from '../components/ThemeContext.js';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Analytics } from '@vercel/analytics/react';
+import Header from '../components/Header.js';
 import '../styles/globals.css';
 
 function App({ Component, pageProps }) {
@@ -23,6 +24,7 @@ function ThemedApp({ Component, pageProps }) {
 
   return (
     <StyledThemeProvider theme={theme}>
+      <Header />
       <Component {...pageProps} />
     </StyledThemeProvider>
   );
