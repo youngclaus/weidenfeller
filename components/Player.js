@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { useTheme } from './ThemeContext.js';
 
@@ -52,13 +51,8 @@ const Player = () => {
                 <Artist>{artist}</Artist>
             </TrackInfo>
             <PlaybackControls>
-                <Link href="/about">
-                    <Button><img src='/Player/backward.png' /></Button>
-                </Link>
-                <Button onClick={handleThemeToggle}><img src='/Player/lightdark.png' /></Button>
-                <Link href="/projects">
-                    <Button><img src='/Player/forward.png' /></Button>
-                </Link>
+                <Button><img src='/Player/backward.png' /></Button>
+                <Button><img src='/Player/forward.png' /></Button>
             </PlaybackControls>
         </PlayerContainer>
     );
@@ -73,7 +67,7 @@ const PlayerContainer = styled.div`
     backdrop-filter: blur(15px);
     padding: 20px;
     border-radius: 15px;
-    box-shadow: -2px 1px 5px ${({ theme }) => theme.c2};
+    box-shadow: 0px 0px 10px -5px black;
     font-family: "DM Mono", monospace;
 `;
 
@@ -124,16 +118,19 @@ const Artist = styled.h3`
 `;
 
 const PlaybackControls = styled.div`
-    width: 100%;
+    width: 80%;
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    background-color: ${({ theme }) => theme.c3};
+    background: ${({theme}) => theme.c3};
+    opacity: 70%;
     border-radius: 15px;
-    box-shadow: -2px 1px 5px ${({ theme }) => theme.c2};
-    margin-top: 20px;
+    box-shadow: 0px 0px 8px -3px black;
+    margin-top: 10px;
+    margin-left: 50%;
+    transform: translateX(-50%);
 `;
 
 const Button = styled.button`
@@ -142,7 +139,5 @@ const Button = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    margin-left: 30px;
-    margin-right: 30px;
-    transform: scale(1.5);
+    transform: scale(.6);
 `;
