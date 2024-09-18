@@ -104,16 +104,6 @@ const Vinyl = styled.a`
     transform-origin: center center;
     transition: transform 0.6s ease;
   }
-
-  @supports (-webkit-touch-callout: none) {
-    width: 10vw;
-    height: auto;
-    position: relative;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.6s ease;
-    margin-right: -55px;
-  }
 `;
 
 const VinylMode = styled.a`
