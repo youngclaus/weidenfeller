@@ -59,6 +59,12 @@ const VinylContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+
+  @media (max-width: 550px) {
+    left: 50vw;
+    transform: translateX(-60%);
+    z-index: 100;
+  }
 `;
 
 const VinylImage = styled.img`
