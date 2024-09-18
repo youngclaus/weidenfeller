@@ -196,8 +196,8 @@ const PlayerContainer = styled.div`
     @supports (-webkit-touch-callout: none) {
       position: absolute;
       display: flex;
-      width: 100%;
-      height: 100%;
+      width: 80%;
+      height: 80%;
       justify-content: center;
       left: 50%;
       transform: translate(-50%, -50%);
