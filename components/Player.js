@@ -20,11 +20,11 @@ const Player = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 950) {
-                if (window.innerHeight < 600) {
-                    setTitle('Break Stuff');
-                    setArtist('Limp Bizkit');
-                } else {
+            if (window.innerHeight < 600) {
+                setTitle('Break Stuff');
+                setArtist('Limp Bizkit');
+            } else {
+                if (window.innerWidth < 950) {
                     if (index === 0) {
                         setTitle(albumTitles[index]);
                         setArtist('chris youngclaus');
@@ -32,12 +32,11 @@ const Player = () => {
                         setTitle(albumTitles[index]);
                         setArtist(albumArtists[index]);
                     }
+                } else {
+                    setTitle(albumTitles[index]);
+                    setArtist(albumArtists[index]);
                 }
-            } else {
-                setTitle(albumTitles[index]);
-                setArtist(albumArtists[index]);
             }
-            
         };
 
         window.addEventListener('resize', handleResize);
