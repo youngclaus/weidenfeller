@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { useTheme } from './ThemeContext.js';
 
 const Player = () => {
-    const { theme, switchTheme } = useTheme();
-    const [title, setTitle] = useState('welcome to the portfolio');
-    const [artist, setArtist] = useState('claus');
 
-    const handleThemeToggle = () => {
-        switchTheme(theme.mode === 'light' ? 'dark' : 'light');  // Toggle between light and dark modes
+    const albumImages = ["/Hero/claus.png", "/Hero/dortmund.png", "/Hero/spotify.png"];
+    const albumTitles = ['welcome to the portfolio', 'echte liebe', 'too many playlists'];
+    const albumArtists = ['claus', 'Dortmund', 'Spotify'];
+    const [index, setIndex] = useState(0);
+    const [title, setTitle] = useState(albumTitles[index]);
+    const [artist, setArtist] = useState(albumArtists[index]);
+
+    const handleNext = () => {
+        setIndex((prevIndex) => (prevIndex+1) % albumImages.length);
+    };
+
+    const handlePrevious = () => {
+        setIndex((prevIndex) => (prevIndex - 1 + albumImages.length) % albumImages.length);
     };
 
     useEffect(() => {
@@ -18,15 +25,17 @@ const Player = () => {
                     setTitle('Break Stuff');
                     setArtist('Limp Bizkit');
                 } else {
-                    setTitle('welcome to the portfolio')
-                    setArtist('chris youngclaus');
+                    if (index === 0) {
+                        setTitle(albumTitles[index]);
+                        setArtist('chris youngclaus');
+                    } else {
+                        setTitle(albumTitles[index]);
+                        setArtist(albumArtists[index]);
+                    }
                 }
-            } else if (window.innerHeight < 600) {
-                setTitle('Break Stuff');
-                setArtist('Limp Bizkit');
             } else {
-                setTitle('welcome to the portfolio');
-                setArtist('claus');
+                setTitle(albumTitles[index]);
+                setArtist(albumArtists[index]);
             }
             
         };
@@ -37,13 +46,13 @@ const Player = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [index]);
 
     return (
         <PlayerContainer>
             <AlbumContainer>
                 <AlbumArt>
-                    <img src="/Hero/claus.png" alt="Album Art" />
+                    <img src={albumImages[index]} alt="Album Art" />
                 </AlbumArt>
             </AlbumContainer>
             <TrackInfo>
@@ -51,8 +60,8 @@ const Player = () => {
                 <Artist>{artist}</Artist>
             </TrackInfo>
             <PlaybackControls>
-                <Button><img src='/Player/backward.png' /></Button>
-                <Button><img src='/Player/forward.png' /></Button>
+                <Button onClick={handlePrevious}><img src='/Player/backward.png' /></Button>
+                <Button onClick={handleNext}><img src='/Player/forward.png' /></Button>
             </PlaybackControls>
         </PlayerContainer>
     );
@@ -64,8 +73,8 @@ const PlayerContainer = styled.div`
     width: 100%;
     height: 500px;
     max-width: 300px;
-    backdrop-filter: blur(15px);
     padding: 20px;
+    backdrop-filter: blur(15px);
     border-radius: 15px;
     box-shadow: 0px 0px 10px -5px black;
     font-family: "DM Mono", monospace;
@@ -81,10 +90,10 @@ const AlbumContainer = styled.div`
 
 const AlbumArt = styled.div`
     width: 100%;
-    height: auto;
+    height: 100%;
     img {
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
     }
 `;
@@ -124,10 +133,9 @@ const PlaybackControls = styled.div`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    background: ${({theme}) => theme.c3};
-    opacity: 70%;
+    backdrop-filter: blur(15px);
     border-radius: 15px;
-    box-shadow: 0px 0px 8px -3px black;
+    box-shadow: 0px 0px 10px -5px black;
     margin-top: 10px;
     margin-left: 50%;
     transform: translateX(-50%);
