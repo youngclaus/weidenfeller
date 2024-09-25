@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/Image';
 
 const Player = () => {
 
-    const albumImages = ["/Hero/claus.png", "/Hero/dortmund.png", "/Hero/spotify.png"];
-    const albumTitles = ['welcome to the portfolio', 'echte liebe', 'too many playlists'];
-    const albumArtists = ['claus', 'Dortmund', 'Spotify'];
+    const albumImages = ["/Hero/claus.png", "/Hero/dortmund.png", "/Hero/school.jpg","/Hero/spotify.png"];
+    const albumTitles = ['welcome to the portfolio', 'echte liebe', 'masters in a.i.','too many playlists'];
+    const albumArtists = ['claus', 'borussia dortmund fan', 'stevens institute of technology','dublecy on spotify'];
     const [index, setIndex] = useState(0);
     const [title, setTitle] = useState(albumTitles[index]);
     const [artist, setArtist] = useState(albumArtists[index]);
@@ -51,7 +52,7 @@ const Player = () => {
         <PlayerContainer>
             <AlbumContainer>
                 <AlbumArt>
-                    <img src={albumImages[index]} alt="Album Art" />
+                    <Image src={albumImages[index]} alt="Album Art" width={300} height={300} objectFit='contain'/>
                 </AlbumArt>
             </AlbumContainer>
             <TrackInfo>
@@ -90,11 +91,6 @@ const AlbumContainer = styled.div`
 const AlbumArt = styled.div`
     width: 100%;
     height: 100%;
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 `;
 
 const TrackInfo = styled.div`
