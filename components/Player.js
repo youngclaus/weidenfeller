@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import Image from 'next/Image';
+import Image from 'next/image';
 
 const Player = () => {
 
