@@ -21,19 +21,24 @@ const Header = () => {
           <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" color={currentPath === '/' ? theme.c3 : theme.c2}/>
           <VinylText>home</VinylText>
         </Vinyl>
+        {/*
         <Vinyl href="/about" style={{ zIndex: 9 }}>
           <VinylImage src="/Header/vinyl.png" alt="About Vinyl" color={currentPath === '/about' ? theme.c3 : theme.c2}/>
           <VinylText>about</VinylText>
         </Vinyl>
+        */}
         <Vinyl href="/projects" style={{ zIndex: 8 }}>
           <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" color={currentPath === '/projects' ? theme.c3 : theme.c2}/>
           <VinylText>projects</VinylText>
         </Vinyl>
+        {/*
         <Vinyl href="/music" style={{ zIndex: 7 }}>
           <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" color={currentPath === '/music' ? theme.c3 : theme.c2}/>
           <VinylText>music</VinylText>
         </Vinyl>
+        */}
       </VinylContainer>
+      
 
       <VinylMode onClick={handleThemeToggle} style={{ zIndex: 6}}>
           <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" color={theme.c2}/>
