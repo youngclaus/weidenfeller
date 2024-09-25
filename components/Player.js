@@ -4,9 +4,9 @@ import Image from 'next/image';
 
 const Player = () => {
 
-    const albumImages = ["/Hero/claus.png", "/Hero/dortmund.png", "/Hero/school.jpg","/Hero/spotify.png"];
-    const albumTitles = ['welcome to the portfolio', 'echte liebe', 'masters in a.i.','too many playlists'];
-    const albumArtists = ['claus', 'borussia dortmund fan', 'stevens institute of technology','dublecy on spotify'];
+    const albumImages = ["/Hero/claus.png", "/Hero/school.jpg", "/Hero/dortmund.png", "/Hero/spotify.png"];
+    const albumTitles = ['welcome to the portfolio', 'masters in a.i.', 'echte liebe', 'too many playlists'];
+    const albumArtists = ['claus', 'stevens institute of technology', 'borussia dortmund fan', 'dublecy on spotify'];
     const [index, setIndex] = useState(0);
     const [title, setTitle] = useState(albumTitles[index]);
     const [artist, setArtist] = useState(albumArtists[index]);
@@ -61,6 +61,7 @@ const Player = () => {
             </TrackInfo>
             <PlaybackControls>
                 <Button onClick={handlePrevious}><img src='/Player/backward.png' /></Button>
+                <Image src="/logo600.png" width={100} height={100} />
                 <Button onClick={handleNext}><img src='/Player/forward.png' /></Button>
             </PlaybackControls>
         </PlayerContainer>
@@ -85,7 +86,7 @@ const AlbumContainer = styled.div`
     height: 300px;
     transform: translateX(1%);
     overflow: hidden;
-    box-shadow: -5px 5px 0px ${({ theme }) => theme.c2};
+    box-shadow: -5px 5px 0px ${({ theme }) => theme.c3};
 `
 
 const AlbumArt = styled.div`
@@ -122,8 +123,8 @@ const Artist = styled.h3`
 `;
 
 const PlaybackControls = styled.div`
-    width: 80%;
-    height: 80px;
+    width: fit-content;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -131,7 +132,7 @@ const PlaybackControls = styled.div`
     backdrop-filter: blur(15px);
     border-radius: 15px;
     box-shadow: 0px 0px 10px -5px black;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-left: 50%;
     transform: translateX(-50%);
 `;

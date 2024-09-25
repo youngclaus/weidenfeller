@@ -1,9 +1,9 @@
 export const lightTheme = {
   mode: 'light',
-  c1: '#ddd', 
-  c2: '#f5f5f5',  
-  c3: '#90cef9', 
-  c4: '#000', 
+  c1: '#fff', //background
+  c2: '#fff', //inactive records 
+  c3: '#F39F5A', //active records
+  c4: '#000', //text
   opacity: '1',
   glow: 'rgba(255, 255, 255, 0.3)',
 };
@@ -12,7 +12,7 @@ export const darkTheme = {
   mode: 'dark',
   c1: '#222',
   c2: '#000',
-  c3: '#555',
+  c3: '#662549',
   c4: '#ccc',
   opacity: '0.6',
   glow: 'rgba(209, 197, 86, 0.5)',
