@@ -17,31 +17,31 @@ const Header = () => {
   return (
     <HeaderContainer>
       <VinylContainer>
-        <Vinyl href="/" style={{ zIndex: 10 }}>
-          <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" color={currentPath === '/' ? theme.c3 : theme.c2}/>
+        <Vinyl href="/" style={{ zIndex: 10 }} color={currentPath === '/' ? theme.c3 : theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" />
           <VinylText>home</VinylText>
         </Vinyl>
         {/*
-        <Vinyl href="/about" style={{ zIndex: 9 }}>
-          <VinylImage src="/Header/vinyl.png" alt="About Vinyl" color={currentPath === '/about' ? theme.c3 : theme.c2}/>
+        <Vinyl href="/about" style={{ zIndex: 9 }} color={currentPath === '/about' ? theme.c3 : theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
           <VinylText>about</VinylText>
         </Vinyl>
         */}
-        <Vinyl href="/projects" style={{ zIndex: 8 }}>
-          <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" color={currentPath === '/projects' ? theme.c3 : theme.c2}/>
+        <Vinyl href="/projects" style={{ zIndex: 8 }} color={currentPath === '/projects' ? theme.c3 : theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
         {/*
-        <Vinyl href="/music" style={{ zIndex: 7 }}>
-          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" color={currentPath === '/music' ? theme.c3 : theme.c2}/>
+        <Vinyl href="/music" style={{ zIndex: 7 }} color={currentPath === '/music' ? theme.c3 : theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
           <VinylText>music</VinylText>
         </Vinyl>
         */}
       </VinylContainer>
       
 
-      <VinylMode onClick={handleThemeToggle} style={{ zIndex: 6}}>
-          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" color={theme.c2}/>
+      <VinylMode onClick={handleThemeToggle} style={{ zIndex: 6}} color={theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
           <VinylText>{theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}</VinylText>
       </VinylMode>
     </HeaderContainer>
@@ -75,7 +75,6 @@ const VinylContainer = styled.div`
 const VinylImage = styled.img`
   width: 150px;
   height: 150px;
-  background-color: ${({ color }) => color};
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -87,7 +86,7 @@ const VinylText = styled.span`
   position: absolute;
   bottom: 7%;
   left: 50%;
-  transform: translate(-45%, -50%);
+  transform: translate(-40%, 0%);
   font-family: "DM Mono", monospace;
   font-weight: bold;
   font-size: 12px;
@@ -96,13 +95,14 @@ const VinylText = styled.span`
 `;
 
 const Vinyl = styled.a`
-  width: 150px;
-  height: 150px;
+  width: 145px;
+  height: 145px;
   position: relative;
-  display: block;
   cursor: pointer;
+  background-color: ${({ color }) => color};
+  border-radius: 50%;
   transition: transform 0.6s ease;
-  margin-right: -55px;
+  margin-right: -45px;
 
   &:hover > ${VinylImage} {
     transform: rotate(280deg);
@@ -112,13 +112,16 @@ const Vinyl = styled.a`
 `;
 
 const VinylMode = styled.a`
-  width: 150px;
-  height: 150px;
+  width: 145px;
+  height: 145px;
   right: 25px;
   position: absolute;
   display: block;
   cursor: pointer;
   transition: transform 0.6s ease;
+  background-color: ${({ color }) => color};
+  
+  border-radius: 50%;
 
   @media (max-width: 550px) {
     left: 50vw;
