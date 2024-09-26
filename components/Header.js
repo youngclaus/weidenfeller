@@ -53,7 +53,6 @@ export default Header;
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
-  padding-left: 10px;
   position: fixed;
   width: 100vw;
   z-index: 100;
@@ -64,10 +63,11 @@ const VinylContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  padding-left: 10px;
 
-  @media (max-width: 550px) {
+  @media (max-width: 950px) {
     left: 50vw;
-    transform: translateX(-60%);
+    transform: translateX(-63%);
     z-index: 100;
   }
 `;
@@ -95,8 +95,8 @@ const VinylText = styled.span`
 `;
 
 const Vinyl = styled.a`
-  width: 145px;
-  height: 145px;
+  width: 146px;
+  height: 146px;
   position: relative;
   cursor: pointer;
   background-color: ${({ color }) => color};
@@ -112,8 +112,8 @@ const Vinyl = styled.a`
 `;
 
 const VinylMode = styled.a`
-  width: 145px;
-  height: 145px;
+  width: 146px;
+  height: 146px;
   right: 25px;
   position: absolute;
   display: block;
@@ -123,9 +123,9 @@ const VinylMode = styled.a`
   
   border-radius: 50%;
 
-  @media (max-width: 550px) {
+  @media (max-width: 950px) {
     left: 50vw;
-    top: 40px;
+    top: 35px;
     transform: translateX(-50%);
   }
 
