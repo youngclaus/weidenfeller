@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
 
 const Timeline = () => {
   const timelineData = [
@@ -95,10 +96,52 @@ const Timeline = () => {
     },
   ];
 
+  const sectionRefs = useRef([]);
+  const [currentSection, setCurrentSection] = useState(0);
+
+  const scrollToNext = () => {
+    if (currentSection < sectionRefs.current.length - 1) {
+      const nextSection = sectionRefs.current[currentSection + 1];
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+        setCurrentSection((prevIndex) => prevIndex + 1);  // Update the index
+      }
+    }
+  };
+
+  const scrollToPrev = () => {
+    if (currentSection > 0) {
+      const nextSection = sectionRefs.current[currentSection - 1];
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+        setCurrentSection((prevIndex) => prevIndex - 1);  // Update the index
+      }
+    }
+  };
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    const newIndex = sectionRefs.current.findIndex(
+      (ref) => ref.offsetTop > scrollPosition + 100  // Offset to trigger early
+    );
+    if (newIndex !== -1) {
+      setCurrentSection(newIndex - 1);
+    } else {
+      setCurrentSection(sectionRefs.current.length - 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <TimelineContainer>
       {timelineData.map((item, index) => (
-        <YearSection key={index} id={item.id}>
+        <YearSection key={index} id={item.id} ref={(el) => (sectionRefs.current[index] = el)}>
           <Year>{item.year}</Year>
           <TextBox>
             {item.text.map((img, imgIndex) => (
@@ -120,8 +163,17 @@ const Timeline = () => {
               </ImageContainer>
             ))
           )}
+
         </YearSection>
       ))}
+      <ScrollContainer>
+        <ScrollButton onClick={scrollToPrev}>
+          <img src="/Projects/icon_up.png" alt="Scroll Up"/>
+        </ScrollButton>
+        <ScrollButton onClick={scrollToNext} >
+          <img src="/Projects/icon_down.png" alt="Scroll down" />
+        </ScrollButton>
+      </ScrollContainer>
     </TimelineContainer>
   );
 };
@@ -251,3 +303,41 @@ const Text = styled.h3`
     font-style: oblique;
   }
 `;
+
+const ScrollContainer = styled.div`
+  display: flex;
+  position: fixed;
+  width: 200px;
+  height: 100px;
+  bottom: 2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: space-between;
+  align-items: center;
+  animation: pulse 5s infinite;
+
+  img {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    top: 50%;
+    transform: translate(-9%, -50%);
+    z-index: 10;
+  }
+`
+
+const ScrollButton = styled.button`
+  display: flex;
+  width: 87px;
+  height: 87px;
+  background: ${({theme}) => theme.c1};
+  border-radius: 50%;
+  border: none;
+  z-index: 10;
+
+  &:hover {
+    background: ${({theme}) => theme.c3};
+  }
+`;
+
+
