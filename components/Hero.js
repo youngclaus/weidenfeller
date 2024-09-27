@@ -96,11 +96,20 @@ const Hero = () => {
           </CommandText>
         )}
       </CommandLine>
-      {floatingWords.map((word, index) => (
-        <FloatingWord key={index} style={{ left: word.position }}>
-          {word.text}
-        </FloatingWord>
-      ))}
+      {floatingWords.map((word, index) => {
+        const isLeftSide = parseInt(word.position) < 50; // Check if word is on the left half of the screen
+        return (
+          <FloatingWord
+            key={index}
+            style={{
+              left: word.position,
+              transformOrigin: isLeftSide ? 'left' : 'right', // Adjust the origin based on position
+            }}
+          >
+            {word.text}
+          </FloatingWord>
+        );
+      })}
     </Container>
   );
 };
@@ -275,4 +284,5 @@ const FloatingWord = styled.div`
   white-space: nowrap;
   opacity: 1;
   animation: 5s ${fadeOutUpwards} 3s ease-out forwards;
+  transform-origin: left;
 `;
