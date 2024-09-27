@@ -16,4 +16,6 @@ export default Projects;
 
 const Container = styled.div`
     display: flex;
+    user-select: none;
+    -webkit-user-drag: none;
 `;

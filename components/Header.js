@@ -57,6 +57,7 @@ const HeaderContainer = styled.header`
   width: 100vw;
   z-index: 100;
   top: -105px;
+  -webkit-user-drag: none;
 `;
 
 const VinylContainer = styled.div`
