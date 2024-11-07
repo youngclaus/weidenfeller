@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { useRef, useEffect } from 'react';
-import { useTheme } from '../components/ThemeContext';
+import { useTheme } from '../components/Theme/ThemeContext';
 import Link from 'next/link';
 
 const About = () => {

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
-import { useTheme } from '../components/ThemeContext';
+import { useTheme } from '../components/Theme/ThemeContext';
 
 const Home = () => {
   const { theme } = useTheme();
