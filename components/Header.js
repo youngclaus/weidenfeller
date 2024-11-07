@@ -1,14 +1,8 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useTheme } from '../components/ThemeContext.js';
+import { useTheme } from './Theme/ThemeContext.js';
 
-const Header = () => {
+const Header = ({ activeComponent, setActiveComponent }) => {
   const { theme, switchTheme } = useTheme();
-  const [currentPath, setCurrentPath] = useState('');
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
 
   const handleThemeToggle = () => {
     switchTheme(theme.mode === 'light' ? 'dark' : 'light');
@@ -17,7 +11,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <VinylContainer>
-        <Vinyl href="/" style={{ zIndex: 10 }} color={currentPath === '/' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('index')} style={{ zIndex: 10 }} color={activeComponent === 'index' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" />
           <VinylText>home</VinylText>
         </Vinyl>
@@ -27,7 +21,7 @@ const Header = () => {
           <VinylText>about</VinylText>
         </Vinyl>
         */}
-        <Vinyl href="/projects" style={{ zIndex: 8 }} color={currentPath === '/projects' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('projects')} style={{ zIndex: 8 }} color={activeComponent === 'projects' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
@@ -95,7 +89,7 @@ const VinylText = styled.span`
   transition: transform 0.6s ease;
 `;
 
-const Vinyl = styled.a`
+const Vinyl = styled.div`
   width: 146px;
   height: 146px;
   position: relative;
@@ -110,9 +104,14 @@ const Vinyl = styled.a`
     transform-origin: center center;
     transition: transform 0.6s ease;
   }
+
+  &:hover > ${VinylText} {
+    font-size: 14px;
+    transition: font-size 0.2s ease-in-out;
+  }
 `;
 
-const VinylMode = styled.a`
+const VinylMode = styled.div`
   width: 146px;
   height: 146px;
   right: 25px;
@@ -134,5 +133,10 @@ const VinylMode = styled.a`
     transform: rotate(280deg);
     transform-origin: center center;
     transition: transform 0.6s ease;
+  }
+
+  &:hover > ${VinylText} {
+    font-size: 14px;
+    transition: font-size 0.2s ease-in-out;
   }
 `

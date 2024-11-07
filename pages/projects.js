@@ -1,14 +1,11 @@
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Timeline from '../components/Timeline';
+import Timeline from '../components/Projects/Timeline';
 
 const Projects = () => {
     return (
-        <Container>
-            <Header />
+        <Container className="projects-container">
             <Timeline />
         </Container>
-
     )
 }
 
