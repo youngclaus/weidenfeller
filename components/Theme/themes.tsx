@@ -42,7 +42,7 @@ export const basement: Theme = {
   mode: 'toggled',
   c1: '#f0b35d', 
   c2: '#a67575',  
-  c3: '#f0b35d', 
+  c3: '#a67575', 
   c4: '#905d5d', 
   opacity: '0.8',
   glow: 'rgba(209, 197, 86, 0.5)',

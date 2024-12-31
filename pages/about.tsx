@@ -1,13 +1,16 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React from 'react';
 import ImageContainer from '../components/About/ImageContainer';
 
+interface AboutProps {
+    setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
+}
 
-const About: React.FC = () => {
+const About: React.FC<AboutProps> = ({setActiveComponent}) => {
 
     return (
         <Container>
-            <ImageContainer/>
+            <ImageContainer setActiveComponent={setActiveComponent}/>
         </Container>
     );
 };

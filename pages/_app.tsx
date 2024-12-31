@@ -33,9 +33,9 @@ const ThemedApp: React.FC = () => {
   const renderComponent = () => {
     switch (activeComponent) {
       case 'projects':
-        return <Projects />;
+        return <Projects setActiveComponent={handleSetActiveComponent}/>;
       case 'about':
-        return <About />;
+        return <About setActiveComponent={handleSetActiveComponent}/>;
       case 'music':
         return <Music />;
       default:

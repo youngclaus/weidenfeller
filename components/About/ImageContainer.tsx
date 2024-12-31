@@ -48,7 +48,11 @@ const staticImages = [
   },
 ];
 
-const ImageContainer: React.FC = () => {
+interface ImageContainerProps {
+  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
+}
+
+const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) => {
   const { theme, switchTheme } = useTheme();
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const [prints, setPrints] = useState<ObjectData[]>([]);
@@ -72,25 +76,24 @@ const ImageContainer: React.FC = () => {
     const imageContainer = imageContainerRef.current;
   
     const handleScroll = (event: WheelEvent) => {
-      // Check if inventory is open
       if (showInventory) {
-        const inventoryElement = document.querySelector('#inventory-overlay'); // Target inventory element
+        const inventoryElement = document.querySelector('#inventory-overlay');
         if (inventoryElement && inventoryElement.contains(event.target as Node)) {
-          // Allow vertical scrolling within the inventory
+          // vertical scrolling within the inventory
           return;
         }
   
         // Prevent scrolling outside the inventory
         event.preventDefault();
       } else {
-        // Allow horizontal scrolling with the wheel
+        // horizontal scrolling with the wheel
         if (imageContainer) {
           imageContainer.scrollLeft += event.deltaY;
         }
       }
     };
   
-    // Add scroll listener
+    // scroll listener
     window.addEventListener('wheel', handleScroll, { passive: false });
   
     return () => {
@@ -145,7 +148,7 @@ const defaultText = prints.length === 0 ? "Open the menu to fill up my room" : h
         })}
         <TextBox $visible={!!defaultText}>{defaultText}</TextBox>
         <InventoryContainer>
-          <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory}/>
+          <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory} setActiveComponent={setActiveComponent}/>
         </InventoryContainer>
         {showInventory && (
             <InventoryOverlay id="inventory-overlay">

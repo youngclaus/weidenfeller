@@ -5,9 +5,10 @@ import { useTheme } from '../Theme/ThemeContext';
 interface InventoryButtonProps {
   onClick: () => void;
   isInventoryOpen: boolean;
+  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
 }
 
-const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryOpen }) => {
+const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryOpen, setActiveComponent }) => {
   const { theme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -16,20 +17,19 @@ const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryO
     if (isInventoryOpen) {
       setMenuOpen(false); // Force close the menu when inventory opens
     }
-  }, [isInventoryOpen]); // Listen for changes in inventory state
+  }, [isInventoryOpen]);
 
   const toggleMenu = () => {
     if (isInventoryOpen) {
-      onClick(); // Close inventory if already open
+      onClick();
     } else {
-      setMenuOpen((prev) => !prev); // Toggle menu if inventory is closed
+      setMenuOpen((prev) => !prev);
     }
   };
 
   return (
     <Nav expanded={menuOpen && !isInventoryOpen} collapsed={isInventoryOpen}>
       <HamburgerButton onClick={toggleMenu}>
-        {/* Hamburger or 'X' button */}
         <Span
           style={{
             backgroundColor: theme.c3,
@@ -43,14 +43,13 @@ const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryO
           }}
         />
       </HamburgerButton>
-      {/* Show menu items only if not in inventory state */}
       {!isInventoryOpen && menuOpen && (
         <Menu>
           <MenuItem>
             <MenuLink onClick={onClick}>Create</MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">Earn</MenuLink>
+            <MenuLink onClick={() => setActiveComponent('music')}>Earn</MenuLink>
           </MenuItem>
         </Menu>
       )}

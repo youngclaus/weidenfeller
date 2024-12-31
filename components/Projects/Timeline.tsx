@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Link from 'next/link';
-import React, { useState, useRef, useEffect, MutableRefObject } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface TextItem {
   src: string;
@@ -22,7 +21,7 @@ interface TimelineData {
   images?: ImageItem[];
 }
 
-const Timeline: React.FC = () => {
+const Timeline: React.FC<{ setActiveComponent: (component: 'index') => void }> = ({ setActiveComponent }) => {
   const timelineData: TimelineData[] = [
     {
       year: 2019,
@@ -175,9 +174,7 @@ const sectionRefs = useRef<HTMLDivElement[]>([]);
             ))}
           </TextBox>
           {item.year === 2024 && (
-            <Link href="/">
-              <Text>this.</Text>
-            </Link>
+            <Text onClick={() => setActiveComponent('index')}>this.</Text>
           )}
           {item.images &&
             item.images.length > 0 &&

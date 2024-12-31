@@ -2,10 +2,14 @@ import styled from 'styled-components';
 import React from 'react';
 import Timeline from '../components/Projects/Timeline';
 
-const Projects: React.FC = () => {
+interface ProjectsProps {
+    setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ setActiveComponent }) => {
     return (
         <Container className="projects-container">
-            <Timeline />
+            <Timeline setActiveComponent={setActiveComponent} />
         </Container>
     )
 }
