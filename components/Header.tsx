@@ -1,11 +1,17 @@
 import styled from 'styled-components';
-import { useTheme } from './Theme/ThemeContext.js';
+import { useTheme } from './Theme/ThemeContext';
+import React from 'react';
 
-const Header = ({ activeComponent, setActiveComponent }) => {
+interface HeaderProps {
+  activeComponent: 'index' | 'projects' | 'about' | 'music';
+  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) => {
   const { theme, switchTheme } = useTheme();
 
   const handleThemeToggle = () => {
-    switchTheme(theme.mode === 'light' ? 'dark' : 'light');
+    switchTheme(theme.mode === 'dark' ? 'light' : 'dark');
   };
 
   return (
@@ -15,29 +21,27 @@ const Header = ({ activeComponent, setActiveComponent }) => {
           <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" />
           <VinylText>home</VinylText>
         </Vinyl>
-        {/*
-        <Vinyl href="/about" style={{ zIndex: 9 }} color={currentPath === '/about' ? theme.c3 : theme.c2}>
-          <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
-          <VinylText>about</VinylText>
-        </Vinyl>
-        */}
+        
         <Vinyl onClick={() => setActiveComponent('projects')} style={{ zIndex: 8 }} color={activeComponent === 'projects' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
-        {/*
-        <Vinyl href="/music" style={{ zIndex: 7 }} color={currentPath === '/music' ? theme.c3 : theme.c2}>
+
+        <Vinyl onClick={() => setActiveComponent('about')} style={{ zIndex: 7 }} color={activeComponent === 'about' ? theme.c3 : theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
+          <VinylText>about</VinylText>
+        </Vinyl>
+        
+        <Vinyl onClick={() => setActiveComponent('music')} style={{ zIndex: 6 }} color={activeComponent === 'music' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
           <VinylText>music</VinylText>
         </Vinyl>
-        */}
-      </VinylContainer>
-      
 
-      <VinylMode onClick={handleThemeToggle} style={{ zIndex: 6}} color={theme.c2}>
-          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
+        <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1}} color={theme.c2}>
+          <VinylImage src="/Header/vinyl.png" alt="Theme Vinyl" />
           <VinylText>{theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}</VinylText>
-      </VinylMode>
+        </Vinyl>
+      </VinylContainer>
     </HeaderContainer>
   );
 };
@@ -61,8 +65,7 @@ const VinylContainer = styled.div`
   padding-left: 10px;
 
   @media (max-width: 950px) {
-    left: 50vw;
-    transform: translateX(-63%);
+    padding-left: 30px;
     z-index: 100;
   }
 `;
@@ -89,7 +92,7 @@ const VinylText = styled.span`
   transition: transform 0.6s ease;
 `;
 
-const Vinyl = styled.div`
+const Vinyl = styled.div<{ color: string }>`
   width: 146px;
   height: 146px;
   position: relative;
@@ -98,6 +101,7 @@ const Vinyl = styled.div`
   border-radius: 50%;
   transition: transform 0.6s ease;
   margin-right: -45px;
+  transform: translate(-23px);
 
   &:hover > ${VinylImage} {
     transform: rotate(280deg);
@@ -110,33 +114,3 @@ const Vinyl = styled.div`
     transition: font-size 0.2s ease-in-out;
   }
 `;
-
-const VinylMode = styled.div`
-  width: 146px;
-  height: 146px;
-  right: 25px;
-  position: absolute;
-  display: block;
-  cursor: pointer;
-  transition: transform 0.6s ease;
-  background-color: ${({ color }) => color};
-  
-  border-radius: 50%;
-
-  @media (max-width: 950px) {
-    left: 50vw;
-    top: 35px;
-    transform: translateX(-50%);
-  }
-
-  &:hover > ${VinylImage} {
-    transform: rotate(280deg);
-    transform-origin: center center;
-    transition: transform 0.6s ease;
-  }
-
-  &:hover > ${VinylText} {
-    font-size: 14px;
-    transition: font-size 0.2s ease-in-out;
-  }
-`

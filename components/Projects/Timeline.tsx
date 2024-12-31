@@ -1,9 +1,29 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, MutableRefObject } from 'react';
 
-const Timeline = () => {
-  const timelineData = [
+interface TextItem {
+  src: string;
+  alt: string;
+}
+
+interface ImageItem {
+  src: string;
+  description?: string;
+  style: React.CSSProperties;
+  id?: string;
+  link?: string;
+}
+
+interface TimelineData {
+  year: number;
+  id?: string;
+  text: TextItem[];
+  images?: ImageItem[];
+}
+
+const Timeline: React.FC = () => {
+  const timelineData: TimelineData[] = [
     {
       year: 2019,
       text: [
@@ -94,27 +114,27 @@ const Timeline = () => {
         { src: '/Projects/icon_matlab.png', alt: 'matlab' },
       ],
     },
-  ];
+];
 
-  const sectionRefs = useRef([]);
-  const [currentSection, setCurrentSection] = useState(0);
+const sectionRefs = useRef<HTMLDivElement[]>([]);
+  const [currentSection, setCurrentSection] = useState<number>(0);
 
   const scrollToNext = () => {
     if (currentSection < sectionRefs.current.length - 1) {
       const nextSection = sectionRefs.current[currentSection + 1];
       if (nextSection) {
         nextSection.scrollIntoView({ behavior: 'smooth' });
-        setCurrentSection((prevIndex) => prevIndex + 1);  // Update the index
+        setCurrentSection((prevIndex) => prevIndex + 1);
       }
     }
   };
 
   const scrollToPrev = () => {
     if (currentSection > 0) {
-      const nextSection = sectionRefs.current[currentSection - 1];
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: 'smooth' });
-        setCurrentSection((prevIndex) => prevIndex - 1);  // Update the index
+      const prevSection = sectionRefs.current[currentSection - 1];
+      if (prevSection) {
+        prevSection.scrollIntoView({ behavior: 'smooth' });
+        setCurrentSection((prevIndex) => prevIndex - 1);
       }
     }
   };
@@ -122,7 +142,7 @@ const Timeline = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     const newIndex = sectionRefs.current.findIndex(
-      (ref) => ref.offsetTop > scrollPosition + 100  // Offset to trigger early
+      (ref) => ref && ref.offsetTop > scrollPosition + 100
     );
     if (newIndex !== -1) {
       setCurrentSection(newIndex - 1);
@@ -141,36 +161,59 @@ const Timeline = () => {
   return (
     <TimelineContainer>
       {timelineData.map((item, index) => (
-        <YearSection key={index} id={item.id} ref={(el) => (sectionRefs.current[index] = el)}>
+        <YearSection
+          key={index}
+          id={item.id}
+          ref={(el) => {
+            if (el) sectionRefs.current[index] = el;
+          }}
+        >
           <Year>{item.year}</Year>
           <TextBox>
             {item.text.map((img, imgIndex) => (
               <IconImage key={imgIndex} src={img.src} alt={img.alt} />
             ))}
           </TextBox>
-          {item.year === 2024 && <Link href="/"><Text>this.</Text></Link>}
-          {item.images && item.images.length > 0 && (
+          {item.year === 2024 && (
+            <Link href="/">
+              <Text>this.</Text>
+            </Link>
+          )}
+          {item.images &&
+            item.images.length > 0 &&
             item.images.map((image, imgIndex) => (
               <ImageContainer key={imgIndex} style={image.style}>
                 {image.link ? (
-                  <a href={image.link} target="_blank" rel="noopener noreferrer">
-                    <Image id={image.id} src={image.src} alt={`${item.year} image`} />
+                  <a
+                    href={image.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      id={image.id}
+                      src={image.src}
+                      alt={`${item.year} image`}
+                    />
                   </a>
                 ) : (
-                  <Image id={image.id} src={image.src} alt={`${item.year} image`} />
+                  <Image
+                    id={image.id}
+                    src={image.src}
+                    alt={`${item.year} image`}
+                  />
                 )}
-                {image.description && <Description>{image.description}</Description>}
+                {image.description && (
+                  <Description>{image.description}</Description>
+                )}
               </ImageContainer>
-            ))
-          )}
-
+            ))}
         </YearSection>
       ))}
       <ScrollContainer>
         <ScrollButton onClick={scrollToPrev}>
-          <img src="/Projects/icon_up.png" alt="Scroll Up"/>
+          <img src="/Projects/icon_up.png" alt="Scroll Up" />
         </ScrollButton>
-        <ScrollButton onClick={scrollToNext} >
+        <ScrollButton onClick={scrollToNext}>
           <img src="/Projects/icon_down.png" alt="Scroll down" />
         </ScrollButton>
       </ScrollContainer>
@@ -195,7 +238,7 @@ const TimelineContainer = styled.div`
 
 const YearSection = styled.div`
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
   position: relative;
   scroll-snap-align: start;
   background-color: ${({ theme }) => theme.c1};
@@ -238,7 +281,6 @@ const ImageContainer = styled.div`
   justify-content: center;
   width: fit-content;
   height: fit-content;
-  ${({ style }) => style}; // Allows custom positioning via inline styles
 
   a {
     display: flex;
@@ -324,20 +366,18 @@ const ScrollContainer = styled.div`
     transform: translate(-9%, -50%);
     z-index: 10;
   }
-`
+`;
 
 const ScrollButton = styled.button`
   display: flex;
   width: 87px;
   height: 87px;
-  background: ${({theme}) => theme.c1};
+  background: ${({ theme }) => theme.c1};
   border-radius: 50%;
   border: none;
   z-index: 10;
 
   &:hover {
-    background: ${({theme}) => theme.c3};
+    background: ${({ theme }) => theme.c3};
   }
 `;
-
-

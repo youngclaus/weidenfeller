@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { useTheme } from '../components/Theme/ThemeContext';
+import React from 'react';
 import Player from '../components/Index/Player';
 import CommandLine from '../components/Index/Footer';
 
-const Index = () => {
-  const { theme } = useTheme();
-
+const Index: React.FC = () => {
   return (
-    <Container theme={theme}>
+    <Container>
       <BackgroundContainer className="background-container">
         <Code>
           <img src="/Hero/code.png" alt="code" />
@@ -29,6 +27,8 @@ const Index = () => {
 
 export default Index;
 
+// Styled Components
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -45,7 +45,7 @@ const BackgroundContainer = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-`
+`;
 
 const Code = styled.div`
   opacity: 0.3;
@@ -75,7 +75,7 @@ const ContentContainer = styled.div`
     justify-content: space-between;
     flex-direction: row;  
   }
-`
+`;
 
 const TitleContainer = styled.div`
   @media (max-width: 949px) {
@@ -91,7 +91,7 @@ const TitleContainer = styled.div`
     flex-direction: column;
     padding-left: 20px;
   }
-`
+`;
 
 const Title = styled.div`
   text-align: left;
@@ -113,7 +113,7 @@ const PlayerContainer = styled.div`
     height: 100%;
     justify-content: center;
     left: 50%;
-    top: 10%;
+    top: 15%;
     transform: translate(-50%);
     padding: 0;
 
@@ -133,10 +133,9 @@ const PlayerContainer = styled.div`
     display: flex;
     width: 40%;
     height: 100%;
-
     justify-content: right;
     padding-right: 20px;
     align-items: center;
     z-index: 10;
   }
-`
+`;

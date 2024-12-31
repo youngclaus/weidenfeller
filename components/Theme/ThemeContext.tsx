@@ -1,29 +1,42 @@
-import { createContext, useState, useContext, useEffect } from 'react';
-import { lightTheme, darkTheme, the1975, basement, beck, blink, borns, catfish, coldplay, coldplay2, coldplay3, daft, glass, imagine, mckenna, monkeys, paramore, xx } from './themes';
+import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import {
+  lightTheme, darkTheme, the1975, basement, beck, blink, borns, catfish,
+  coldplay, coldplay2, coldplay3, daft, glass, imagine, mckenna, monkeys,
+  paramore, xx, Theme
+} from './themes';
 
-const ThemeContext = createContext();
+interface ThemeContextType {
+  theme: Theme;
+  switchTheme: (themeName: string) => void;
+}
 
-export const useTheme = () => {
-    const context = useContext(ThemeContext);
-    if (!context) {
-      throw new Error("useTheme must be used within a ThemeProvider");
-    }
-    return context;
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = (): ThemeContextType => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 };
 
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(lightTheme);
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>(lightTheme);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       const parsedTheme = JSON.parse(savedTheme);
-      setTheme(parsedTheme || lightTheme); // Ensure a valid theme is always set
+      setTheme(parsedTheme || lightTheme);
     }
   }, []);
 
-  const switchTheme = (themeName) => {
-    let newTheme;
+  const switchTheme = (themeName: string) => {
+    let newTheme: Theme;
 
     switch (themeName) {
       case 'dark':
@@ -78,7 +91,7 @@ export const ThemeProvider = ({ children }) => {
         newTheme = xx;
         break;
       case 'light':
-        newTheme= lightTheme;
+        newTheme = lightTheme;
         break;
       default:
         newTheme = darkTheme;

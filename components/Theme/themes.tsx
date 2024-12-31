@@ -1,14 +1,24 @@
-export const lightTheme = {
+export interface Theme {
+  mode: 'light' | 'dark' | 'toggled';
+  c1: string;  // background color
+  c2: string;  // inactive records
+  c3: string;  // active records
+  c4: string;  // text color
+  opacity: string;
+  glow: string;
+}
+
+export const lightTheme: Theme = {
   mode: 'light',
-  c1: '#fff', //background
-  c2: '#fff', //inactive records 
-  c3: '#F39F5A', //active records
-  c4: '#000', //text
+  c1: '#fff',
+  c2: '#e0e0e0',
+  c3: '#F39F5A',
+  c4: '#000',
   opacity: '1',
   glow: 'rgba(255, 255, 255, 0.3)',
 };
 
-export const darkTheme = {
+export const darkTheme: Theme = {
   mode: 'dark',
   c1: '#222',
   c2: '#000',
@@ -18,17 +28,17 @@ export const darkTheme = {
   glow: 'rgba(209, 197, 86, 0.5)',
 };
 
-export const the1975 = {
+export const the1975: Theme = {
   mode: 'toggled',
-  c1: '#ffbdc9', 
-  c2: '#d199a2',  
-  c3: '#9678b6', 
-  c4: '#a6389e', 
+  c1: '#ffbdc9',
+  c2: '#d199a2',
+  c3: '#9678b6',
+  c4: '#a6389e',
   opacity: '0.7',
   glow: 'rgba(255, 171, 186, 0.8)',
-}
+};
 
-export const basement = {
+export const basement: Theme = {
   mode: 'toggled',
   c1: '#f0b35d', 
   c2: '#a67575',  
@@ -38,7 +48,7 @@ export const basement = {
   glow: 'rgba(209, 197, 86, 0.5)',
 };
 
-export const beck = {
+export const beck: Theme = {
   mode: 'toggled',
   c1: '#008ef9', 
   c2: '#f9e14e',  
@@ -48,7 +58,7 @@ export const beck = {
   glow: 'rgba(0, 142, 249, 0.7)',
 }
 
-export const blink = {
+export const blink: Theme = {
   mode: 'toggled',
   c1: '#000', 
   c2: '#ae403b',  
@@ -58,7 +68,7 @@ export const blink = {
   glow: 'rgba(249, 225, 78, 0.7)',
 }
 
-export const borns = {
+export const borns: Theme = {
   mode: 'toggled',
   c1: '#c1b8a2', 
   c2: '#4d4c5b',  
@@ -68,7 +78,7 @@ export const borns = {
   glow: 'rgba(181, 164, 98, 0.7)',
 }
 
-export const catfish = {
+export const catfish: Theme = {
   mode: 'toggled',
   c1: '#000', 
   c2: '#797979',  
@@ -78,7 +88,7 @@ export const catfish = {
   glow: 'rgba(0, 0, 0, 0.9)',
 }
 
-export const coldplay = {
+export const coldplay: Theme = {
   mode: 'toggled',
   c1: '#6a6a56', 
   c2: '#a43b2a',  
@@ -88,7 +98,7 @@ export const coldplay = {
   glow: 'rgba(207, 188, 223, 0.9)',
 }
 
-export const coldplay2 = {
+export const coldplay2: Theme = {
   mode: 'toggled',
   c1: '#00054', 
   c2: '#81acd8',  
@@ -98,7 +108,7 @@ export const coldplay2 = {
   glow: 'rgba(0, 0, 0, 0.9)',
 }
 
-export const coldplay3 = {
+export const coldplay3: Theme = {
   mode: 'toggled',
   c1: '#fff', 
   c2: '#000054',  
@@ -108,7 +118,7 @@ export const coldplay3 = {
   glow: 'rgba(0, 0, 0, 0.9)',
 }
 
-export const daft = {
+export const daft: Theme = {
   mode: 'toggled',
   c1: '#313131', 
   c2: '#000',  
@@ -118,7 +128,7 @@ export const daft = {
   glow: 'rgba(255, 215, 0, 0.9)',
 }
 
-export const glass = {
+export const glass: Theme = {
   mode: 'toggled',
   c1: '#99398d', 
   c2: '#99398d',  
@@ -128,7 +138,7 @@ export const glass = {
   glow: 'rgba(232, 77, 134, 0.9)',
 }
 
-export const imagine = {
+export const imagine: Theme = {
   mode: 'toggled',
   c1: '#3a3249', 
   c2: '#3a3249',  
@@ -138,7 +148,7 @@ export const imagine = {
   glow: 'rgba(187, 139, 132, 0.7)',
 }
 
-export const mckenna = {
+export const mckenna: Theme = {
   mode: 'toggled',
   c1: '#fd9b63', 
   c2: '#fd9b63',  
@@ -148,7 +158,7 @@ export const mckenna = {
   glow: 'rgba(129, 162, 99, 0.9)',
 }
 
-export const monkeys = {
+export const monkeys: Theme = {
   mode: 'toggled',
   c1: '#353535', 
   c2: '#303030',  
@@ -158,7 +168,7 @@ export const monkeys = {
   glow: 'rgba(0, 0, 0, 0.9)',
 }
 
-export const paramore = {
+export const paramore: Theme = {
   mode: 'toggled',
   c1: 'orange', 
   c2: 'orange',  
@@ -168,7 +178,7 @@ export const paramore = {
   glow: 'rgba(0, 0, 0, 0.9)',
 }
 
-export const xx = {
+export const xx: Theme = {
   mode: 'toggled',
   c1: 'black', 
   c2: 'gray',  

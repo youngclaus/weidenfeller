@@ -2,17 +2,17 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const Player = () => {
+const Player: React.FC = () => {
+    const albumImages: string[] = ["/Hero/claus.png", "/Hero/school.jpg", "/Hero/dortmund.png", "/Hero/spotify.png"];
+    const albumTitles: string[] = ['welcome to the portfolio', 'masters in a.i.', 'echte liebe', 'too many playlists'];
+    const albumArtists: string[] = ['claus', 'stevens institute of technology', 'borussia dortmund fan', 'dublecy on spotify'];
 
-    const albumImages = ["/Hero/claus.png", "/Hero/school.jpg", "/Hero/dortmund.png", "/Hero/spotify.png"];
-    const albumTitles = ['welcome to the portfolio', 'masters in a.i.', 'echte liebe', 'too many playlists'];
-    const albumArtists = ['claus', 'stevens institute of technology', 'borussia dortmund fan', 'dublecy on spotify'];
-    const [index, setIndex] = useState(0);
-    const [title, setTitle] = useState(albumTitles[index]);
-    const [artist, setArtist] = useState(albumArtists[index]);
+    const [index, setIndex] = useState<number>(0);
+    const [title, setTitle] = useState<string>(albumTitles[index]);
+    const [artist, setArtist] = useState<string>(albumArtists[index]);
 
     const handleNext = () => {
-        setIndex((prevIndex) => (prevIndex+1) % albumImages.length);
+        setIndex((prevIndex) => (prevIndex + 1) % albumImages.length);
     };
 
     const handlePrevious = () => {
@@ -46,13 +46,13 @@ const Player = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [index]);
+    }, [index, albumTitles, albumArtists]);
 
     return (
         <PlayerContainer>
             <AlbumContainer>
                 <AlbumArt>
-                    <Image src={albumImages[index]} alt="Album Art" width={300} height={300} objectFit='contain'/>
+                    <Image src={albumImages[index]} alt="Album Art" width={300} height={300} objectFit='contain' />
                 </AlbumArt>
             </AlbumContainer>
             <TrackInfo>
@@ -60,9 +60,9 @@ const Player = () => {
                 <Artist>{artist}</Artist>
             </TrackInfo>
             <PlaybackControls>
-                <Button onClick={handlePrevious}><img src='/Player/backward.png' /></Button>
-                <Image src="/logo600.png" width={100} height={100} />
-                <Button onClick={handleNext}><img src='/Player/forward.png' /></Button>
+                <Button onClick={handlePrevious}><img src='/Player/backward.png' alt="Previous" /></Button>
+                <Image src="/logo600.png" alt="Logo" width={100} height={100} />
+                <Button onClick={handleNext}><img src='/Player/forward.png' alt="Next" /></Button>
             </PlaybackControls>
         </PlayerContainer>
     );
@@ -87,7 +87,7 @@ const AlbumContainer = styled.div`
     transform: translateX(1%);
     overflow: hidden;
     box-shadow: -5px 5px 0px ${({ theme }) => theme.c3};
-`
+`;
 
 const AlbumArt = styled.div`
     width: 100%;
@@ -116,7 +116,7 @@ const SongTitle = styled.h2`
 `;
 
 const Artist = styled.h3`
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: ${({ theme }) => theme.c4};
     margin: 0;
     white-space: nowrap;
@@ -143,5 +143,5 @@ const Button = styled.button`
     background: none;
     border: none;
     cursor: pointer;
-    transform: scale(.6);
+    transform: scale(0.6);
 `;

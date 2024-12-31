@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import React from 'react';
 import Timeline from '../components/Projects/Timeline';
 
-const Projects = () => {
+const Projects: React.FC = () => {
     return (
         <Container className="projects-container">
             <Timeline />
