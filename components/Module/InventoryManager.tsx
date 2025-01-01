@@ -93,7 +93,7 @@ const InventoryManager: React.FC = () => {
         <ScrollButton onClick={handleScrollLeft}>⬅</ScrollButton>
         <SeriesTitle>{currentSeries || 'No Series Available'}</SeriesTitle>
         <ScrollButton onClick={handleScrollRight}>➡</ScrollButton>
-        <TestButton onClick={handleTestButtonClick}>Add Test Bits</TestButton>
+        {/*<TestButton onClick={handleTestButtonClick}>Add Test Bits</TestButton>*/}
       </SeriesNavigator>
     </Container>
   );
