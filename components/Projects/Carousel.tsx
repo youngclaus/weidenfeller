@@ -77,7 +77,7 @@ const CarouselWrapper = styled.div`
 
 const CardItem = styled.div<{ position: string }>`
   position: absolute;
-  width: 40%;
+  width: 50%;
   height: 60%;
   text-align: center;
   display: flex;
@@ -132,8 +132,8 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 500px;
+  max-height: 500px;
   object-fit: cover;
   object-position: left;
 `;
