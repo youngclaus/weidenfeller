@@ -10,7 +10,7 @@ export interface Theme {
 
 export const lightTheme: Theme = {
   mode: 'light',
-  c1: '#fff',
+  c1: '#e0e0e0',
   c2: '#e0e0e0',
   c3: '#F39F5A',
   c4: '#000',

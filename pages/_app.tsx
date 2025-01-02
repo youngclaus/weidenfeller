@@ -28,25 +28,13 @@ const ThemedApp: React.FC = () => {
     setActiveComponent(component);
   }, []);
 
-  if (!theme) return null;
-
-  const renderComponent = () => {
-    switch (activeComponent) {
-      case 'projects':
-        return <Projects setActiveComponent={handleSetActiveComponent}/>;
-      case 'about':
-        return <About setActiveComponent={handleSetActiveComponent}/>;
-      case 'music':
-        return <Music />;
-      default:
-        return <Index />;
-    }
-  };
-
   return (
     <StyledThemeProvider theme={theme}>
       <Header activeComponent={activeComponent} setActiveComponent={handleSetActiveComponent} />
-      {renderComponent()}
+      {activeComponent === 'projects' && <Projects setActiveComponent={handleSetActiveComponent} />}
+      {activeComponent === 'about' && <About setActiveComponent={handleSetActiveComponent} />}
+      {activeComponent === 'music' && <Music />}
+      {activeComponent === 'index' && <Index />}
     </StyledThemeProvider>
   );
 };

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import Player from '../components/Index/Player';
+import Player from '../components/Player/Player';
 import CommandLine from '../components/Index/Footer';
+import { homeContent } from '../components/Player/playerContent';
 
 const Index: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const Index: React.FC = () => {
       </BackgroundContainer>
       <ContentContainer className="content-container">
         <PlayerContainer>
-          <Player />
+          <Player content={homeContent} visible={true} />
         </PlayerContainer>
         <TitleContainer>
           <Title>chris</Title>
@@ -111,7 +112,7 @@ const PlayerContainer = styled.div`
     height: 100%;
     justify-content: center;
     left: 50%;
-    top: 15%;
+    align-items: center;
     transform: translate(-50%);
     padding: 0;
 
