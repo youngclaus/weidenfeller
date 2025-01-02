@@ -166,6 +166,7 @@ const Arrow = styled.button`
   cursor: pointer;
   color: ${({ theme }) => theme.c3};
   padding: 0 20px;
+  z-index: 1000;
 
   &:hover {
     transform: scale(1.1);

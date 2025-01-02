@@ -92,6 +92,11 @@ export const cards: Card[] = [
   },
   //2024
   {
+    title: 'Stevens Institute of Technology',
+    description: 'M.E. Applied Artificial Intelligence',
+    image:'/Projects/2024_soccer.jpg'
+  },
+  {
     title: 'youngcla.us',
     description: 'i think its pretty cool',
     image:'/Projects/2024_website.png'
