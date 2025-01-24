@@ -37,8 +37,9 @@ const PrintsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 16px;
+  gap: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 100%;
   width: 100%;
   overflow-y: scroll;

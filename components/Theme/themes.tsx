@@ -83,7 +83,7 @@ export const catfish: Theme = {
   c1: '#000', 
   c2: '#797979',  
   c3: '#333', 
-  c4: '#333', 
+  c4: 'black', 
   opacity: '0.5',
   glow: 'rgba(0, 0, 0, 0.9)',
 }
@@ -113,7 +113,7 @@ export const coldplay3: Theme = {
   c1: '#fff', 
   c2: '#000054',  
   c3: '#ddd', 
-  c4: '#ddd', 
+  c4: 'gray', 
   opacity: '0.8',
   glow: 'rgba(0, 0, 0, 0.9)',
 }
@@ -123,7 +123,7 @@ export const daft: Theme = {
   c1: '#313131', 
   c2: '#000',  
   c3: '#ffb521', 
-  c4: '#ffb521', 
+  c4: '#black', 
   opacity: '0.8',
   glow: 'rgba(255, 215, 0, 0.9)',
 }
@@ -173,7 +173,7 @@ export const paramore: Theme = {
   c1: 'orange', 
   c2: 'orange',  
   c3: 'white', 
-  c4: 'white',
+  c4: 'black',
   opacity: '0.8',
   glow: 'rgba(0, 0, 0, 0.9)',
 }
@@ -183,7 +183,7 @@ export const xx: Theme = {
   c1: 'black', 
   c2: 'gray',  
   c3: 'white', 
-  c4: 'white',
+  c4: 'black',
   opacity: '0.8',
   glow: 'rgba(0, 0, 0, 0.9)',
 }

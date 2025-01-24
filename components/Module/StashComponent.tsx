@@ -35,7 +35,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 100%;
   width: 100%;
   overflow-y: auto;
@@ -46,11 +47,11 @@ const Container = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c1}; 
+    background-color: ${({ theme }) => theme.c2}; 
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c2}; 
+    background-color: ${({ theme }) => theme.c3}; 
   }
 `;
 
