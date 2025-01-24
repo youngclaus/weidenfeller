@@ -84,7 +84,7 @@ const YearNavContainer = styled.div`
 `;
 
 const YearNavItem = styled.button<{ active: boolean }>`
-  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 2rem);
   border: none;
   background: none;
   cursor: pointer;

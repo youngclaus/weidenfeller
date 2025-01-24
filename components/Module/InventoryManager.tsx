@@ -48,22 +48,6 @@ const InventoryManager: React.FC = () => {
     setCurrentSeriesIndex((prevIndex) => Math.min(prevIndex + 1, seriesList.length - 1));
   };
 
-  const handleTestButtonClick = () => {
-    addUserBits('white', 100);
-    addUserBits('gray', 100);
-    addUserBits('blue', 100);
-    addUserBits('brown', 100);
-    addUserBits('gray', 100);
-    addUserBits('orange', 100);
-    addUserBits('pink', 100);
-    addUserBits('yellow', 100);
-    addUserBits('green', 100);
-    addUserBits('brown', 100);
-    addUserBits('black', 100);
-
-    setStash(getUserBits());
-  };
-
   const seriesList = Array.from(new Set([...blueprints, ...prints].map(obj => obj.series)));
   const currentSeries = seriesList.length > 0 ? seriesList[currentSeriesIndex] : '';
   const currentBlueprints = blueprints.filter(bp => bp.series === currentSeries);
@@ -93,7 +77,6 @@ const InventoryManager: React.FC = () => {
         <ScrollButton onClick={handleScrollLeft}>⬅</ScrollButton>
         <SeriesTitle>{currentSeries || 'No Series Available'}</SeriesTitle>
         <ScrollButton onClick={handleScrollRight}>➡</ScrollButton>
-        {/*<TestButton onClick={handleTestButtonClick}>Add Test Bits</TestButton>*/}
       </SeriesNavigator>
     </Container>
   );
@@ -202,19 +185,4 @@ const PrintSeparator = styled.div`
   height: 100%;
   overflow-y: auto;
   background-color: ${({theme}) => theme.c3};
-`;
-
-const TestButton = styled.button`
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #0056b3;
-  }
 `;
