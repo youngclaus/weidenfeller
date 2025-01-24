@@ -41,7 +41,7 @@ const Timeline: React.FC = () => {
             >
               {item.year}
             </YearNavItem>
-            {i < timelineData.length - 1 && <Separator>◉</Separator>}
+            {i < timelineData.length - 1 && <Separator>●</Separator>}
           </React.Fragment>
         ))}
       </YearNavContainer>

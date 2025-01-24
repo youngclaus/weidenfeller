@@ -26,17 +26,14 @@ const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) 
           <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
-{/*
         <Vinyl onClick={() => setActiveComponent('about')} style={{ zIndex: 7 }} color={activeComponent === 'about' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
-          <VinylText>about</VinylText>
+          <VinylText>explore</VinylText>
         </Vinyl>
-        
         <Vinyl onClick={() => setActiveComponent('music')} style={{ zIndex: 6 }} color={activeComponent === 'music' ? theme.c3 : theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
           <VinylText>music</VinylText>
         </Vinyl>
-*/}
         <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1}} color={theme.c2}>
           <VinylImage src="/Header/vinyl.png" alt="Theme Vinyl" />
           <VinylText>{theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}</VinylText>
