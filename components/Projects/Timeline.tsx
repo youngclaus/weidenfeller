@@ -52,12 +52,15 @@ const Timeline: React.FC = () => {
 export default Timeline;
 
 const TimelineContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  top: 60px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  display: flex;
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -67,18 +70,19 @@ const TimelineContainer = styled.div`
 `;
 
 const CarouselContainer = styled.div`
+  display: flex;
+  position: relative;
   flex-grow: 1;
   width: 100%;
-`;
+  height: calc(100% - 80px);
+  `;
 
 const YearNavContainer = styled.div`
   display: flex;
-  position: fixed;
+  position: relative;
   align-items: center;
   justify-content: center;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  height: 80px;
   width: 100%;
   z-index: 100;
 `;
@@ -90,7 +94,7 @@ const YearNavItem = styled.button<{ active: boolean }>`
   cursor: pointer;
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  color: ${({ theme, active }) => (active ? theme.c3 : theme.c2)};
+  color: ${({ theme, active }) => (active ? theme.c3 : theme.c4)};
   transition: color 0.3s ease;
 
   &:hover {
@@ -101,5 +105,5 @@ const YearNavItem = styled.button<{ active: boolean }>`
 const Separator = styled.span`
   font-size: 10px;
   margin: 0 10px;
-  color: ${({ theme }) => theme.c2};
+  color: ${({ theme }) => theme.c3};
 `;

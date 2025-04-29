@@ -9,7 +9,7 @@ interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = ({ setActiveComponent }) => {
   return (
     <Container>
-        <BackgroundContainer className="background-container">
+      <BackgroundContainer className="background-container">
         <Code>
           <img src="/Hero/code.png" alt="code" />
         </Code>
@@ -43,8 +43,6 @@ const Code = styled.div`
   opacity: 0.3;
   filter: blur(5px);
   position: absolute;
-  width: 100vw;
-  height: auto;
   white-space: nowrap;
-  overflow: hidden;
+  object-fit: cover;
 `;

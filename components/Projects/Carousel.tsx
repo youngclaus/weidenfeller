@@ -19,132 +19,73 @@ const Carousel: React.FC<CarouselProps> = ({ cards, currentIndex, setIndex }) =>
     setIndex(newIndex);
   };
 
-  return (
-    <CarouselContainer>
-      <Arrow onClick={handlePrev}>◀</Arrow>
-      <CarouselWrapper>
-        {cards.map((card, index) => {
-          const position =
-            index === currentIndex
-              ? 'current'
-              : index === (currentIndex - 1 + cards.length) % cards.length
-              ? 'prev'
-              : index === (currentIndex + 1) % cards.length
-              ? 'next'
-              : 'hidden';
+  const card = cards[currentIndex];
 
-          return (
-            <CardItem key={index} position={position}>
-              <ImageContainer>
-                <Image src={card.image} alt={card.title} />
-              </ImageContainer>
-              {position === 'current' && (
-                <TextContainer visible={position === 'current'}>
-                  <Title>{card.title}</Title>
-                  <Description>{card.description}</Description>
-                </TextContainer>
-              )}
-            </CardItem>
-          );
-        })}
-      </CarouselWrapper>
-      <Arrow onClick={handleNext}>▶</Arrow>
-    </CarouselContainer>
+  return (
+    <ContentContainer>
+      <CarouselContainer>
+        <ImageBox>
+          <Image src={card.image} alt={card.title} />
+        </ImageBox>
+        <TextBox>
+          <Title>{card.title}</Title>
+          <Description>{card.description}</Description>
+        </TextBox>
+      </CarouselContainer>
+      <ArrowContainer>
+        <Arrow onClick={handlePrev}>◀</Arrow>
+        <CardNumber>
+          {currentIndex + 1} / {cards.length}
+        </CardNumber>
+        <Arrow onClick={handleNext}>▶</Arrow>
+      </ArrowContainer>
+    </ContentContainer>
   );
 };
 
 export default Carousel;
 
-const CarouselContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-`;
-
-const CarouselWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+const ContentContainer =  styled.div`
   width: 100%;
   height: 100%;
-  max-width: 1000px;
-`;
-
-const CardItem = styled.div<{ position: string }>`
-  position: absolute;
-  width: 50%;
-  height: 60%;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
-  transition: transform 0.5s ease, scale 0.5s ease, opacity 0.5s ease;
+`
 
-  ${({ position }) =>
-    position === 'current' &&
-    `
-      transform: translate(0) scale(1);
-      opacity: 1;
-      z-index: 2;
-  `}
-
-  ${({ position }) =>
-    position === 'prev' &&
-    `
-      transform: translate(-50%, -15%) scale(0.8);
-      opacity: 0.2;
-      z-index: 1;
-  `}
-
-  ${({ position }) =>
-    position === 'next' &&
-    `
-      transform: translate(50%, -15%) scale(0.8);
-      opacity: 0.2;
-      z-index: 1;
-  `}
-
-  ${({ position }) =>
-    position === 'hidden' &&
-    `
-      display: none;
-  `}
+const CarouselContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 95%;
+  height: 400px;
+  background: ${({ theme }) => theme.c1 || 'white'};
+  box-shadow: -5px 5px 3px ${({ theme }) => theme.c2};
+  flex: 1 1 auto;
 `;
 
-const ImageContainer = styled.div`
-  width: auto;
-  height: auto;
+const ImageBox = styled.div`
+  width: 50%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  position: static;
-  top: 0;
-  overflow: hidden;
-  box-shadow: -10px 10px 0px ${({ theme }) => theme.c3};
+  background: ${({ theme }) => theme.c2 || '#f0f0f0'};
 `;
 
 const Image = styled.img`
-  max-width: 500px;
-  max-height: 500px;
-  object-fit: cover;
-  object-position: left;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;
 
-const TextContainer = styled.div<{ visible: boolean }>`
-  width: 100%;
-  height: 30%;
-  display: ${({ visible }) => (visible ? 'block' : 'none')};
+const TextBox = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: ${({ theme }) => theme.c3 || '#fafafa'};
   font-family: "DM Mono", monospace;
 `;
 
@@ -152,23 +93,54 @@ const Title = styled.h3`
   color: ${({ theme }) => theme.c4};
   font-size: 1.5rem;
   font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-decoration: underline ${({ theme }) => theme.c2};
+  padding: 5px;
 `;
 
 const Description = styled.p`
   color: ${({ theme }) => theme.c4};
+  width: 80%;
   font-size: 1rem;
+  padding: 5px;
+  text-align: left;
+  box-shadow: -3px 3px 3px ${({ theme }) => theme.c2};
+`;
+
+const ArrowContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+  gap: 2rem;
 `;
 
 const Arrow = styled.button`
-  background: none;
+  background-color: ${({ theme }) => theme.c3};
+  box-shadow: -3px 3px 3px ${({ theme }) => theme.c2};
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: ${({ theme }) => theme.c3};
-  padding: 0 20px;
+  color: ${({ theme }) => theme.c2};
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
+  transition: transform 0.2s;
 
   &:hover {
-    transform: scale(1.1);
+    box-shadow: -6px 6px 3px ${({ theme }) => theme.c2};
   }
+`;
+
+const CardNumber = styled.span`
+  font-size: 1.2rem;
+  font-family: "DM Mono", monospace;
+  color: ${({ theme }) => theme.c4};
+  margin: 0 1.5rem;
+  min-width: 60px;
+  text-align: center;
 `;
