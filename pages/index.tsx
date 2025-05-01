@@ -31,8 +31,8 @@ export default Index;
 const Container = styled.div`
   display: flex;
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-color: ${({ theme }) => theme.c1};
   z-index: 0;
   user-select: none;
