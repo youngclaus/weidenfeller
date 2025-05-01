@@ -60,19 +60,21 @@ const Code = styled.div`
 
 const ContentContainer = styled.div`
   @media (max-width: 949px) {
-    position: relative;
     display: flex;
+    position: fixed;
     width: 100vw;
-    height: calc(100vh - 20px);
-    align-items: center;
+    height: 85vh;
+    bottom: 40px;
     justify-content: center;
     z-index: 5;
   }
 
   @media (min-width: 950px) {
     display: flex;
+    position: fixed;
     width: 100vw;
-    height: calc(100vh - 20px);
+    height: 85vh;
+    bottom: 40px;
     align-items: center;
     z-index: 5;
     justify-content: space-between;

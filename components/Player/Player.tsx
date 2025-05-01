@@ -23,12 +23,8 @@ const Player: React.FC<PlayerProps> = ({ content, visible }) => {
     setIndex(newIndex);
   };
 
-  const isMobile = () =>
-    typeof window !== 'undefined' &&
-    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
   const handleResize = () => {
-    if (window.innerHeight < 600 && !isMobile()) {
+    if (window.innerHeight < 660) {
       setTitle('Break Stuff');
       setArtist('Limp Bizkit');
     } else {
@@ -83,7 +79,7 @@ export default Player;
 
 const PlayerContainer = styled.div`
   width: 100%;
-  height: 500px;
+  height: 90%;
   max-width: 300px;
   padding: 20px;
   backdrop-filter: blur(15px);

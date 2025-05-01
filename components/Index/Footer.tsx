@@ -68,6 +68,7 @@ const CommandLine: React.FC = () => {
             key={index}
             style={{
               left: word.position,
+              zIndex: 100,
               transformOrigin: isLeftSide ? 'left' : 'right', // Adjust the origin based on position
             }}
           >
@@ -92,7 +93,7 @@ const CommandLineContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  z-index: 50;
+  z-index: 10;
 `;
 
 const typing = keyframes`
