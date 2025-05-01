@@ -31,8 +31,8 @@ export default Index;
 const Container = styled.div`
   display: flex;
   position: fixed;
-  width: 100dvw;
-  height: 100dvh;
+  width: 100vw;
+  height: 100vh;
   background-color: ${({ theme }) => theme.c1};
   z-index: 0;
   user-select: none;
@@ -62,8 +62,8 @@ const ContentContainer = styled.div`
   @media (max-width: 949px) {
     display: flex;
     position: fixed;
-    width: 100vw;
-    height: 85vh;
+    width: 100dvw;
+    height: 85dvh;
     bottom: 40px;
     justify-content: center;
     z-index: 5;
@@ -72,8 +72,8 @@ const ContentContainer = styled.div`
   @media (min-width: 950px) {
     display: flex;
     position: fixed;
-    width: 100vw;
-    height: 85vh;
+    width: 100dvw;
+    height: 85dvh;
     bottom: 40px;
     align-items: center;
     z-index: 5;
