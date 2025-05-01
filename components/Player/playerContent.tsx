@@ -12,7 +12,7 @@ export const homeContent: PlayerContent = {
     '/Hero/spotify.png',
   ],
   titles: [
-    'welcome to the portfolio',
+    'welcome to my website',
     'masters in A.I.',
     'echte liebe',
     'too many playlists',
