@@ -74,9 +74,9 @@ const InventoryManager: React.FC = () => {
         </ScrollableContent>
       </ContentWrapper>
       <SeriesNavigator>
-        <ScrollButton onClick={handleScrollLeft}>⬅</ScrollButton>
+        <ScrollButton onClick={handleScrollLeft}>◀</ScrollButton>
         <SeriesTitle>{currentSeries || 'No Series Available'}</SeriesTitle>
-        <ScrollButton onClick={handleScrollRight}>➡</ScrollButton>
+        <ScrollButton onClick={handleScrollRight}>▶</ScrollButton>
       </SeriesNavigator>
     </Container>
   );

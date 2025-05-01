@@ -89,7 +89,7 @@ const PlayerContainer = styled.div`
   backdrop-filter: blur(15px);
   background-color: rgba(0, 0, 0, .2);
   border-radius: 15px;
-  box-shadow: 0px 0px 10px -5px black;
+  box-shadow: 0px 0px 10px -1px black;
   font-family: "DM Mono", monospace;
 `;
 

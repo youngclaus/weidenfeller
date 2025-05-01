@@ -58,7 +58,7 @@ const CarouselContainer = styled.div`
   position: relative;
   width: 95%;
   height: 400px;
-  background: ${({ theme }) => theme.c1 || 'white'};
+  background: ${({ theme }) => theme.c3};
   box-shadow: -5px 5px 3px ${({ theme }) => theme.c2};
   flex: 1 1 auto;
 `;
@@ -69,12 +69,12 @@ const ImageBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.c2 || '#f0f0f0'};
+  background: ${({ theme }) => theme.c3};
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
 `;
 
@@ -90,22 +90,23 @@ const TextBox = styled.div`
 `;
 
 const Title = styled.h3`
+  width: 90%;
   color: ${({ theme }) => theme.c4};
-  font-size: 1.5rem;
+  font-size: 3vw;
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
-  text-decoration: underline ${({ theme }) => theme.c2};
+  box-shadow: -3px 3px 4px ${({ theme }) => theme.c2};
   padding: 5px;
 `;
 
 const Description = styled.p`
   color: ${({ theme }) => theme.c4};
   width: 80%;
-  font-size: 1rem;
+  font-size: 2vw;
   padding: 5px;
   text-align: left;
-  box-shadow: -3px 3px 3px ${({ theme }) => theme.c2};
+  box-shadow: -3px 3px 5px ${({ theme }) => theme.c2};
 `;
 
 const ArrowContainer = styled.div`
