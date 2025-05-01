@@ -60,8 +60,10 @@ const Code = styled.div`
 
 const ContentContainer = styled.div`
   @media (max-width: 949px) {
+    position: relative;
+    display: flex;
     width: 100vw;
-    height: calc(100vh - 35px);
+    height: calc(100vh - 20px);
     align-items: center;
     justify-content: center;
     z-index: 5;
@@ -70,7 +72,7 @@ const ContentContainer = styled.div`
   @media (min-width: 950px) {
     display: flex;
     width: 100vw;
-    height: calc(100vh - 35px);
+    height: calc(100vh - 20px);
     align-items: center;
     z-index: 5;
     justify-content: space-between;
@@ -114,20 +116,10 @@ const PlayerContainer = styled.div`
     height: 100%;
     justify-content: center;
     left: 50%;
+    top: 50%;
     align-items: center;
-    transform: translate(-50%);
+    transform: translate(-50%, -50%);
     padding: 0;
-
-    @supports (-webkit-touch-callout: none) {
-      position: absolute;
-      display: flex;
-      width: 80%;
-      height: 80%;
-      justify-content: center;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 0;
-    }
   }
 
   @media (min-width: 950px) {
