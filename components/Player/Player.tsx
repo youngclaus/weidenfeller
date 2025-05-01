@@ -23,8 +23,12 @@ const Player: React.FC<PlayerProps> = ({ content, visible }) => {
     setIndex(newIndex);
   };
 
+  const isMobile = () =>
+    typeof window !== 'undefined' &&
+    /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   const handleResize = () => {
-    if (window.innerHeight < 600) {
+    if (window.innerHeight < 600 && !isMobile()) {
       setTitle('Break Stuff');
       setArtist('Limp Bizkit');
     } else {
@@ -83,6 +87,7 @@ const PlayerContainer = styled.div`
   max-width: 300px;
   padding: 20px;
   backdrop-filter: blur(15px);
+  background-color: rgba(0, 0, 0, .2);
   border-radius: 15px;
   box-shadow: 0px 0px 10px -5px black;
   font-family: "DM Mono", monospace;
@@ -136,7 +141,7 @@ const PlaybackControls = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   box-shadow: 0px 0px 10px -5px black;
   margin-top: 20px;

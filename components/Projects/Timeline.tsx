@@ -55,8 +55,8 @@ const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 100vw;
-  height: calc(100vh - 60px);
+  width: 100dvw;
+  height: calc(100dvh - 60px);
   top: 60px;
   overflow-x: auto;
   overflow-y: hidden;
