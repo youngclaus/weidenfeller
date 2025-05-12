@@ -75,6 +75,8 @@ const ContentContainer = styled.div`
     width: 100dvw;
     height: 85dvh;
     bottom: 40px;
+    top: 50%;
+    transform: translateY(-50%);
     align-items: center;
     z-index: 5;
     justify-content: space-between;

@@ -55,7 +55,7 @@ const Player: React.FC<PlayerProps> = ({ content, visible }) => {
     <PlayerContainer>
       <AlbumContainer>
         <AlbumArt>
-          <Image src={content.images[index]} alt="Album Art" width={300} height={300} objectFit="contain" />
+          <img src={content.images[index]} alt="Album Art" width={300} height={300} />
         </AlbumArt>
       </AlbumContainer>
       <TrackInfo>
@@ -81,6 +81,7 @@ const PlayerContainer = styled.div`
   width: 100%;
   height: 90%;
   max-width: 300px;
+  max-height: 500px;
   padding: 20px;
   backdrop-filter: blur(15px);
   background-color: rgba(0, 0, 0, .2);
