@@ -76,6 +76,7 @@ const Image = styled.img`
   width: 90%;
   height: 90%;
   object-fit: contain;
+  filter: drop-shadow(0 0 10px ${({theme}) => theme.c2});
 `;
 
 const TextBox = styled.div`
@@ -85,7 +86,7 @@ const TextBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.c3 || '#fafafa'};
+  background: ${({ theme }) => theme.c3};
   font-family: "DM Mono", monospace;
 `;
 
@@ -96,7 +97,7 @@ const Title = styled.h3`
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
-  box-shadow: -3px 3px 4px ${({ theme }) => theme.c2};
+  box-shadow: -2px 2px 5px ${({ theme }) => theme.c2};
   padding: 5px;
 `;
 
@@ -105,7 +106,7 @@ const Description = styled.p`
   width: 80%;
   font-size: 2vw;
   padding: 5px;
-  text-align: left;
+  text-align: center;
   box-shadow: -3px 3px 5px ${({ theme }) => theme.c2};
 `;
 

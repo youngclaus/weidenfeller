@@ -5,58 +5,43 @@ export interface Card {
 }
 
 export const cards: Card[] = [
-  //2019
+  //2025
+  {
+    title: 'Allergenics V2',
+    description: 'Current W.I.P. Complete rework from the ground-up. Changed codebase to Next.js from base React, introduced Tailwind, adding A.I. model to backend.',
+    image:'/Projects/2025_allergenics.png'
+  },
+  {
+    title: 'Banking Application',
+    description: 'Participated in brief trial with a startup in NYC. Tasked with building a banking application from scratch. Built on Python, React, PostgreSQL, Grafana, Prometheus, Tempo, and ran through Docker build.',
+    image: '/Projects/2025_banking_application.png'
+  },
+  //2024
+  {
+    title: 'Stevens Institute of Technology',
+    description: 'Masters of Engineering in Applied Artificial Intelligence 2023-2024',
+    image:'/Projects/2024_soccer.jpg'
+  },
+  {
+    title: 'youngcla.us',
+    description: 'My new creative outlet.',
+    image:'/Projects/2024_website.png'
+  },
+  //2023
   {
     title: 'Stevens Institute of Technology',
     description: 'B.E. Computer Engineering',
     image: '/Projects/2019_stevens.jpg'
   },
   {
-    title: 'Solidworks Drone Design',
-    description: 'Graphical engineering class project. Developed a functioning drone schematic in Solidworks.',
-    image: '/Projects/2019_drone.png'
+    title: 'Allergenics V1',
+    description: 'My Senior Project. A website that automatically finds the menus of the nearest 20 food vendors near the user, and highlights dishes that could potentially contain something the user is allergic to. Time constraints forced my team to take a hit to front-end design to ensure the product worked for the Stevens Design Expo.',
+    image:'/Projects/2023_allergenics.png'
   },
   {
-    title: 'Robotics Final Project',
-    description: 'Tasked with building and configuring an Arduino robot to navigate through a randomized course using inconsistent sensors. It was a test of troublehsooting and patience.',
-    image: '/Projects/2019_robot.jpg'
-  },
-  {
-    title: 'C++ Final Project',
-    description: 'Text-based RPG. Hundreds of lines of story text and a fully developed backend with OOP and base-level reasoning. (Roughly 10 minutes of playtime!).',
-    image:'/Projects/2019_final_project.png'
-  },
-  {
-    title: 'Python Final Project',
-    description: 'Moderately similar to C++ Project but with developed solo instead.',
-    image:'/Projects/2019_python_project.png'
-  },
-  //2020
-  {
-    title: 'Arduino Weather Sensor',
-    description: 'Tasked with building a weather-proof weather sensor to leave outside and remotely collect data to measure air quality and make educated weather predictions based on patterns.',
-    image:'/Projects/2020_arduino.png'
-  },
-  {
-    title: '3D Printed Baby Yoda',
-    description: 'The Child',
-    image:'/Projects/2020_design.png'
-  },
-  {
-    title: 'C++ Artist-Album Analyzer',
-    description: 'Used Spotify API to get entire discography of any Spotify-listed artist (precursor to future projects).',
-    image:'/Projects/2020_spotify.png'
-  },
-  //2021
-  {
-    title: 'Amplifier with Filters',
-    description: 'Did not get to make a physical device in this class at all because of COVID.',
-    image:'/Projects/2021_filters.png'
-  },
-  {
-    title: 'Binary Tree Project',
-    description: 'Not for the faint of heart (This includes queues, stacks, and lists as well).',
-    image:'/Projects/2021_binary_tree.png'
+    title: 'Stevens Design Expo',
+    description: 'Great success at the Design Expo. Industry leaders, company reps, and family of students were inputting their own allergies and successfully seeing results for places near the Stevens campus.',
+    image:'/Projects/2023_allergenics.jpg'
   },
   //2022
   {
@@ -79,27 +64,60 @@ export const cards: Card[] = [
     description: 'Python program that shows the hidden numbers behind any song in the Spotify database - I used this as a foundation in a separate music recommendation app.',
     image:'/Projects/2022_python_final.png'
   },
-  //2023
+  //2021
   {
-    title: 'Allergenics V1',
-    description: 'My Senior Project. A website that automatically finds the menus of the nearest 20 food vendors near the user, and highlights dishes that could potentially contain something the user is allergic to. Time constraints forced my team to take a hit to front-end design to ensure the product worked for the Stevens Design Expo.',
-    image:'/Projects/2023_allergenics.png'
+    title: 'Amplifier with Filters',
+    description: 'Did not get to make a physical device in this class at all because of COVID.',
+    image:'/Projects/2021_filters.png'
   },
   {
-    title: 'Stevens Design Expo',
-    description: 'Great success at the Design Expo. Industry leaders, company reps, and family of students were inputting their own allergies and successfully seeing results for places near the Stevens campus.',
-    image:'/Projects/2023_allergenics.jpg'
+    title: 'Binary Tree Project',
+    description: 'Not for the faint of heart (This includes queues, stacks, and lists as well).',
+    image:'/Projects/2021_binary_tree.png'
   },
-  //2024
+  //2020
   {
-    title: 'Stevens Institute of Technology',
-    description: 'Masters of Engineering in Applied Artificial Intelligence 2023-2024',
-    image:'/Projects/2024_soccer.jpg'
+    title: 'Arduino Weather Sensor',
+    description: 'Tasked with building a weather-proof weather sensor to leave outside and remotely collect data to measure air quality and make educated weather predictions based on patterns.',
+    image:'/Projects/2020_arduino.png'
   },
   {
-    title: 'youngcla.us',
-    description: 'This is my creative outlet - not a professional portfolio.',
-    image:'/Projects/2024_website.png'
+    title: '3D Printed Baby Yoda',
+    description: 'The Child',
+    image:'/Projects/2020_design.png'
   },
+  {
+    title: 'C++ Artist-Album Analyzer',
+    description: 'Used Spotify API to get entire discography of any Spotify-listed artist (precursor to future projects).',
+    image:'/Projects/2020_spotify.png'
+  },
+  //2019
+  
+  {
+    title: 'Solidworks Drone Design',
+    description: 'Graphical engineering class project. Developed a functioning drone schematic in Solidworks.',
+    image: '/Projects/2019_drone.png'
+  },
+  {
+    title: 'Robotics Final Project',
+    description: 'Tasked with building and configuring an Arduino robot to navigate through a randomized course using inconsistent sensors. It was a test of troublehsooting and patience.',
+    image: '/Projects/2019_robot.jpg'
+  },
+  {
+    title: 'C++ Final Project',
+    description: 'Text-based RPG. Hundreds of lines of story text and a fully developed backend with OOP and base-level reasoning. (Roughly 10 minutes of playtime!).',
+    image:'/Projects/2019_final_project.png'
+  },
+  {
+    title: 'Python Final Project',
+    description: 'Moderately similar to C++ Project but with developed solo instead.',
+    image:'/Projects/2019_python_project.png'
+  },
+  
+  
+  
+  
+  
+  
 
 ]

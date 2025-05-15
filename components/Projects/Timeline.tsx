@@ -8,14 +8,16 @@ interface TimelineData {
   startIndex: number;
 }
 
+// 2 4 2 3 5
 const Timeline: React.FC = () => {
   const timelineData: TimelineData[] = [
-    { year: 2019, startIndex: 0 },
-    { year: 2020, startIndex: 5 },
-    { year: 2021, startIndex: 8 },
-    { year: 2022, startIndex: 10 },
-    { year: 2023, startIndex: 14 },
-    { year: 2024, startIndex: 16 },
+    { year: 2025, startIndex: 0},
+    { year: 2024, startIndex: 2 },
+    { year: 2023, startIndex: 4 },
+    { year: 2022, startIndex: 7 },
+    { year: 2021, startIndex: 11 },
+    { year: 2020, startIndex: 13 },
+    { year: 2019, startIndex: 16 },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
