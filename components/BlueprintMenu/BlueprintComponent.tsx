@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getObjectsByState, markObjectAsCompleted } from '../Module/blueprints';
-import { colorDictionary, getUserBits, removeUserBits, getHexFromColorName } from '../Module/bits';
+import { getObjectsByState, markObjectAsCompleted } from '../BlueprintMenu/blueprints';
+import { colorDictionary, getUserBits, removeUserBits, getHexFromColorName } from '../BlueprintMenu/bits';
 
 interface Bit {
   color: string;

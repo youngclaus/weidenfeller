@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
-import { getObjectsByState, ObjectData } from '../Module/blueprints';
+import { getObjectsWithState, ObjectWithState } from '../BlueprintMenu/blueprints';
 import { useTheme } from '../Theme/ThemeContext';
 import InventoryButton from './InventoryButton';
-import InventoryManager from '../../components/Module/InventoryManager';
+import InventoryManager from '../../components/BlueprintMenu/InventoryManager';
 
 const blueprintPositions: { [name: string]: { height: string; transform: string; zIndex: number } } = {
   flag: {height: '40%', transform: 'translate(1%, 18%)', zIndex: 1},
@@ -55,7 +55,7 @@ interface ImageContainerProps {
 const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) => {
   const { theme, switchTheme } = useTheme();
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
-  const [prints, setPrints] = useState<ObjectData[]>([]);
+  const [objects, setObjects] = useState<ObjectWithState[]>([]);
   const [hoveredText, setHoveredText] = useState<string | null>(null);
   const [showInventory, setShowInventory] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -68,8 +68,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
   };
 
   useEffect(() => {
-    const { prints: fetchedPrints } = getObjectsByState();
-    setPrints(fetchedPrints);
+    setObjects(getObjectsWithState());
   }, [refreshKey]);
 
   useEffect(() => {
@@ -112,41 +111,39 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
         }
     }
     return defaultSrc;
-};
+  };
 
-const defaultText = prints.length === 0 ? "Open the menu to fill up my room" : hoveredText;
+  const hasCompleted = objects.some(obj => obj.active);
+  const defaultMessage = 'Open the menu to fill up my room';
+  const displayText = hoveredText || (!hasCompleted ? defaultMessage : '');
 
   return (
     <StyledImageContainer ref={imageContainerRef}>
-      {staticImages.map((image, index) => (
-        <StaticImage key={index} src={image.src} alt={image.alt} style={image.style} />
+      {staticImages.map((image, idx) => (
+        <StaticImage key={idx} {...image} />
       ))}
-      {prints
-        .filter((print) => blueprintPositions[print.name]) // Only include prints with defined positions
-        .map((print) => {
-          const position = blueprintPositions[print.name];
-          const isVinylCollection = print.series === 'vinyl collection';
+      {objects
+        .filter(obj => blueprintPositions[obj.name]) // Only include prints with defined positions
+        .map(obj => {
+          const pos = blueprintPositions[obj.name];
 
           return (
             <GlowContainer
-              key={print.name}
-              style={{ height: position.height, transform: position.transform, zIndex: position.zIndex,}}
+              key={obj.name}
+              style={{ height: pos.height, transform: pos.transform, zIndex: pos.zIndex }}
             >
-              <GlowImage 
-                src={getDynamicSrc(print.name, print.image)} 
-                alt={print.name}
-                onMouseEnter={() => setHoveredText(print.description)}
-                onMouseLeave={() => setHoveredText(null)}
-                onClick={() => {
-                  if (isVinylCollection) {
-                    switchTheme(print.name);
-                  }
-                }}
+              <GlowImage
+                $active={obj.active}
+                src={getDynamicSrc(obj.name, obj.image)}
+                alt={obj.name}
+                onMouseEnter={() => obj.active && setHoveredText(obj.description)}
+                onMouseLeave={() => obj.active && setHoveredText(null)}
+                onClick={() => obj.active && obj.series === 'vinyl collection' && switchTheme(obj.name)}
               />
             </GlowContainer>
           );
         })}
-        <TextBox $visible={!!defaultText}>{defaultText}</TextBox>
+        <TextBox $visible={!!displayText}>{displayText}</TextBox>
         <InventoryContainer>
           <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory} setActiveComponent={setActiveComponent}/>
         </InventoryContainer>
@@ -202,18 +199,23 @@ const GlowContainer = styled.div`
   justify-content: center;
 `;
 
-const GlowImage = styled.img`
+const GlowImage = styled.img<{ $active: boolean }>`
   display: flex;
   transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   width: auto;
   height: 100%;
 
-  &:hover {
-    filter: brightness(1.2) drop-shadow(0 0 20px ${({ theme }) => theme.glow});
-  }
+  ${({ $active, theme }) =>
+    $active
+      ? css`filter: none;`
+      : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c4});`}
 
-  &:hover + div {
-    opacity: 1;
+  /* Hover state: glow for active, stronger red-outline for inactive */
+  &:hover {
+    ${({ $active, theme }) =>
+      $active
+        ? css`filter: brightness(1.2) drop-shadow(0 0 20px ${theme.glow});`
+        : css`filter: brightness(0) drop-shadow(0 0 12px ${theme.c4});`}
   }
 `;
 

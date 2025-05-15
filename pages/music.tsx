@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { getUserBits, addUserBits, Bit } from '../components/Module/bits';
+import { getUserBits, addUserBits, Bit } from '../components/BlueprintMenu/bits';
 
 const Music: React.FC = () => {
   const [stash, setStash] = useState<Bit[]>([]);

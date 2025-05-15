@@ -8,6 +8,19 @@ export interface ObjectData {
   requiredBits: { color: string; quantity: number }[];
 }
 
+export interface ObjectWithState extends ObjectData {
+  active: boolean;
+}
+
+export const getObjectsWithState = (): ObjectWithState[] => {
+  const all = getAllObjects();
+  const completed = getCompletedObjectNames();
+  return all.map(obj => ({
+    ...obj,
+    active: completed.includes(obj.name),
+  }));
+};
+
 export const getCompletedObjectNames = (): string[] => {
   if (typeof window === 'undefined') return [];
   const names = localStorage.getItem('completedObjects');
