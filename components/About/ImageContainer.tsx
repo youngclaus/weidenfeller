@@ -239,7 +239,7 @@ const TextBox = styled.div<{ $visible: boolean }>`
 `;
 
 const InventoryContainer = styled.div`
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 100px;
 `

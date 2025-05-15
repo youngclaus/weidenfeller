@@ -13,7 +13,7 @@ export const homeContent: PlayerContent = {
   ],
   titles: [
     'welcome to my website',
-    'masters in A.I.',
+    'masters in a.i.',
     'echte liebe',
     'too many playlists',
   ],

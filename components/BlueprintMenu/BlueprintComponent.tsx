@@ -123,7 +123,7 @@ const BlueprintImage = styled.img`
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
-  filter: grayscale(100%);
+  filter: brightness(0);
   transition: filter 0.3s ease;
 `;
 
