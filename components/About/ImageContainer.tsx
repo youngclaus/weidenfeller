@@ -222,7 +222,7 @@ const GlowImage = styled.img<{ $active: boolean }>`
 const TextBox = styled.div<{ $visible: boolean }>`
   position: fixed;
   left: 50%;
-  bottom: 15%;
+  bottom: 12%;
   transform: translateX(-50%);
   font-family: "DM Mono", monospace;
   font-size: 2.5vh;

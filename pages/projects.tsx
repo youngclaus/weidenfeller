@@ -10,9 +10,7 @@ const Projects: React.FC<ProjectsProps> = ({ setActiveComponent }) => {
   return (
     <Container>
       <BackgroundContainer className="background-container">
-        <Code>
-          <img src="/Hero/code.png" alt="code" />
-        </Code>
+        <img src="/Hero/code.png" alt="code" />
       </BackgroundContainer>
       <Timeline />
     </Container>
@@ -31,18 +29,14 @@ const Container = styled.div`
 `;
 
 const BackgroundContainer = styled.div`
-  display: flex;
   position: absolute;
-  justify-content: center;
-  align-items: center;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-`;
-
-const Code = styled.div`
+  background-image: url('/Hero/code.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   opacity: 0.3;
   filter: blur(5px);
-  position: absolute;
-  white-space: nowrap;
-  object-fit: cover;
 `;

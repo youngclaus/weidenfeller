@@ -8,14 +8,12 @@ const Index: React.FC = () => {
   return (
     <Container>
       <BackgroundContainer className="background-container">
-        <Code>
-          <img src="/Hero/code.png" alt="code" />
-        </Code>
+        <img src="/Hero/code.png" alt="code" />
       </BackgroundContainer>
       <ContentContainer className="content-container">
         <PlayerContainer>
           <Player content={homeContent} visible={true} />
-        </PlayerContainer>
+        </PlayerContainer> 
         <TitleContainer>
           <Title>chris</Title>
           <Title>youngclaus</Title>
@@ -40,22 +38,16 @@ const Container = styled.div`
 `;
 
 const BackgroundContainer = styled.div`
-  display: flex;
   position: absolute;
-  justify-content: center;
-  align-items: center;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-`;
-
-const Code = styled.div`
+  background-image: url('/Hero/code.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   opacity: 0.3;
   filter: blur(5px);
-  position: absolute;
-  width: 100vw;
-  height: auto;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 const ContentContainer = styled.div`

@@ -93,7 +93,7 @@ const TextBox = styled.div`
 const Title = styled.h3`
   width: 90%;
   color: ${({ theme }) => theme.c4};
-  font-size: 3vw;
+  font-size: clamp(1.8rem, 3vw, 4rem);
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
@@ -104,7 +104,7 @@ const Title = styled.h3`
 const Description = styled.p`
   color: ${({ theme }) => theme.c4};
   width: 80%;
-  font-size: 2vw;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
   padding: 5px;
   text-align: center;
   box-shadow: -3px 3px 5px ${({ theme }) => theme.c2};
