@@ -130,6 +130,7 @@ const ScrollableContent = styled.div`
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  margin-bottom: 50px;
 `;
 
 const SeriesNavigator = styled.div`
@@ -169,7 +170,6 @@ const StashSeparator = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0;
   background-color: ${({theme}) => theme.c3};
   overflow: hidden;
   min-width: 0;
@@ -184,7 +184,6 @@ const BlueprintSeparator = styled.div`
   background-color: ${({theme}) => theme.c1};
   overflow: hidden;
   min-width: 0;
-  padding: 0;
 `;
 
 const PrintSeparator = styled.div`
@@ -194,5 +193,4 @@ const PrintSeparator = styled.div`
   background-color: ${({theme}) => theme.c3};
   overflow: hidden;
   min-width: 0;
-  padding: 0;
 `;
