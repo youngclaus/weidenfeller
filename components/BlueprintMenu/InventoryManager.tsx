@@ -96,14 +96,18 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 0px 0px 10px -5px black;
   overflow: hidden;
+  font-family: "DM Mono", monospace;
+  font-weight: bold;
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${({theme}) => theme.c1};
+  background-color: ${({theme}) => theme.c3};
   color: ${({theme}) => theme.c4};
   text-align: center;
+  border-bottom: 2px solid ${({theme}) => theme.c1};
+  flex-shrink: 0;
 `;
 
 const Title = styled.h3`
@@ -116,14 +120,16 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100% - 91px);
+  flex: 1;
   position: relative;
+  overflow: hidden;
 `;
 
 const ScrollableContent = styled.div`
   display: flex;
   flex: 1;
-  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 `;
 
 const SeriesNavigator = styled.div`
@@ -132,18 +138,19 @@ const SeriesNavigator = styled.div`
   justify-content: center;
   height: 50px;
   width: 100%;
-  background-color: ${({theme}) => theme.c1};
-  border-top: 1px solid ${({theme}) => theme.c2};
+  border-top: 2px solid ${({theme}) => theme.c1};
+  background-color: ${({theme}) => theme.c3};
   position: absolute;
   bottom: 0;
   gap: 10px;
+  flex-shrink: 0;
 `;
 
 const ScrollButton = styled.button`
   background-color: ${({theme}) => theme.c1};
-  color: ${({theme}) => theme.c4};
+  color: ${({theme}) => theme.c3};
   border: none;
-  padding: 10px;
+  padding: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -159,30 +166,33 @@ const SeriesTitle = styled.div`
 `;
 
 const StashSeparator = styled.div`
-  width: 33%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 0;
   background-color: ${({theme}) => theme.c3};
+  overflow: hidden;
+  min-width: 0;
 `;
 
 const BlueprintSeparator = styled.div`
-  width: 33%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: ${({theme}) => theme.c2};
+  background-color: ${({theme}) => theme.c1};
+  overflow: hidden;
+  min-width: 0;
+  padding: 0;
 `;
 
 const PrintSeparator = styled.div`
-  width: 33%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
   background-color: ${({theme}) => theme.c3};
+  overflow: hidden;
+  min-width: 0;
+  padding: 0;
 `;

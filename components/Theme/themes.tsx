@@ -1,30 +1,30 @@
 export interface Theme {
   mode: 'light' | 'dark' | 'toggled';
-  c1: string;  // background color
-  c2: string;  // inactive records
-  c3: string;  // active records
-  c4: string;  // text color
+  c1: string;  
+  c2: string;  
+  c3: string;  
+  c4: string;  
   opacity: string;
   glow: string;
 }
 
 export const lightTheme: Theme = {
   mode: 'light',
-  c1: '#e0e0e0',
-  c2: '#e0e0e0',
-  c3: '#F39F5A',
-  c4: '#000',
+  c1: '#ddd', // Main text color (white)
+  c2: '#666', // background color (gray)
+  c3: '#F39F5A', // Flavor color (orange)
+  c4: '#444', // alt text color (black)
   opacity: '1',
-  glow: 'rgba(255, 255, 255, 0.3)',
+  glow: 'rgb(255, 255, 255)',
 };
 
 export const darkTheme: Theme = {
   mode: 'dark',
-  c1: '#222',
-  c2: '#000',
-  c3: '#662549',
-  c4: '#ccc',
-  opacity: '0.6',
+  c1: '#666', // Main text color (gray)
+  c2: '#000', // background color (black)
+  c3: '#662549', // Flavor color (purple)
+  c4: '#bbb', // alt text color (white)
+  opacity: '0.7',
   glow: 'rgba(209, 197, 86, 0.5)',
 };
 

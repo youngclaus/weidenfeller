@@ -31,7 +31,7 @@ const Container = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.c1};
+  background-color: #222;
   z-index: 0;
   user-select: none;
   -webkit-user-drag: none;
@@ -94,7 +94,7 @@ const TitleContainer = styled.div`
 
 const Title = styled.div`
   text-align: left;
-  color: ${({ theme }) => theme.c4};
+  color: ${({ theme }) => theme.c3};
   font-family: "DM Mono", monospace;
   font-weight: bold;
   opacity: 70%;

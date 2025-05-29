@@ -180,7 +180,7 @@ const StyledImageContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c2};
+    background-color: ${({ theme }) => theme.c3};
   }
 
   &::-webkit-scrollbar-track {
@@ -208,7 +208,7 @@ const GlowImage = styled.img<{ $active: boolean }>`
   ${({ $active, theme }) =>
     $active
       ? css`filter: none;`
-      : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c4});`}
+      : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c3});`}
 
   /* Hover state: glow for active, stronger red-outline for inactive */
   &:hover {
@@ -245,7 +245,7 @@ const InventoryContainer = styled.div`
 `
 
 const InventoryOverlay = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -55%);

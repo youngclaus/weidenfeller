@@ -38,17 +38,26 @@ const PrintsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
+  margin: 10px;
+  flex: 1;
+  width: calc(100% - 20px);
+  overflow-y: auto;
+  padding-right: 5px;
   background-color: inherit;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Explorer */
+  min-height: 0;
 
   &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.c2}; 
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.c1};
+    border-radius: 4px;
   }
 `;
 
@@ -86,9 +95,9 @@ const PrintItem = styled.div`
   background-color: ${({theme}) => theme.c1};
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
-  width: 70%;
+  width: calc(100% - 30px);
+  max-width: 100%;
   height: 175px;
-  max-width: 400px;
   position: relative;
 
   &:hover {

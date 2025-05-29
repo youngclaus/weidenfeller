@@ -18,10 +18,8 @@ const StashComponent: React.FC<StashComponentProps> = ({ stash }) => {
       {stash.map((bit, index) => (
         <BitContainer key={index}>
           <ColorBox color={Object.keys(colorDictionary).find(key => colorDictionary[key].toLowerCase() === bit.color.toLowerCase()) || bit.color} />
-          <BitInfo>
-            <BitName>{bit.color}</BitName>
-            <BitQuantity>{bit.quantity}</BitQuantity>
-          </BitInfo>
+          <BitName>{bit.color}</BitName>
+          <BitQuantity>{bit.quantity}</BitQuantity>
         </BitContainer>
       ))}
     </Container>
@@ -35,53 +33,63 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 100%;
-  width: 100%;
+  margin: 10px;
+  flex: 1;
+  width: calc(100% - 20px);
   overflow-y: auto;
   padding-right: 5px;
+  min-height: 0;
 
   &::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.c2}; 
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c3}; 
+    background-color: ${({ theme }) => theme.c1};
+    border-radius: 4px;
   }
 `;
 
 const BitContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px;
+  justify-content: center;
+  gap: 20px;
   border-radius: 5px;
   box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.1);
+  background-color: ${({theme}) => theme.c1};
+  width: 80%;
+  height: 60px;
+  flex-shrink: 0;
+  flex-grow: 0;
 `;
 
 const ColorBox = styled.div<{ color: string }>`
-  width: 20px;
-  height: 20px;
+  width: 3vw;
+  height: 3vw;
+  max-width: 20px;
+  max-height: 20px;
   border-radius: 3px;
   background-color: ${({ color }) => color};
   border: 1px solid #000;
-`;
-
-const BitInfo = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const BitName = styled.p`
   margin: 0;
   font-family: "DM Mono", monospace;
   font-weight: bold;
+  font-size: clamp(2px, 2vw, 20px);
   color: ${({ theme }) => theme.c4};
+  display: none;
+
+  @media (min-width: 850px) {
+    display: block;
+  }
 `;
 
 const BitQuantity = styled.p`

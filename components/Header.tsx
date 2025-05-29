@@ -17,24 +17,24 @@ const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) 
   return (
     <HeaderContainer>
       <VinylContainer>
-        <Vinyl onClick={() => setActiveComponent('index')} style={{ zIndex: 10 }} color={activeComponent === 'index' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('index')} style={{ zIndex: 10 }} color={activeComponent === 'index' ? theme.c3 : theme.c1}>
           <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" />
           <VinylText>home</VinylText>
         </Vinyl>
         
-        <Vinyl onClick={() => setActiveComponent('projects')} style={{ zIndex: 8 }} color={activeComponent === 'projects' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('projects')} style={{ zIndex: 8 }} color={activeComponent === 'projects' ? theme.c3 : theme.c1}>
           <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
-        <Vinyl onClick={() => setActiveComponent('about')} style={{ zIndex: 7 }} color={activeComponent === 'about' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('about')} style={{ zIndex: 7 }} color={activeComponent === 'about' ? theme.c3 : theme.c1}>
           <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
           <VinylText>explore</VinylText>
         </Vinyl>
-        <Vinyl onClick={() => setActiveComponent('music')} style={{ zIndex: 6 }} color={activeComponent === 'music' ? theme.c3 : theme.c2}>
+        <Vinyl onClick={() => setActiveComponent('music')} style={{ zIndex: 6 }} color={activeComponent === 'music' ? theme.c3 : theme.c1}>
           <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
           <VinylText>music</VinylText>
         </Vinyl>
-        <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1}} color={theme.c2}>
+        <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1}} color={theme.c1}>
           <VinylImage src="/Header/vinyl.png" alt="Theme Vinyl" />
           <VinylText>{theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}</VinylText>
         </Vinyl>

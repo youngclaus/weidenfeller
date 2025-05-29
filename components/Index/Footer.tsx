@@ -135,7 +135,7 @@ const FloatingWord = styled.div`
   bottom: 40px;
   font-family: "DM Mono", monospace;
   font-size: 100%;
-  color: ${({ theme }) => theme.c4};
+  color: ${({ theme }) => theme.c1};
   font-weight: bold;
   white-space: nowrap;
   opacity: 1;

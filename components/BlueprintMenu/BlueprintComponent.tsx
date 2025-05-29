@@ -79,17 +79,27 @@ const BlueprintContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  height: 100%;
-  width: 100%;
-  overflow-y: scroll;
-  padding: 15px;
+  flex: 1;
+  width: calc(100% - 20px);
+  overflow-y: auto;
+  padding: 10px;
+  padding-right: 5px;
   background-color: inherit;
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Explorer */
+  min-height: 0;
+  margin: 10px;
 
   &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.c2}; 
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.c1};
+    border-radius: 4px;
   }
 `;
 
@@ -134,11 +144,11 @@ const BlueprintItem = styled.div`
   text-align: center;
   padding: 15px;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.c1};
+  background-color: ${({ theme }) => theme.c3};
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
-  width: 70%;
-  max-width: 400px;
+  width: calc(100% - 30px);
+  max-width: 100%;
   height: 175px;
   position: relative;
 
@@ -181,7 +191,7 @@ const BlueprintName = styled.p`
 const CompleteButton = styled.button`
   padding: 5px 10px;
   color: ${({theme}) => theme.c4};
-  background-color: ${({theme}) => theme.c3};
+  background-color: ${({theme}) => theme.c1};
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -191,7 +201,7 @@ const CompleteButton = styled.button`
   font-size: 10px;
 
   &:hover:not(:disabled) {
-    background-color: #0056b3;
+    background-color: ${({theme}) => theme.c2};
   }
 
   &:disabled {

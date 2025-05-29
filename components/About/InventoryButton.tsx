@@ -67,7 +67,7 @@ const Nav = styled.div<{ expanded: boolean; collapsed: boolean }>`
   align-items: center;
   width: ${({ expanded, collapsed }) => (expanded ? '300px' : collapsed ? '80px' : '80px')};
   height: 80px;
-  background-color: ${({theme}) => theme.c1};
+  background-color: ${({theme}) => theme.c2};
   border-radius: 50px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   z-index: 100;
@@ -113,7 +113,7 @@ const MenuItem = styled.div`
 
 const MenuLink = styled.a`
   text-decoration: none;
-  color: ${({theme}) => theme.c4};
+  color: ${({theme}) => theme.c1};
   cursor: pointer;
   text-transform: uppercase;
   font-weight: 500;
