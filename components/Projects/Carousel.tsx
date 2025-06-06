@@ -57,9 +57,7 @@ const CarouselContainer = styled.div`
   display: flex;
   position: relative;
   width: 95%;
-  height: 400px;
-  background: ${({ theme }) => theme.c3};
-  box-shadow: -5px 5px 3px ${({ theme }) => theme.c2};
+  height: 90%;
   flex: 1 1 auto;
 `;
 
@@ -69,7 +67,7 @@ const ImageBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.c3};
+  background: none;
 `;
 
 const Image = styled.img`
@@ -86,7 +84,7 @@ const TextBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.c3};
+  background: none;
   font-family: "DM Mono", monospace;
 `;
 
@@ -95,19 +93,23 @@ const Title = styled.h3`
   color: ${({ theme }) => theme.c4};
   font-size: clamp(1.8rem, 3vw, 4rem);
   font-weight: bold;
+  border-radius: 10px;
   margin-bottom: 1rem;
   text-align: center;
-  box-shadow: -2px 2px 5px ${({ theme }) => theme.c2};
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 3px 3px ${({ theme }) => theme.c3};
   padding: 5px;
 `;
 
 const Description = styled.p`
   color: ${({ theme }) => theme.c4};
   width: 80%;
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
-  padding: 5px;
+  font-size: clamp(0.5rem, 2vw, 2rem);
+  padding: 10px;
   text-align: center;
-  box-shadow: -3px 3px 5px ${({ theme }) => theme.c2};
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 5px 5px 5px ${({ theme }) => theme.c3};
 `;
 
 const ArrowContainer = styled.div`

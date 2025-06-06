@@ -23,7 +23,7 @@ const Container = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.c1};
+  background-color: #222;
   user-select: none;
   -webkit-user-drag: none;
 `;
