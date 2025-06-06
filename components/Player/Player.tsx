@@ -116,7 +116,7 @@ const TrackInfo = styled.div`
 
 const SongTitle = styled.h2`
   font-size: 1.2rem;
-  color: ${({ theme }) => theme.c1};
+  color: ${({ theme }) => theme.c3};
   margin: 10px;
   white-space: nowrap;
   @supports (-webkit-touch-callout: none) {
