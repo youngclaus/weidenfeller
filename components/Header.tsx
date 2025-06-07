@@ -59,11 +59,12 @@ const VinylContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 10px;
+  padding-left: 20px;
+  z-index: 100;
 
-  @media (max-width: 950px) {
-    padding-left: 30px;
-    z-index: 100;
+  @media (max-width: 550px) {
+    padding-left: 0px;
+    
   }
 `;
 
@@ -75,6 +76,11 @@ const VinylImage = styled.img`
   overflow: hidden;
   transition: transform 0.6s ease;
   transform: rotate(-15deg);
+
+  @media (max-width: 550px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const VinylText = styled.span`
@@ -87,6 +93,10 @@ const VinylText = styled.span`
   font-size: 12px;
   color: ${({ theme }) => theme.c4};
   transition: transform 0.6s ease;
+
+  @media (max-width: 550px) {
+    font-size: 10px;
+    transform: translateX(-45%);
 `;
 
 const Vinyl = styled.div<{ color: string }>`
@@ -99,6 +109,14 @@ const Vinyl = styled.div<{ color: string }>`
   transition: transform 0.6s ease;
   margin-right: -45px;
   transform: translate(-23px);
+
+  @media (max-width: 550px) {
+    width: 96px;
+    height: 96px;
+    margin-right: -30px;
+    transform: translate(0%, 50%);
+    padding-right: 5px;
+  }
 
   &:hover > ${VinylImage} {
     transform: rotate(280deg);

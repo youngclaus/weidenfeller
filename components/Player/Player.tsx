@@ -126,7 +126,7 @@ const SongTitle = styled.h2`
 
 const Artist = styled.h3`
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.c4};
+  color: ${({ theme }) => theme.c1};
   margin: 0;
   white-space: nowrap;
 `;
