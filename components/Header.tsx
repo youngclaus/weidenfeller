@@ -127,5 +127,10 @@ const Vinyl = styled.div<{ color: string }>`
   &:hover > ${VinylText} {
     font-size: 14px;
     transition: font-size 0.2s ease-in-out;
+
+    @media (max-width: 550px) {
+      font-size: 11px;
+      transition: font-size 0.2s ease-in-out;
+    }
   }
 `;
