@@ -95,7 +95,7 @@ const VinylText = styled.span`
   transition: transform 0.6s ease;
 
   @media (max-width: 550px) {
-    font-size: 10px;
+    font-size: 9px;
     transform: translateX(-45%);
 `;
 
@@ -129,7 +129,7 @@ const Vinyl = styled.div<{ color: string }>`
     transition: font-size 0.2s ease-in-out;
 
     @media (max-width: 550px) {
-      font-size: 11px;
+      font-size: 10px;
       transition: font-size 0.2s ease-in-out;
     }
   }
