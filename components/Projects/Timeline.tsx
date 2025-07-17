@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from './Carousel';
 import { cards } from './cards';
 
@@ -8,19 +8,23 @@ interface TimelineData {
   startIndex: number;
 }
 
-// 2 4 2 3 5
 const Timeline: React.FC = () => {
-  const timelineData: TimelineData[] = [
-    { year: 2025, startIndex: 0},
-    { year: 2024, startIndex: 2 },
-    { year: 2023, startIndex: 4 },
-    { year: 2022, startIndex: 7 },
-    { year: 2021, startIndex: 11 },
-    { year: 2020, startIndex: 13 },
-    { year: 2019, startIndex: 16 },
-  ];
-
+  const [timelineData, setTimelineData] = useState<TimelineData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const generatedData: TimelineData[] = [];
+    let currentYear: number | null = null;
+    cards.forEach((card, index) => {
+      if (card.year !== currentYear) {
+        generatedData.push({ year: card.year, startIndex: index});
+        currentYear = card.year;
+      }
+    });
+
+    setTimelineData(generatedData);
+    setCurrentIndex(0);
+  }, []);
 
   const scrollToYear = (startIndex: number) => {
     setCurrentIndex(startIndex);
@@ -57,13 +61,13 @@ const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 100dvw;
+  width: 100vw;
   max-width: 1600px;
   height: calc(100dvh - 60px);
   top: 60px;
   left: 50%;
   transform: translateX(-50%);
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
@@ -90,6 +94,16 @@ const YearNavContainer = styled.div`
   height: 80px;
   width: 100%;
   z-index: 100;
+  background: ${({theme}) => theme.c1};
+  padding: 0;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.3);
+  overflow-x: auto;;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const YearNavItem = styled.button<{ active: boolean }>`
@@ -100,10 +114,17 @@ const YearNavItem = styled.button<{ active: boolean }>`
   font-family: "DM Mono", monospace;
   font-weight: bold;
   color: ${({ theme, active }) => (active ? theme.c3 : theme.c4)};
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 5px 10px;
+  white-space: nowrap;
 
   &:hover {
     color: ${({ theme }) => theme.c3};
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
@@ -111,4 +132,5 @@ const Separator = styled.span`
   font-size: 10px;
   margin: 0 10px;
   color: ${({ theme }) => theme.c3};
+  user-select: none;
 `;

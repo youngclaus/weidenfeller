@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import { FaGithub } from 'react-icons/fa';
 import { Card } from './cards';
 
 interface CarouselProps {
@@ -30,6 +31,31 @@ const Carousel: React.FC<CarouselProps> = ({ cards, currentIndex, setIndex }) =>
         <TextBox>
           <Title>{card.title}</Title>
           <Description>{card.description}</Description>
+          <DetailsContainer>
+            {card.role && (
+              <DetailItem>
+                <strong>Role:</strong> {card.role}
+              </DetailItem>
+            )}
+            {card.duration && (
+              <DetailItem>
+                <strong>Duration:</strong> {card.duration}
+              </DetailItem>
+            )}
+            {card.technologies && (
+              <DetailItem>
+                <strong>Stack:</strong> {card.technologies}
+              </DetailItem>
+            )}
+            <LinksContainer>
+              {card.githubLink && (
+                <LinkButton href={card.githubLink} target="_blank" rel="noopener noreferrer">
+                  <FaGithub size={24} color="#333" />
+                </LinkButton>
+              )}
+            </LinksContainer>
+
+          </DetailsContainer>
         </TextBox>
       </CarouselContainer>
       <ArrowContainer>
@@ -51,94 +77,147 @@ const ContentContainer =  styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
 `
 
 const CarouselContainer = styled.div`
   display: flex;
-  position: relative;
   width: 95%;
-  height: 90%;
-  flex: 1 1 auto;
+  max-width: 1200px;
+  height: 85%;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
-  @media (max-width: 700px) {
-    display: flex;
+  @media (max-width: 900px) {
     flex-direction: column;
-    align-items: center;
-    top: 10%;
+    height: auto;
+    width: 90%;
   }
+
 `;
 
 const ImageBox = styled.div`
-  width: 50%;
-  height: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     width: 100%;
     height: 50%;
-    order: 2;
+    min-height: 250px;
+    padding: 20px 0 20px 0;
   }
 `;
 
 const Image = styled.img`
-  width: 90%;
-  height: 90%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px ${({theme}) => theme.c2});
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  filter: drop-shadow(0 0 15px ${({theme}) => theme.c2});
 `;
 
 const TextBox = styled.div`
-  width: 50%;
-  height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: none;
   font-family: "DM Mono", monospace;
+  background: ${({theme}) => theme.c3};
+  opacity: 0.9;
+  text-align: center;
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     width: 100%;
-    height: 25%;
-    order: 1;
   }
 `;
 
 const Title = styled.h3`
-  width: 90%;
-  color: #ccc;
-  font-size: clamp(1.8rem, 3vw, 4rem);
-  font-weight: bold;
-  border-radius: 10px;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: ${({ theme }) => theme.c4};
   margin-bottom: 1rem;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 3px 3px 3px ${({ theme }) => theme.c3};
-  padding: 5px;
-
-  @media (max-width: 700px) {
-    font-size: clamp(1.5rem, 2vw, 3rem);
-    margin-bottom: 0.5rem;
-  }
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 `;
 
 const Description = styled.p`
-  color: #bbb;
-  width: 80%;
-  font-size: clamp(0.5rem, 2vw, 2rem);
-  padding: 10px;
-  text-align: center;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 5px 5px 5px ${({ theme }) => theme.c3};
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-weight: 500;
+  color: ${({theme}) => theme.c2};
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 90%;
+`;
 
-  @media (max-width: 700px) {
-    font-size: clamp(1rem, 2vw, 2.5rem);
-    width: 90%;
-    order: 3;
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-itmes: flex-start;
+  width: 90%;
+  margin-top: 1rem;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  text-align: left;
+
+  @media (max-width: 900px) {
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+const DetailItem = styled.p`
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  color: #e0e0e0;
+  margin: 5px 0;
+  strong {
+    color: ${({ theme }) => theme.c4};
+    margin-right: 5px;
+  }
+`;
+
+const LinksContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+  width: 100%;
+`;
+
+const LinkButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: ${({ theme }) => theme.c3}; 
+  color: #1a1a2e; 
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: ${({ theme }) => theme.c2};
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 `;
 

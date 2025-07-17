@@ -64,7 +64,7 @@ const VinylContainer = styled.div`
 
   @media (max-width: 550px) {
     padding-left: 0px;
-    
+    transform: translateY(-10%);
   }
 `;
 
