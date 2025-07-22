@@ -20,9 +20,9 @@ export const lightTheme: Theme = {
 
 export const darkTheme: Theme = {
   mode: 'dark',
-  c1: '#666', // Main text color (gray)
+  c1: '#444', // Main text color (gray)
   c2: '#000', // background color (black)
-  c3: '#963c6e', // Flavor color (purple)
+  c3: '#b74a86', // Flavor color (purple)
   c4: '#bbb', // alt text color (white)
   opacity: '0.7',
   glow: 'rgba(209, 197, 86, 0.5)',
