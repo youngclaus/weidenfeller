@@ -17,38 +17,45 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Title>My Work</Title>
-      <ProjectsGrid>
-        {cards.map((card, index) => (
-          <ProjectCard
-            key={index}
-            card={card}
-            onClick={() => handleCardClick(card)}
-          />
-        ))}
-      </ProjectsGrid>
-      {selectedCard && (
-        <ProjectModal card={selectedCard} onClose={handleCloseModal} />
-      )}
-    </Container>
+    <>
+      <BackgroundLine />
+      <Container>
+        <BackgroundLine />
+        <Title>Projects</Title>
+        <ProjectsGrid>
+          {cards.map((card, index) => (
+            <ProjectCard
+              key={index}
+              card={card}
+              onClick={() => handleCardClick(card)}
+            />
+          ))}
+        </ProjectsGrid>
+        {selectedCard && (
+          <ProjectModal card={selectedCard} onClose={handleCloseModal} />
+        )}
+      </Container>
+    </>
   );
 };
 
 export default Projects;
 
 const Container = styled.div`
-  padding: 80px 40px 40px;
+  position: relative;
+  padding: 40px 40px 40px;
   background-color: ${({ theme }) => theme.c1};
   min-height: 100vh;
   color: ${({ theme }) => theme.c4};
+  z-index: 10;
 `;
 
 const Title = styled.h1`
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  font-size: 3rem;
-  text-shadow: 0 0 5px rgba(155, 155, 155, 0.5);
+  font-size: 4rem;
+  padding: 5px;
+  text-shadow: 4px 4px 1px ${({ theme }) => theme.c2};
   text-align: center;
   margin-bottom: 40px;
   color: ${({ theme }) => theme.c3};
@@ -56,8 +63,20 @@ const Title = styled.h1`
 
 const ProjectsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 40px;
   max-width: 1600px;
   margin: 0 auto;
 `;
+
+const BackgroundLine = styled.div`
+  position: fixed;
+  top: 15%;
+  left: -25%;
+  width: 150%;
+  height: 500px;
+  background-color: ${({ theme }) => theme.c3};
+  border: 1px solid ${({ theme }) => theme.c2};
+  transform: rotate(-20deg);
+  z-index: -1;
+`

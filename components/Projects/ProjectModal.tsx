@@ -56,7 +56,7 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,14 +71,12 @@ const ModalContent = styled.div`
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
+  border-bottom-left-radius: 15px;
 `;
 
 const CloseButton = styled.button`
@@ -95,27 +93,18 @@ const CloseButton = styled.button`
 
 const Image = styled.img`
   width: 100%;
-  height: 250px;
+  height: 400px;
   object-fit: cover;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-
-  @media (min-width: 768px) {
-    width: 40%;
-    height: auto;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 15px;
-  }
 `;
 
 const Content = styled.div`
   padding: 30px;
   color: ${({ theme }) => theme.c4};
   width: 100%;
-
-  @media (min-width: 768px) {
-    width: 60%;
-  }
+  box-sizing: border-box;
+  word-break: break-word;
 `;
 
 const Title = styled.h2`
@@ -169,7 +158,7 @@ const Tags = styled.div`
 
 const Tag = styled.span`
   background-color: ${({ theme }) => theme.c3};
-  color: ${({ theme }) => theme.c1};
+  color: ${({ theme }) => theme.c4};
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.9rem;

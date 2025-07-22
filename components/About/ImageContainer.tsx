@@ -208,13 +208,13 @@ const GlowImage = styled.img<{ $active: boolean }>`
   ${({ $active, theme }) =>
     $active
       ? css`filter: none;`
-      : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c3});`}
+      : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c4});`}
 
   /* Hover state: glow for active, stronger red-outline for inactive */
   &:hover {
     ${({ $active, theme }) =>
       $active
-        ? css`filter: brightness(1.2) drop-shadow(0 0 20px ${theme.glow});`
+        ? css`filter: brightness(1.2) drop-shadow(0 0 20px ${theme.c3});`
         : css`filter: brightness(0) drop-shadow(0 0 12px ${theme.c4});`}
   }
 `;

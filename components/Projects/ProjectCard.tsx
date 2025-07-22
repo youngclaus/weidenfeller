@@ -61,7 +61,7 @@ const Title = styled.h3`
   font-weight: bold;
   font-size: 1.5rem;
   font-weight: 700;
-  text-shadow: 0 0 5px rgba(155, 155, 155, 0.5);
+  text-shadow: 1px 1px ${({ theme}) => theme.c2};
   color: ${({ theme }) => theme.c3};
   margin-bottom: 10px;
 `;
