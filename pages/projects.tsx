@@ -71,10 +71,10 @@ const ProjectsGrid = styled.div`
 
 const BackgroundLine = styled.div`
   position: fixed;
-  top: 15%;
+  top: 40%;
+  width: 200%;
   left: -25%;
-  width: 150%;
-  height: 500px;
+  height: 600px;
   background-color: ${({ theme }) => theme.c3};
   border: 1px solid ${({ theme }) => theme.c2};
   transform: rotate(-20deg);
