@@ -31,7 +31,7 @@ const ThemedApp: React.FC = () => {
   return (
     <StyledThemeProvider theme={theme}>
       <Header activeComponent={activeComponent} setActiveComponent={handleSetActiveComponent} />
-      {activeComponent === 'projects' && <Projects setActiveComponent={handleSetActiveComponent} />}
+      {activeComponent === 'projects' && <Projects />}
       {activeComponent === 'about' && <About setActiveComponent={handleSetActiveComponent} />}
       {activeComponent === 'music' && <Music />}
       {activeComponent === 'index' && <Index />}
