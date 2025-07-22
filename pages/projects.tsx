@@ -1,18 +1,36 @@
 import styled from 'styled-components';
-import React from 'react';
-import Timeline from '../components/Projects/Timeline';
+import React, { useState } from 'react';
+import { cards } from '../components/Projects/cards';
+import ProjectCard from '../components/Projects/ProjectCard';
+import ProjectModal from '../components/Projects/ProjectModal';
+import { Card } from '../components/Projects/cards';
 
-interface ProjectsProps {
-  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
-}
+const Projects: React.FC = () => {
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
-const Projects: React.FC<ProjectsProps> = ({ setActiveComponent }) => {
+  const handleCardClick = (card: Card) => {
+    setSelectedCard(card);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCard(null);
+  };
+
   return (
     <Container>
-      <BackgroundContainer className="background-container">
-        
-      </BackgroundContainer>
-      <Timeline />
+      <Title>My Work</Title>
+      <ProjectsGrid>
+        {cards.map((card, index) => (
+          <ProjectCard
+            key={index}
+            card={card}
+            onClick={() => handleCardClick(card)}
+          />
+        ))}
+      </ProjectsGrid>
+      {selectedCard && (
+        <ProjectModal card={selectedCard} onClose={handleCloseModal} />
+      )}
     </Container>
   );
 };
@@ -20,23 +38,26 @@ const Projects: React.FC<ProjectsProps> = ({ setActiveComponent }) => {
 export default Projects;
 
 const Container = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  background-color: ${({theme}) => theme.c1};
-  user-select: none;
-  -webkit-user-drag: none;
+  padding: 80px 40px 40px;
+  background-color: ${({ theme }) => theme.c1};
+  min-height: 100vh;
+  color: ${({ theme }) => theme.c4};
 `;
 
-const BackgroundContainer = styled.div`
-  position: absolute;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  filter: blur(5px);
+const Title = styled.h1`
+  font-family: "DM Mono", monospace;
+  font-weight: bold;
+  font-size: 3rem;
+  text-shadow: 0 0 5px rgba(155, 155, 155, 0.5);
+  text-align: center;
+  margin-bottom: 40px;
+  color: ${({ theme }) => theme.c3};
+`;
+
+const ProjectsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
 `;
