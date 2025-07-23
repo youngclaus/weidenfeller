@@ -23,7 +23,7 @@ export const cards: Card[] = [
     year: 2025,
     technologies: ['React', 'Next.js', 'Tailwind CSS', 'PostCSS', 'Typescript', 'Python', 'Flask', 'OpenAI'],
     tags: ['Web App', 'AI/ML', 'Full-Stack'],
-    githubLink: '',
+    githubLink: 'https://github.com/youngclaus/achraf',
     website: '',
     role: 'Passion Project',
     duration: 'Ongoing',

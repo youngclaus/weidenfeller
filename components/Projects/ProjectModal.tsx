@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from './cards';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaSearch } from 'react-icons/fa';
 
 interface ProjectModalProps {
   card: Card;
@@ -9,42 +9,57 @@ interface ProjectModalProps {
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ card, onClose }) => {
+  const [isImagePoppedOut, setIsImagePoppedOut] = useState(false);
+
+  const handleImagePopOut = () => setIsImagePoppedOut(true);
+  const handleCloseImagePopOut = () => setIsImagePoppedOut(false);
+
   return (
-    <ModalOverlay onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose}>&times;</CloseButton>
-        <Image src={card.image} alt={card.title} />
-        <Content>
-          <Title>{card.title}</Title>
-          <Year>{card.year}</Year>
-          <Description>{card.longDescription}</Description>
-          <Details>
-            <DetailItem><strong>Role:</strong> {card.role}</DetailItem>
-            <DetailItem><strong>Duration:</strong> {card.duration}</DetailItem>
-          </Details>
-          <Technologies>
-            <strong>Technologies:</strong>
-            <Tags>
-              {card.technologies.map(tech => (
-                <Tag key={tech}>{tech}</Tag>
-              ))}
-            </Tags>
-          </Technologies>
-          <Links>
-            {card.githubLink && (
-              <Link href={card.githubLink} target="_blank" rel="noopener noreferrer">
-                <FaGithub /> GitHub
-              </Link>
-            )}
-            {card.website && (
-              <Link href={card.website} target="_blank" rel="noopener noreferrer">
-                <FaExternalLinkAlt /> Live Site
-              </Link>
-            )}
-          </Links>
-        </Content>
-      </ModalContent>
-    </ModalOverlay>
+    <>
+      <ModalOverlay onClick={onClose}>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
+          <MagnifyButton onClick={handleImagePopOut}>
+            <FaSearch />
+          </MagnifyButton>
+          <CloseButton onClick={onClose}>&times;</CloseButton>
+          <Image src={card.image} alt={card.title} />
+          <Content>
+            <Title>{card.title}</Title>
+            <Year>{card.year}</Year>
+            <Description>{card.longDescription}</Description>
+            <Details>
+              <DetailItem><strong>Role:</strong> {card.role}</DetailItem>
+              <DetailItem><strong>Duration:</strong> {card.duration}</DetailItem>
+            </Details>
+            <Technologies>
+              <strong>Technologies:</strong>
+              <Tags>
+                {card.technologies.map(tech => (
+                  <Tag key={tech}>{tech}</Tag>
+                ))}
+              </Tags>
+            </Technologies>
+            <Links>
+              {card.githubLink && (
+                <Link href={card.githubLink} target="_blank" rel="noopener noreferrer">
+                  <FaGithub /> GitHub
+                </Link>
+              )}
+              {card.website && (
+                <Link href={card.website} target="_blank" rel="noopener noreferrer">
+                  <FaExternalLinkAlt /> Live Site
+                </Link>
+              )}
+            </Links>
+          </Content>
+        </ModalContent>
+      </ModalOverlay>
+      {isImagePoppedOut && (
+          <ImagePopOutOverlay onClick={handleCloseImagePopOut}>
+            <PoppedImage src={card.image} alt={card.title} />
+          </ImagePopOutOverlay>
+        )}
+    </>
   );
 };
 
@@ -67,7 +82,6 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: ${({ theme }) => theme.c1};
-  border-radius: 15px;
   width: 90%;
   max-width: 800px;
   max-height: 90vh;
@@ -78,6 +92,19 @@ const ModalContent = styled.div`
   flex-direction: column;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.c3};
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.c4};
+  }
 `;
 
 const CloseButton = styled.button`
@@ -86,18 +113,53 @@ const CloseButton = styled.button`
   right: 15px;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 3rem;
   color: ${({ theme }) => theme.c2};
+  text-shadow: 2px 1px 0px ${({ theme }) => theme.c3};
   cursor: pointer;
-  z-index: 1;
+  z-index: 100;
+`;
+
+const MagnifyButton = styled.button`
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.c2};
+  filter: drop-shadow(2px 1px 0px ${({ theme }) => theme.c3});
+  cursor: pointer;
+  z-index: 100;
 `;
 
 const Image = styled.img`
   width: 100%;
   height: 400px;
   object-fit: cover;
+  background: #000;
   border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-right-radius: 0px;
+`;
+
+const ImagePopOutOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: pointer;
+`;
+
+const PoppedImage = styled.img`
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
 `;
 
 const Content = styled.div`
