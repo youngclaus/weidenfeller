@@ -69,7 +69,7 @@ const Title = styled.h3`
 const Description = styled.p`
   font-family: "DM Mono", monospace;
   font-size: 1rem;
-  color: ${({ theme }) => theme.c2};
+  color: ${({ theme }) => theme.c4};
   line-height: 1.5;
   margin-bottom: 15px;
   flex-grow: 1;

@@ -4,6 +4,7 @@ import { cards } from '../components/Projects/cards';
 import ProjectCard from '../components/Projects/ProjectCard';
 import ProjectModal from '../components/Projects/ProjectModal';
 import { Card } from '../components/Projects/cards';
+import LavaLamp from '../components/Projects/LavaLamp';
 
 const Projects: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -17,10 +18,9 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <>
-      <BackgroundLine />
-      <Container>
-        <BackgroundLine />
+    <ProjectsPageContainer>
+      <LavaLamp />
+      <ContentWrapper>
         <Title>Projects</Title>
         <ProjectsGrid>
           {cards.map((card, index) => (
@@ -34,20 +34,34 @@ const Projects: React.FC = () => {
         {selectedCard && (
           <ProjectModal card={selectedCard} onClose={handleCloseModal} />
         )}
-      </Container>
-    </>
+      </ContentWrapper>
+    </ProjectsPageContainer>
   );
 };
 
 export default Projects;
 
-const Container = styled.div`
-  position: relative;
-  padding: 40px 40px 40px;
-  background-color: ${({ theme }) => theme.c1};
+const ProjectsPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30px 30px 30px;
+  background: linear-gradient(60deg, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c2}, ${({theme}) => theme.c3});
+  color: ${({ theme }) => theme.c1};
   min-height: 100vh;
-  color: ${({ theme }) => theme.c4};
-  z-index: 10;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
 `;
 
 const Title = styled.h1`
@@ -68,15 +82,3 @@ const ProjectsGrid = styled.div`
   max-width: 1600px;
   margin: 0 auto;
 `;
-
-const BackgroundLine = styled.div`
-  position: fixed;
-  top: 40%;
-  width: 200%;
-  left: -25%;
-  height: 600px;
-  background-color: ${({ theme }) => theme.c3};
-  border: 1px solid ${({ theme }) => theme.c2};
-  transform: rotate(-20deg);
-  z-index: -1;
-`

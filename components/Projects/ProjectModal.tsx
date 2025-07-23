@@ -56,6 +56,7 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 50px 10px 10px 10px;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
