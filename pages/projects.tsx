@@ -7,6 +7,9 @@ import { Card } from '../components/Projects/cards';
 
 const Projects: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  const allTags = Array.from(new Set(cards.flatMap(card => card.tags)));
 
   const handleCardClick = (card: Card) => {
     setSelectedCard(card);
@@ -16,12 +19,34 @@ const Projects: React.FC = () => {
     setSelectedCard(null);
   };
 
+  const handleTagClick = (tag: string | null) => {
+    setSelectedTag(tag);
+  };
+
+  const filteredCards = selectedTag
+    ? cards.filter(card => card.tags.includes(selectedTag))
+    : cards;
+
   return (
     <>
       <Container>
         <Title>Projects</Title>
+        <TagsContainer>
+          <TagButton onClick={() => handleTagClick(null)} active={!selectedTag}>
+            All
+          </TagButton>
+          {allTags.map(tag => (
+            <TagButton
+              key={tag}
+              onClick={() => handleTagClick(tag)}
+              active={selectedTag === tag}
+            >
+              {tag}
+            </TagButton>
+          ))}
+        </TagsContainer>
         <ProjectsGrid>
-          {cards.map((card, index) => (
+          {filteredCards.map((card, index) => (
             <ProjectCard
               key={index}
               card={card}
@@ -77,6 +102,31 @@ const Title = styled.h1`
   margin-bottom: 40px;
   color: ${({ theme }) => theme.c3};
   z-index: 10;
+`;
+
+const TagsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+`;
+
+const TagButton = styled.button<{ active: boolean }>`
+  background: ${({ active, theme }) => (active ? theme.c3 : 'transparent')};
+  color: ${({ active, theme }) => (active ? theme.c1 : theme.c4)};
+  border: 2px solid ${({ theme }) => theme.c3};
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-family: "DM Mono", monospace;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.c3};
+    color: ${({ theme }) => theme.c1};
+  }
 `;
 
 const ProjectsGrid = styled.div`
