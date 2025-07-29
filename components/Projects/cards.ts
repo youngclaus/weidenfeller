@@ -41,7 +41,16 @@ export const cards: Card[] = [
     duration: 'Feb 2025 - March 2025',
   },
   //2024
-  
+  {
+    title: 'March Madness Predictor',
+    description: 'Used AI/ML to predict March Madness.',
+    longDescription: 'Used machine learning techniques to develop a model that predicts the outcome of the NCAA March Madness tournaments. Our thesis was that teams that closer to the paint are generally more successful.',
+    image: '/Projects/2024_march_madness.jpg',
+    year: 2024,
+    technologies: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'LaTeX'],
+    tags: ['Academic', 'Software', 'Data Structures'],
+    duration: 'Spring 2024'
+  },
   {
     title: 'youngcla.us',
     description: 'My creative outlet.',
