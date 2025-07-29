@@ -36,6 +36,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  z-index: 50;
 
   &:hover {
     transform: translateY(-10px);

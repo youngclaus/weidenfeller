@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { Card } from './cards';
-import { FaGithub, FaExternalLinkAlt, FaSearch } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaSearch, FaTimes } from 'react-icons/fa';
 
 interface ProjectModalProps {
   card: Card;
@@ -18,12 +18,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ card, onClose }) => {
     <>
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
-          <MagnifyButton onClick={handleImagePopOut}>
-            <FaSearch />
-          </MagnifyButton>
-          <CloseButton onClick={onClose}>&times;</CloseButton>
           <Image src={card.image} alt={card.title} />
           <Content>
+            <MagnifyButton onClick={handleImagePopOut}>
+              <FaSearch />
+            </MagnifyButton>
+            <CloseButton onClick={onClose}><FaTimes /></CloseButton>
             <Title>{card.title}</Title>
             <Year>{card.year}</Year>
             <Description>{card.longDescription}</Description>
@@ -77,7 +77,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   font-family: "DM Mono", monospace;
-  z-index: 1000;
+  z-index: 100;
 `;
 
 const ModalContent = styled.div`
@@ -109,13 +109,18 @@ const ModalContent = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
+  top: 30px;
+  right: 30px;
+  background: ${({ theme }) => theme.c3};
+  color: ${({ theme }) => theme.c1};
   border: none;
-  font-size: 3rem;
-  color: ${({ theme }) => theme.c2};
-  text-shadow: 2px 1px 0px ${({ theme }) => theme.c3};
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
   cursor: pointer;
   z-index: 100;
 `;
@@ -124,11 +129,16 @@ const MagnifyButton = styled.button`
   position: absolute;
   top: 30px;
   left: 30px;
-  background: none;
+  background: ${({ theme }) => theme.c3};
+  color: ${({ theme }) => theme.c1};
   border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.c2};
-  filter: drop-shadow(2px 1px 0px ${({ theme }) => theme.c3});
   cursor: pointer;
   z-index: 100;
 `;

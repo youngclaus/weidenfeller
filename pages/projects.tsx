@@ -1,10 +1,9 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import React, { useState } from 'react';
 import { cards } from '../components/Projects/cards';
 import ProjectCard from '../components/Projects/ProjectCard';
 import ProjectModal from '../components/Projects/ProjectModal';
 import { Card } from '../components/Projects/cards';
-import LavaLamp from '../components/Projects/LavaLamp';
 
 const Projects: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -18,9 +17,8 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <ProjectsPageContainer>
-      <LavaLamp />
-      <ContentWrapper>
+    <>
+      <Container>
         <Title>Projects</Title>
         <ProjectsGrid>
           {cards.map((card, index) => (
@@ -34,34 +32,39 @@ const Projects: React.FC = () => {
         {selectedCard && (
           <ProjectModal card={selectedCard} onClose={handleCloseModal} />
         )}
-      </ContentWrapper>
-    </ProjectsPageContainer>
+      </Container>
+    </>
   );
 };
 
 export default Projects;
 
-const ProjectsPageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 30px 30px 30px;
-  background: linear-gradient(60deg, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c2}, ${({theme}) => theme.c3});
-  color: ${({ theme }) => theme.c1};
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-
-  @media (max-width: 768px) {
-    padding: 1rem;
+const gradientAnimation = keyframes`
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
   }
 `;
 
-const ContentWrapper = styled.div`
+const Container = styled.div`
   position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 1200px;
+  padding: 40px 40px 40px;
+  background: linear-gradient(
+    to top right,
+    ${({ theme }) => theme.c2} 0%,
+    ${({ theme }) => theme.c3} 50%,
+    ${({ theme }) => theme.c1} 100%
+  );
+  min-height: 100vh;
+  color: ${({ theme }) => theme.c4};
+  z-index: 10;
+  background-size: 250% 250%;
+  animation: ${gradientAnimation} 20s ease infinite;
 `;
 
 const Title = styled.h1`
@@ -73,6 +76,7 @@ const Title = styled.h1`
   text-align: center;
   margin-bottom: 40px;
   color: ${({ theme }) => theme.c3};
+  z-index: 10;
 `;
 
 const ProjectsGrid = styled.div`
@@ -81,4 +85,5 @@ const ProjectsGrid = styled.div`
   gap: 40px;
   max-width: 1600px;
   margin: 0 auto;
+  z-index: 10;
 `;
