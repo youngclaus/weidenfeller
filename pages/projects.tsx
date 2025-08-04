@@ -121,6 +121,7 @@ const TagButton = styled.button<{ active: boolean }>`
   cursor: pointer;
   font-family: "DM Mono", monospace;
   font-size: 1rem;
+  font-weight: 500;
   transition: all 0.3s ease;
 
   &:hover {

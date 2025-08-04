@@ -37,6 +37,7 @@ const CardContainer = styled.div`
   flex-direction: column;
   height: 100%;
   z-index: 50;
+  font-family: "DM Mono", monospace;
 
   &:hover {
     transform: translateY(-10px);
@@ -58,7 +59,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.h3`
-  font-family: "DM Mono", monospace;
+  
   font-weight: bold;
   font-size: 1.5rem;
   font-weight: 700;
@@ -68,7 +69,6 @@ const Title = styled.h3`
 `;
 
 const Description = styled.p`
-  font-family: "DM Mono", monospace;
   font-size: 1rem;
   color: ${({ theme }) => theme.c4};
   line-height: 1.5;
@@ -89,5 +89,5 @@ const Tag = styled.span`
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
 `; 
