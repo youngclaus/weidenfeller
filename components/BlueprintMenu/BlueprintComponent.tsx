@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getObjectsByState, markObjectAsCompleted } from '../BlueprintMenu/blueprints';
-import { colorDictionary, getUserBits, removeUserBits, getHexFromColorName } from '../BlueprintMenu/bits';
+import { colorDictionary, getUserBits, removeUserBits, getHexFromColorName } from './bits';
 
 interface Bit {
   color: string;
@@ -31,12 +30,12 @@ const BlueprintComponent: React.FC<BlueprintComponentProps> = ({ completeBluepri
   const hasRequiredBits = (requiredBits: { color: string; quantity: number }[]): boolean => {
     return requiredBits.every((requiredBit) => {
       const stashBit = userStash.find((bit) => bit.color.toLowerCase() === requiredBit.color.toLowerCase());
-      return stashBit && stashBit.quantity >= requiredBit.quantity;
+      return Boolean(stashBit && stashBit.quantity >= requiredBit.quantity);
     });
   };
 
   const handleCompleteBlueprint = (blueprintName: string) => {
-    const blueprint = blueprints.find(bp => bp.name === blueprintName);
+    const blueprint = blueprints.find((candidate) => candidate.name === blueprintName);
     if (blueprint && hasRequiredBits(blueprint.requiredBits)) {
       removeUserBits(blueprint.requiredBits);
       setUserStash(getUserBits());
@@ -50,8 +49,8 @@ const BlueprintComponent: React.FC<BlueprintComponentProps> = ({ completeBluepri
         <BlueprintItem key={blueprint.name}>
           <BlueprintImageContainer>
             <HoverOverlay>
-              {blueprint.requiredBits.map((bit, index) => (
-                <BitRequirement key={index}>
+              {blueprint.requiredBits.map((bit) => (
+                <BitRequirement key={`${blueprint.name}-${bit.color}`}>
                   <ColorBox color={getHexFromColorName(bit.color) || bit.color} />
                   <span>{colorDictionary[bit.color] || bit.color}: {bit.quantity}</span>
                 </BitRequirement>
