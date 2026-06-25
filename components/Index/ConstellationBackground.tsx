@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../Theme/ThemeContext';
+import { namedConstellations, NamedConstellation } from './constellationData';
 
 interface Particle {
   x: number;
@@ -21,6 +22,13 @@ interface PointerState {
   active: boolean;
 }
 
+type ConstellationStyle = React.CSSProperties & {
+  '--desktop-x': string;
+  '--desktop-y': string;
+  '--mobile-x': string;
+  '--mobile-y': string;
+};
+
 const MAX_CONNECTION_DISTANCE = 132;
 const POINTER_INFLUENCE_DISTANCE = 190;
 
@@ -28,9 +36,37 @@ const clamp = (value: number, min: number, max: number) => (
   Math.min(Math.max(value, min), max)
 );
 
+const getConstellationPosition = (
+  constellation: NamedConstellation,
+  width: number,
+  height: number,
+) => {
+  const useMobileLayout = width < 700;
+  const xPercent = useMobileLayout ? constellation.mobileX : constellation.x;
+  const yPercent = useMobileLayout ? constellation.mobileY : constellation.y;
+
+  return {
+    x: width * (xPercent / 100),
+    y: height * (yPercent / 100),
+  };
+};
+
 const ConstellationBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const activeConstellationRef = useRef<string | null>(null);
+  const redrawRef = useRef<() => void>(() => undefined);
+  const [activeConstellation, setActiveConstellationState] = useState<string | null>(null);
   const { theme } = useTheme();
+
+  const setActiveConstellation = (id: string | null) => {
+    activeConstellationRef.current = id;
+    setActiveConstellationState(id);
+    redrawRef.current();
+  };
+
+  const toggleConstellation = (id: string) => {
+    setActiveConstellation(activeConstellationRef.current === id ? null : id);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -58,8 +94,8 @@ const ConstellationBackground: React.FC = () => {
 
     const createParticles = () => {
       const viewportArea = width * height;
-      const desktopCount = clamp(Math.round(viewportArea / 15000), 48, 112);
-      const mobileCount = clamp(Math.round(viewportArea / 18000), 30, 68);
+      const desktopCount = clamp(Math.round(viewportArea / 17000), 42, 92);
+      const mobileCount = clamp(Math.round(viewportArea / 21000), 24, 52);
       const count = width < 700 ? mobileCount : desktopCount;
 
       particles = Array.from({ length: count }, () => ({
@@ -122,6 +158,62 @@ const ConstellationBackground: React.FC = () => {
       pointer.velocityY *= 0.88;
     };
 
+    const drawNamedConstellations = () => {
+      const baseDimension = Math.min(width, height);
+      const time = performance.now() * 0.001;
+
+      namedConstellations.forEach((constellation, constellationIndex) => {
+        const center = getConstellationPosition(constellation, width, height);
+        const rotation = constellation.rotation * (Math.PI / 180);
+        const minScale = width < 700 ? 20 : 26;
+        const maxScale = width < 700 ? 34 : 52;
+        const scale = clamp(baseDimension * constellation.scale, minScale, maxScale);
+        const isActive = activeConstellationRef.current === constellation.id;
+        const points = constellation.pattern.map((point, pointIndex) => {
+          const rotatedX = point.x * Math.cos(rotation) - point.y * Math.sin(rotation);
+          const rotatedY = point.x * Math.sin(rotation) + point.y * Math.cos(rotation);
+          const drift = reducedMotion
+            ? 0
+            : Math.sin(time * 0.75 + constellationIndex + pointIndex) * 1.25;
+
+          return {
+            x: center.x + rotatedX * scale + drift,
+            y: center.y + rotatedY * scale + drift * 0.55,
+          };
+        });
+
+        context.beginPath();
+        points.forEach((point, index) => {
+          if (index === 0) context.moveTo(point.x, point.y);
+          else context.lineTo(point.x, point.y);
+        });
+        context.strokeStyle = isActive ? theme.c4 : theme.c3;
+        context.globalAlpha = isActive ? 0.94 : 0.38;
+        context.lineWidth = isActive ? 1.7 : 1;
+        context.shadowColor = isActive ? theme.glow : theme.c3;
+        context.shadowBlur = isActive ? 14 : 4;
+        context.stroke();
+
+        points.forEach((point, pointIndex) => {
+          const twinkle = reducedMotion
+            ? 0
+            : Math.sin(time * 1.4 + constellationIndex * 0.8 + pointIndex) * 0.35;
+          const radius = (isActive ? 2.8 : 1.8) + twinkle;
+
+          context.beginPath();
+          context.arc(point.x, point.y, Math.max(radius, 1.2), 0, Math.PI * 2);
+          context.fillStyle = isActive ? theme.c4 : theme.c3;
+          context.globalAlpha = isActive ? 1 : 0.74;
+          context.shadowColor = isActive ? theme.glow : theme.c3;
+          context.shadowBlur = isActive ? 16 : 7;
+          context.fill();
+        });
+      });
+
+      context.globalAlpha = 1;
+      context.shadowBlur = 0;
+    };
+
     function draw() {
       context.clearRect(0, 0, width, height);
 
@@ -150,13 +242,13 @@ const ConstellationBackground: React.FC = () => {
           const distance = Math.hypot(first.x - second.x, first.y - second.y);
 
           if (distance < MAX_CONNECTION_DISTANCE) {
-            const opacity = (1 - distance / MAX_CONNECTION_DISTANCE) * 0.32;
+            const opacity = (1 - distance / MAX_CONNECTION_DISTANCE) * 0.24;
             context.beginPath();
             context.moveTo(first.x, first.y);
             context.lineTo(second.x, second.y);
             context.strokeStyle = theme.c3;
             context.globalAlpha = opacity;
-            context.lineWidth = 0.75;
+            context.lineWidth = 0.65;
             context.stroke();
           }
         }
@@ -165,7 +257,7 @@ const ConstellationBackground: React.FC = () => {
           const pointerDistance = Math.hypot(first.x - pointer.x, first.y - pointer.y);
 
           if (pointerDistance < POINTER_INFLUENCE_DISTANCE) {
-            const opacity = (1 - pointerDistance / POINTER_INFLUENCE_DISTANCE) * 0.58;
+            const opacity = (1 - pointerDistance / POINTER_INFLUENCE_DISTANCE) * 0.48;
             context.beginPath();
             context.moveTo(first.x, first.y);
             context.lineTo(pointer.x, pointer.y);
@@ -200,6 +292,7 @@ const ConstellationBackground: React.FC = () => {
         context.fill();
       });
 
+      drawNamedConstellations();
       context.globalAlpha = 1;
       context.shadowBlur = 0;
     }
@@ -237,13 +330,14 @@ const ConstellationBackground: React.FC = () => {
       if (reducedMotion) {
         draw();
       } else {
-        animate();
+        animationFrame = window.requestAnimationFrame(animate);
       }
     };
 
+    redrawRef.current = draw;
     resizeCanvas();
 
-    if (!reducedMotion) animate();
+    if (!reducedMotion) animationFrame = window.requestAnimationFrame(animate);
 
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
@@ -252,6 +346,7 @@ const ConstellationBackground: React.FC = () => {
     reducedMotionQuery.addEventListener('change', handleMotionPreferenceChange);
 
     return () => {
+      redrawRef.current = () => undefined;
       window.cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('pointermove', handlePointerMove);
@@ -262,9 +357,39 @@ const ConstellationBackground: React.FC = () => {
   }, [theme.c3, theme.c4, theme.glow]);
 
   return (
-    <Background aria-hidden="true">
-      <Canvas ref={canvasRef} />
-      <Vignette />
+    <Background>
+      <Canvas ref={canvasRef} aria-hidden="true" />
+      <Vignette aria-hidden="true" />
+      <ConstellationLayer aria-label="Interactive constellations">
+        {namedConstellations.map((constellation) => {
+          const isActive = activeConstellation === constellation.id;
+          const style: ConstellationStyle = {
+            '--desktop-x': `${constellation.x}%`,
+            '--desktop-y': `${constellation.y}%`,
+            '--mobile-x': `${constellation.mobileX}%`,
+            '--mobile-y': `${constellation.mobileY}%`,
+          };
+
+          return (
+            <ConstellationHotspot
+              key={constellation.id}
+              type="button"
+              style={style}
+              aria-label={`Reveal constellation: ${constellation.title}`}
+              aria-pressed={isActive}
+              onPointerEnter={() => setActiveConstellation(constellation.id)}
+              onPointerLeave={() => setActiveConstellation(null)}
+              onFocus={() => setActiveConstellation(constellation.id)}
+              onBlur={() => setActiveConstellation(null)}
+              onClick={() => toggleConstellation(constellation.id)}
+            >
+              <ConstellationLabel $visible={isActive}>
+                {constellation.title}
+              </ConstellationLabel>
+            </ConstellationHotspot>
+          );
+        })}
+      </ConstellationLayer>
     </Background>
   );
 };
@@ -295,4 +420,73 @@ const Vignette = styled.div`
   background:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.12), transparent 28%),
     radial-gradient(circle at center, transparent 42%, rgba(0, 0, 0, 0.38) 100%);
+`;
+
+const ConstellationLayer = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+`;
+
+const ConstellationHotspot = styled.button`
+  appearance: none;
+  position: absolute;
+  left: var(--desktop-x);
+  top: var(--desktop-y);
+  width: 112px;
+  height: 88px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: help;
+  pointer-events: auto;
+
+  &:focus-visible {
+    outline: 1px dashed ${({ theme }) => theme.c3};
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 699px) {
+    left: var(--mobile-x);
+    top: var(--mobile-y);
+    width: 84px;
+    height: 62px;
+  }
+`;
+
+const ConstellationLabel = styled.span<{ $visible: boolean }>`
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  width: max-content;
+  max-width: min(240px, 72vw);
+  padding: 7px 10px;
+  border: 1px solid ${({ theme }) => theme.c3};
+  border-radius: 4px;
+  background: ${({ theme }) => theme.c2};
+  color: ${({ theme }) => theme.c4};
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transform: translate(-50%, ${({ $visible }) => ($visible ? '0' : '-4px')});
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+
+  @media (max-width: 699px) {
+    max-width: 170px;
+    padding: 5px 7px;
+    font-size: 9px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 `;
