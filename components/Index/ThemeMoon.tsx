@@ -4,6 +4,7 @@ import { useTheme } from '../Theme/ThemeContext';
 
 const ThemeMoon: React.FC = () => {
   const { theme, switchTheme } = useTheme();
+  const isCustom = theme.mode === 'toggled';
   const currentMode = theme.mode === 'light'
     ? 'light theme'
     : theme.mode === 'dark'
@@ -17,7 +18,7 @@ const ThemeMoon: React.FC = () => {
       onClick={() => switchTheme(nextTheme)}
       aria-label={`${currentMode}. Switch to ${nextTheme} theme`}
     >
-      <Moon aria-hidden="true" />
+      <Moon $crescent={isCustom} aria-hidden="true" />
       <MoonLabel>{currentMode}</MoonLabel>
     </MoonButton>
   );
@@ -53,7 +54,7 @@ const MoonButton = styled.button`
   }
 `;
 
-const Moon = styled.span`
+const Moon = styled.span<{ $crescent: boolean }>`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -72,6 +73,20 @@ const Moon = styled.span`
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease;
   pointer-events: none;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    display: ${({ $crescent }) => ($crescent ? 'block' : 'none')};
+    position: absolute;
+    top: -2px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.c1};
+    box-shadow: -1px 0 2px rgba(0, 0, 0, 0.18);
+  }
 
   ${MoonButton}:hover &,
   ${MoonButton}:focus-visible & {
@@ -85,6 +100,13 @@ const Moon = styled.span`
   @media (max-width: 699px) {
     width: 20px;
     height: 20px;
+
+    &::after {
+      top: -2px;
+      left: 7px;
+      width: 20px;
+      height: 20px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
