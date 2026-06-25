@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../Theme/ThemeContext';
+import { getExploreGlowFilter } from '../Theme/exploreGlow';
 
 const ThemeMoon: React.FC = () => {
   const { theme, switchTheme } = useTheme();
@@ -67,9 +68,7 @@ const Moon = styled.span<{ $crescent: boolean }>`
     radial-gradient(circle at 42% 68%, rgba(0, 0, 0, 0.12) 0 10%, transparent 11%),
     ${({ theme }) => theme.c3};
   box-shadow: inset -5px -4px 7px rgba(0, 0, 0, 0.32);
-  filter:
-    drop-shadow(0 0 4px ${({ theme }) => theme.glow})
-    drop-shadow(0 0 9px ${({ theme }) => theme.glow});
+  filter: ${({ theme }) => getExploreGlowFilter(theme.c3)};
   -webkit-mask-image: ${({ $crescent }) => (
     $crescent
       ? 'radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%)'
@@ -92,9 +91,6 @@ const Moon = styled.span<{ $crescent: boolean }>`
   ${MoonButton}:focus-visible & {
     transform: translate(-50%, -50%) scale(1.08);
     box-shadow: inset -5px -4px 7px rgba(0, 0, 0, 0.28);
-    filter:
-      drop-shadow(0 0 6px ${({ theme }) => theme.glow})
-      drop-shadow(0 0 12px ${({ theme }) => theme.glow});
   }
 
   @media (max-width: 699px) {

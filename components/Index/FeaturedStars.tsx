@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { featuredStars } from './featuredStarsData';
+import { getExploreGlowFilter } from '../Theme/exploreGlow';
 
 type StarStyle = React.CSSProperties & {
   '--x': string;
@@ -91,9 +92,7 @@ const Point = styled.span<{ $central: boolean }>`
       : `0 0 7px ${theme.c4}, 0 0 14px ${theme.glow}`
   )};
   filter: ${({ $central, theme }) => (
-    $central
-      ? `drop-shadow(0 0 4px ${theme.glow}) drop-shadow(0 0 9px ${theme.glow})`
-      : 'none'
+    $central ? getExploreGlowFilter(theme.c3) : 'none'
   )};
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
@@ -106,11 +105,6 @@ const Point = styled.span<{ $central: boolean }>`
       $central
         ? 'inset -5px -4px 7px rgba(0,0,0,.3)'
         : `0 0 10px ${theme.c4}, 0 0 19px ${theme.glow}`
-    )};
-    filter: ${({ $central, theme }) => (
-      $central
-        ? `drop-shadow(0 0 6px ${theme.glow}) drop-shadow(0 0 12px ${theme.glow})`
-        : 'none'
     )};
   }
 
