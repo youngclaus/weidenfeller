@@ -116,23 +116,28 @@ const VinylGraphic = styled(VinylRecord)`
 
 const VinylText = styled.span`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  width: 38%;
-  transform: translate(-50%, -50%);
+  right: 8%;
+  bottom: 7%;
+  left: 8%;
+  z-index: 3;
+  display: block;
   font-family: "DM Mono", monospace;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
   text-align: center;
   color: ${({ theme }) => theme.c4};
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.95),
+    0 0 6px rgba(0, 0, 0, 0.65);
   pointer-events: none;
   transition: font-size 0.2s ease-in-out;
 
   @media (max-width: 550px) {
-    font-size: 7px;
+    right: 5%;
+    bottom: 5%;
+    left: 5%;
+    font-size: 9px;
   }
 `;
 
@@ -167,10 +172,10 @@ const VinylButton = styled.button<{ $zIndex: number }>`
 
   &:hover > ${VinylText},
   &:focus-visible > ${VinylText} {
-    font-size: 12px;
+    font-size: 14px;
 
     @media (max-width: 550px) {
-      font-size: 8px;
+      font-size: 10px;
     }
   }
 
