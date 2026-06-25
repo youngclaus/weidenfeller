@@ -10,7 +10,9 @@ const Index: React.FC = () => {
       <ConstellationBackground />
       <ContentContainer className="content-container">
         <PlayerContainer>
-          <Player content={homeContent} visible={true} />
+          <PlayerInteraction>
+            <Player content={homeContent} visible={true} />
+          </PlayerInteraction>
         </PlayerContainer>
         <TitleContainer>
           <Title>chris</Title>
@@ -37,6 +39,8 @@ const Container = styled.div`
 `;
 
 const ContentContainer = styled.div`
+  pointer-events: none;
+
   @media (max-width: 949px) {
     display: flex;
     position: fixed;
@@ -90,6 +94,8 @@ const Title = styled.div`
 `;
 
 const PlayerContainer = styled.div`
+  pointer-events: none;
+
   @media (max-width: 949px) {
     position: absolute;
     display: flex;
@@ -112,4 +118,8 @@ const PlayerContainer = styled.div`
     align-items: center;
     z-index: 10;
   }
+`;
+
+const PlayerInteraction = styled.div`
+  pointer-events: auto;
 `;
