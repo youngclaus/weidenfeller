@@ -34,7 +34,8 @@ const ConstellationBackground: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const candidate = canvas.getContext('2d');
+    const currentCanvas: HTMLCanvasElement = canvas;
+    const candidate = currentCanvas.getContext('2d');
     if (!candidate) return;
     const context: CanvasRenderingContext2D = candidate;
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -62,10 +63,10 @@ const ConstellationBackground: React.FC = () => {
       width = window.innerWidth;
       height = window.innerHeight;
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(width * ratio);
-      canvas.height = Math.floor(height * ratio);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      currentCanvas.width = Math.floor(width * ratio);
+      currentCanvas.height = Math.floor(height * ratio);
+      currentCanvas.style.width = `${width}px`;
+      currentCanvas.style.height = `${height}px`;
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
       createParticles();
       draw();
