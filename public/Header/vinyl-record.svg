@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Vinyl record</title>
+  <desc id="desc">A detailed black vinyl record with concentric grooves, soft reflected light, and a transparent center label.</desc>
+  <defs>
+    <radialGradient id="surface" cx="42%" cy="36%" r="72%">
+      <stop offset="0" stop-color="#303238"/>
+      <stop offset="0.22" stop-color="#111216"/>
+      <stop offset="0.58" stop-color="#050506"/>
+      <stop offset="0.82" stop-color="#16171a"/>
+      <stop offset="1" stop-color="#020203"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#fff" stop-opacity="0.02"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.22"/>
+      <stop offset="0.58" stop-color="#fff" stop-opacity="0.025"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="texture" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="14" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
+      <feComponentTransfer in="mono" result="faintNoise">
+        <feFuncA type="table" tableValues="0 0.045"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="faintNoise" mode="screen"/>
+    </filter>
+    <mask id="recordMask">
+      <rect width="512" height="512" fill="#000"/>
+      <circle cx="256" cy="256" r="248" fill="#fff"/>
+      <circle cx="256" cy="256" r="78" fill="#000"/>
+    </mask>
+    <clipPath id="discClip">
+      <circle cx="256" cy="256" r="248"/>
+    </clipPath>
+  </defs>
+
+  <g mask="url(#recordMask)" filter="url(#texture)">
+    <circle cx="256" cy="256" r="248" fill="url(#surface)"/>
+
+    <g fill="none" stroke-linecap="round">
+      <circle cx="256" cy="256" r="232" stroke="#72757d" stroke-opacity="0.18" stroke-width="1.3"/>
+      <circle cx="256" cy="256" r="224" stroke="#0b0c0f" stroke-opacity="0.95" stroke-width="2"/>
+      <circle cx="256" cy="256" r="215" stroke="#777a82" stroke-opacity="0.12" stroke-width="1"/>
+      <circle cx="256" cy="256" r="207" stroke="#000" stroke-opacity="0.75" stroke-width="1.8"/>
+      <circle cx="256" cy="256" r="198" stroke="#7d8087" stroke-opacity="0.13" stroke-width="1"/>
+      <circle cx="256" cy="256" r="189" stroke="#000" stroke-opacity="0.78" stroke-width="2"/>
+      <circle cx="256" cy="256" r="180" stroke="#858891" stroke-opacity="0.12" stroke-width="1"/>
+      <circle cx="256" cy="256" r="171" stroke="#020203" stroke-opacity="0.9" stroke-width="1.8"/>
+      <circle cx="256" cy="256" r="162" stroke="#82858d" stroke-opacity="0.12" stroke-width="1"/>
+      <circle cx="256" cy="256" r="153" stroke="#000" stroke-opacity="0.8" stroke-width="2"/>
+      <circle cx="256" cy="256" r="144" stroke="#888b92" stroke-opacity="0.11" stroke-width="1"/>
+      <circle cx="256" cy="256" r="135" stroke="#000" stroke-opacity="0.82" stroke-width="1.8"/>
+      <circle cx="256" cy="256" r="126" stroke="#8b8e96" stroke-opacity="0.1" stroke-width="1"/>
+      <circle cx="256" cy="256" r="117" stroke="#000" stroke-opacity="0.82" stroke-width="2"/>
+      <circle cx="256" cy="256" r="108" stroke="#84878e" stroke-opacity="0.11" stroke-width="1"/>
+      <circle cx="256" cy="256" r="99" stroke="#000" stroke-opacity="0.88" stroke-width="1.8"/>
+      <circle cx="256" cy="256" r="90" stroke="#92959b" stroke-opacity="0.12" stroke-width="1"/>
+    </g>
+
+    <g fill="none" stroke="url(#sheen)" stroke-width="22" opacity="0.72">
+      <path d="M88 112c82 24 164 104 208 184"/>
+      <path d="M216 64c92 39 170 126 194 222"/>
+    </g>
+
+    <path d="M62 264c35 98 120 174 224 194" fill="none" stroke="#fff" stroke-opacity="0.055" stroke-width="18" stroke-linecap="round"/>
+    <path d="M124 86c62-35 141-48 213-27" fill="none" stroke="#fff" stroke-opacity="0.07" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <circle cx="256" cy="256" r="248" fill="none" stroke="#34363b" stroke-width="3"/>
+  <circle cx="256" cy="256" r="80" fill="none" stroke="#050506" stroke-width="8" opacity="0.92"/>
+  <circle cx="256" cy="256" r="72" fill="none" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/>
+  <circle cx="256" cy="256" r="10" fill="#08090b" stroke="#6e7178" stroke-width="2"/>
+  <circle cx="253" cy="253" r="3.3" fill="#b7bac0" opacity="0.35"/>
+</svg>
