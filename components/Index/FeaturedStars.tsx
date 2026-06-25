@@ -94,13 +94,21 @@ const Mark = styled.span`
     position: absolute;
     left: 50%;
     top: 50%;
-    background: linear-gradient(transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
-    opacity: 0.3;
+    opacity: 0.28;
     transform: translate(-50%, -50%);
   }
 
-  &::before { width: 1px; height: 360%; }
-  &::after { width: 240%; height: 1px; transform: translate(-50%, -50%) rotate(90deg); }
+  &::before {
+    width: 1px;
+    height: 360%;
+    background: linear-gradient(to bottom, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
+  }
+
+  &::after {
+    width: 240%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
+  }
 
   ${Star}:hover &,
   ${Star}:focus-visible & {
@@ -115,16 +123,14 @@ const Label = styled.span<{ $central: boolean }>`
   top: ${({ $central }) => ($central ? 'calc(100% + 26px)' : 'calc(100% + 16px)')};
   width: max-content;
   max-width: ${({ $central }) => ($central ? '280px' : '210px')};
-  padding: ${({ $central }) => ($central ? '0' : '4px 7px')};
-  border: ${({ $central, theme }) => ($central ? '0' : `1px solid ${theme.c3}`)};
-  border-radius: 3px;
-  background: ${({ $central, theme }) => ($central ? 'transparent' : theme.c2)};
   color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
   font-size: ${({ $central }) => ($central ? 'clamp(18px, 2vw, 28px)' : '11px')};
-  font-weight: ${({ $central }) => ($central ? 800 : 650)};
+  font-weight: ${({ $central }) => ($central ? 800 : 600)};
   line-height: 1.3;
   text-align: center;
+  letter-spacing: ${({ $central }) => ($central ? '0.02em' : '0.01em')};
+  opacity: ${({ $central }) => ($central ? 1 : 0.82)};
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72);
   transform: translateX(-50%);
 
