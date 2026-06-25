@@ -25,7 +25,7 @@ export const darkTheme: Theme = {
   c3: '#b74a86',
   c4: '#bbb',
   opacity: '0.7',
-  glow: 'rgba(209, 197, 86, 0.5)',
+  glow: 'rgba(217, 46, 239, 0.5)',
 };
 
 export const the1975: Theme = {
