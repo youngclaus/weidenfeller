@@ -28,8 +28,14 @@ const FeaturedStars: React.FC = () => (
       };
 
       return (
-        <Star key={star.id} style={style} tabIndex={0} aria-label={star.label} $central={Boolean(star.central)}>
-          <Mark aria-hidden="true" />
+        <Star
+          key={star.id}
+          type="button"
+          style={style}
+          aria-label={`Reveal featured star: ${star.label}`}
+          $central={Boolean(star.central)}
+        >
+          <Mark $central={Boolean(star.central)} aria-hidden="true" />
           <Label $central={Boolean(star.central)}>{star.label}</Label>
         </Star>
       );
@@ -41,8 +47,13 @@ export default FeaturedStars;
 
 const drift = keyframes`
   0%, 100% { transform: translate(-50%, -50%); }
-  45% { transform: translate(-50%, -50%) translate(3px, -5px); }
-  75% { transform: translate(-50%, -50%) translate(-2px, 3px); }
+  45% { transform: translate(-50%, -50%) translate(2px, -3px); }
+  75% { transform: translate(-50%, -50%) translate(-2px, 2px); }
+`;
+
+const twinkle = keyframes`
+  0%, 100% { opacity: 0.82; }
+  50% { opacity: 1; }
 `;
 
 const Layer = styled.section`
@@ -52,26 +63,31 @@ const Layer = styled.section`
   pointer-events: none;
 `;
 
-const Star = styled.article<{ $central: boolean }>`
+const Star = styled.button<{ $central: boolean }>`
+  appearance: none;
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: var(--size);
-  height: var(--size);
+  width: ${({ $central }) => ($central ? '92px' : '72px')};
+  height: ${({ $central }) => ($central ? '92px' : '72px')};
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: help;
   pointer-events: auto;
-  outline: none;
   animation: ${drift} var(--duration) ease-in-out var(--delay) infinite;
 
   &:focus-visible {
     outline: 1px dashed ${({ theme }) => theme.c3};
-    outline-offset: ${({ $central }) => ($central ? '20px' : '12px')};
+    outline-offset: 3px;
   }
 
   @media (max-width: 699px) {
     left: var(--mx);
     top: var(--my);
-    width: var(--msize);
-    height: var(--msize);
+    width: ${({ $central }) => ($central ? '76px' : '62px')};
+    height: ${({ $central }) => ($central ? '76px' : '62px')};
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -80,63 +96,76 @@ const Star = styled.article<{ $central: boolean }>`
   }
 `;
 
-const Mark = styled.span`
+const Mark = styled.span<{ $central: boolean }>`
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
-  background: radial-gradient(circle, #fff 0 10%, ${({ theme }) => theme.c4} 28%, ${({ theme }) => theme.c3} 52%, transparent 76%);
-  box-shadow: 0 0 14px ${({ theme }) => theme.c4}, 0 0 34px ${({ theme }) => theme.glow};
-  transition: transform 160ms ease, box-shadow 160ms ease;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    opacity: 0.28;
-    transform: translate(-50%, -50%);
-  }
-
-  &::before {
-    width: 1px;
-    height: 360%;
-    background: linear-gradient(to bottom, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
-  }
-
-  &::after {
-    width: 240%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
-  }
+  background: ${({ theme }) => theme.c3};
+  box-shadow:
+    0 0 ${({ $central }) => ($central ? '9px' : '7px')} ${({ theme }) => theme.c3},
+    0 0 ${({ $central }) => ($central ? '22px' : '17px')} ${({ theme }) => theme.glow};
+  transform: translate(-50%, -50%);
+  animation: ${twinkle} 3.8s ease-in-out infinite;
+  transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
 
   ${Star}:hover &,
-  ${Star}:focus-visible & {
-    transform: scale(1.12);
-    box-shadow: 0 0 18px ${({ theme }) => theme.c4}, 0 0 44px ${({ theme }) => theme.glow};
+  ${Star}:focus & {
+    background: ${({ theme }) => theme.c4};
+    box-shadow:
+      0 0 ${({ $central }) => ($central ? '13px' : '10px')} ${({ theme }) => theme.c4},
+      0 0 ${({ $central }) => ($central ? '30px' : '24px')} ${({ theme }) => theme.glow};
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+
+  @media (max-width: 699px) {
+    width: var(--msize);
+    height: var(--msize);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 `;
 
 const Label = styled.span<{ $central: boolean }>`
   position: absolute;
   left: 50%;
-  top: ${({ $central }) => ($central ? 'calc(100% + 26px)' : 'calc(100% + 16px)')};
+  top: calc(50% + ${({ $central }) => ($central ? '18px' : '15px')});
   width: max-content;
-  max-width: ${({ $central }) => ($central ? '280px' : '210px')};
+  max-width: min(240px, 72vw);
+  padding: 7px 10px;
+  border: 1px solid ${({ theme }) => theme.c3};
+  border-radius: 4px;
+  background: ${({ theme }) => theme.c2};
   color: ${({ theme }) => theme.c4};
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
   font-family: "DM Mono", monospace;
-  font-size: ${({ $central }) => ($central ? 'clamp(18px, 2vw, 28px)' : '11px')};
-  font-weight: ${({ $central }) => ($central ? 800 : 600)};
+  font-size: ${({ $central }) => ($central ? '13px' : '12px')};
+  font-weight: 700;
   line-height: 1.3;
   text-align: center;
-  letter-spacing: ${({ $central }) => ($central ? '0.02em' : '0.01em')};
-  opacity: ${({ $central }) => ($central ? 1 : 0.82)};
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72);
-  transform: translateX(-50%);
+  white-space: normal;
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+
+  ${Star}:hover &,
+  ${Star}:focus & {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 
   @media (max-width: 699px) {
-    top: ${({ $central }) => ($central ? 'calc(100% + 20px)' : 'calc(100% + 10px)')};
-    max-width: ${({ $central }) => ($central ? '220px' : '124px')};
-    font-size: ${({ $central }) => ($central ? '16px' : '8px')};
+    max-width: 170px;
+    padding: 5px 7px;
+    font-size: 9px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 `;
