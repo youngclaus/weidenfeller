@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
 import { getObjectsWithState, ObjectWithState } from '../BlueprintMenu/blueprints';
 import { useTheme } from '../Theme/ThemeContext';
-import { getExploreGlowFilter } from '../Theme/exploreGlow';
+import { getThemeGlowFilter } from '../Theme/exploreGlow';
 import InventoryButton from './InventoryButton';
 import InventoryManager from '../../components/BlueprintMenu/InventoryManager';
 
@@ -215,7 +215,7 @@ const GlowImage = styled.img<{ $active: boolean }>`
   &:hover {
     ${({ $active, theme }) =>
       $active
-        ? css`filter: ${getExploreGlowFilter(theme.c3)};`
+        ? css`filter: ${getThemeGlowFilter(theme.glow, 20)};`
         : css`filter: brightness(0) drop-shadow(0 0 12px ${theme.c4});`}
   }
 `;

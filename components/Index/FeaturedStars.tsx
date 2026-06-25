@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { featuredStars } from './featuredStarsData';
-import { getExploreGlowFilter } from '../Theme/exploreGlow';
+import { getThemeGlowFilter } from '../Theme/exploreGlow';
 
 type StarStyle = React.CSSProperties & {
   '--x': string;
@@ -83,7 +83,7 @@ const Point = styled.span<{ $central: boolean }>`
   border-radius: 50%;
   background: ${({ $central, theme }) => (
     $central
-      ? `radial-gradient(circle at 31% 28%, rgba(255,255,255,.34) 0 7%, transparent 8%), radial-gradient(circle at 66% 36%, rgba(0,0,0,.14) 0 8%, transparent 9%), radial-gradient(circle at 42% 68%, rgba(0,0,0,.12) 0 10%, transparent 11%), radial-gradient(circle at 36% 34%, ${theme.c4}, ${theme.c3} 58%, ${theme.c2} 100%)`
+      ? `radial-gradient(circle at 31% 28%, rgba(255,255,255,.18) 0 7%, transparent 8%), radial-gradient(circle at 66% 36%, rgba(0,0,0,.14) 0 8%, transparent 9%), radial-gradient(circle at 42% 68%, rgba(0,0,0,.12) 0 10%, transparent 11%), ${theme.c3}`
       : theme.c4
   )};
   box-shadow: ${({ $central, theme }) => (
@@ -92,7 +92,7 @@ const Point = styled.span<{ $central: boolean }>`
       : `0 0 7px ${theme.c4}, 0 0 14px ${theme.glow}`
   )};
   filter: ${({ $central, theme }) => (
-    $central ? getExploreGlowFilter(theme.c3) : 'none'
+    $central ? getThemeGlowFilter(theme.glow, 8) : 'none'
   )};
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
@@ -100,11 +100,14 @@ const Point = styled.span<{ $central: boolean }>`
 
   ${Star}:hover &,
   ${Star}:focus-visible & {
-    transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1.06 : 1.2)});
+    transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1 : 1.2)});
     box-shadow: ${({ $central, theme }) => (
       $central
-        ? 'inset -5px -4px 7px rgba(0,0,0,.3)'
+        ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
         : `0 0 10px ${theme.c4}, 0 0 19px ${theme.glow}`
+    )};
+    filter: ${({ $central, theme }) => (
+      $central ? getThemeGlowFilter(theme.glow, 20) : 'none'
     )};
   }
 
