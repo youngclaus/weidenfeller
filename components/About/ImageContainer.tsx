@@ -79,15 +79,21 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
       if (showInventory) {
         const inventoryElement = document.querySelector('#inventory-overlay');
         if (inventoryElement && inventoryElement.contains(event.target as Node)) {
+          // vertical scrolling within the inventory
           return;
         }
   
+        // Prevent scrolling outside the inventory
         event.preventDefault();
-      } else if (imageContainer) {
-        imageContainer.scrollLeft += event.deltaY;
+      } else {
+        // horizontal scrolling with the wheel
+        if (imageContainer) {
+          imageContainer.scrollLeft += event.deltaY;
+        }
       }
     };
   
+    // scroll listener
     window.addEventListener('wheel', handleScroll, { passive: false });
   
     return () => {
@@ -118,7 +124,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
         <StaticImage key={idx} {...image} />
       ))}
       {objects
-        .filter(obj => blueprintPositions[obj.name])
+        .filter(obj => blueprintPositions[obj.name]) // Only include prints with defined positions
         .map(obj => {
           const pos = blueprintPositions[obj.name];
 
@@ -205,6 +211,7 @@ const GlowImage = styled.img<{ $active: boolean }>`
       ? css`filter: none;`
       : css`filter: brightness(0) drop-shadow(0 0 4px ${theme.c4});`}
 
+  /* Hover state: glow for active, stronger red-outline for inactive */
   &:hover {
     ${({ $active, theme }) =>
       $active
