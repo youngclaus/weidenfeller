@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
 import Player from '../components/Player/Player';
-import CommandLine from '../components/Index/Footer';
 import ConstellationBackground from '../components/Index/ConstellationBackground';
 import { homeContent } from '../components/Player/playerContent';
 
@@ -18,7 +17,6 @@ const Index: React.FC = () => {
           <Title>youngclaus</Title>
         </TitleContainer>
       </ContentContainer>
-      <CommandLine />
     </Container>
   );
 };
@@ -43,8 +41,8 @@ const ContentContainer = styled.div`
     display: flex;
     position: fixed;
     width: 100dvw;
-    height: 85dvh;
-    bottom: 40px;
+    height: 100dvh;
+    bottom: 0;
     justify-content: center;
     z-index: 5;
   }
@@ -54,7 +52,6 @@ const ContentContainer = styled.div`
     position: fixed;
     width: 100dvw;
     height: 85dvh;
-    bottom: 40px;
     top: 50%;
     transform: translateY(-50%);
     align-items: center;
