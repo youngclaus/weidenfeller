@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getUserBits, colorDictionary } from './bits';
+import { colorDictionary } from './bits';
 
 interface Bit {
   color: string;

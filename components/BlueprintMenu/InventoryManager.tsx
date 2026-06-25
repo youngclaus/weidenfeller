@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import StashComponent from './StashComponent';
 import BlueprintComponent from './BlueprintComponent';
 import PrintsComponent from './PrintsComponent';
 import { getObjectsByState, markObjectAsCompleted, ObjectData } from './blueprints';
-import { getUserBits, addUserBits, Bit } from './bits';
+import { getUserBits, Bit } from './bits';
 
 const InventoryManager: React.FC = () => {
   const [stash, setStash] = useState<Bit[]>([]);
   const [blueprints, setBlueprints] = useState<ObjectData[]>([]);
   const [prints, setPrints] = useState<ObjectData[]>([]);
-  const [isMobileView, setIsMobileView] = useState<boolean>(window.innerWidth < 800);
   const [currentSeriesIndex, setCurrentSeriesIndex] = useState<number>(0);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth < 800);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     const { blueprints: fetchedBlueprints, prints: fetchedPrints } = getObjectsByState();
     setBlueprints(fetchedBlueprints);
     setPrints(fetchedPrints);
-  
-    const bits = getUserBits();
-    setStash(bits);
+    setStash(getUserBits());
   }, []);
 
   const handleCompleteBlueprint = (blueprintName: string) => {
@@ -40,18 +28,25 @@ const InventoryManager: React.FC = () => {
     setStash(getUserBits());
   };
 
+  const seriesList = Array.from(new Set([...blueprints, ...prints].map((object) => object.series)));
+  const boundedSeriesIndex = seriesList.length === 0
+    ? 0
+    : Math.min(currentSeriesIndex, seriesList.length - 1);
+  const currentSeries = seriesList[boundedSeriesIndex] ?? '';
+  const currentBlueprints = blueprints.filter((blueprint) => blueprint.series === currentSeries);
+  const currentPrints = prints.filter((print) => print.series === currentSeries);
+
   const handleScrollLeft = () => {
-    setCurrentSeriesIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    setCurrentSeriesIndex((previousIndex) => Math.max(previousIndex - 1, 0));
   };
 
   const handleScrollRight = () => {
-    setCurrentSeriesIndex((prevIndex) => Math.min(prevIndex + 1, seriesList.length - 1));
+    setCurrentSeriesIndex((previousIndex) => (
+      seriesList.length === 0
+        ? 0
+        : Math.min(previousIndex + 1, seriesList.length - 1)
+    ));
   };
-
-  const seriesList = Array.from(new Set([...blueprints, ...prints].map(obj => obj.series)));
-  const currentSeries = seriesList.length > 0 ? seriesList[currentSeriesIndex] : '';
-  const currentBlueprints = blueprints.filter(bp => bp.series === currentSeries);
-  const currentPrints = prints.filter(print => print.series === currentSeries);
 
   return (
     <Container>
