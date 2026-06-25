@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { featuredStars } from './featuredStars';
 
 type StarStyle = React.CSSProperties & {
@@ -7,10 +7,6 @@ type StarStyle = React.CSSProperties & {
   '--y': string;
   '--mx': string;
   '--my': string;
-  '--size': string;
-  '--msize': string;
-  '--duration': string;
-  '--delay': string;
 };
 
 const FeaturedStars: React.FC = () => (
@@ -21,16 +17,18 @@ const FeaturedStars: React.FC = () => (
         '--y': `${star.y}%`,
         '--mx': `${star.mobileX}%`,
         '--my': `${star.mobileY}%`,
-        '--size': `${star.size}px`,
-        '--msize': `${star.mobileSize}px`,
-        '--duration': `${star.driftDuration}s`,
-        '--delay': `${star.driftDelay}s`,
       };
 
       return (
-        <Star key={star.id} style={style} tabIndex={0} aria-label={star.label} $central={Boolean(star.central)}>
-          <Mark aria-hidden="true" />
-          <Label $central={Boolean(star.central)}>{star.label}</Label>
+        <Star
+          key={star.id}
+          type="button"
+          style={style}
+          aria-label={`Reveal featured star: ${star.label}`}
+          $central={Boolean(star.central)}
+        >
+          <Point $central={Boolean(star.central)} aria-hidden="true" />
+          <Label>{star.label}</Label>
         </Star>
       );
     })}
@@ -39,12 +37,6 @@ const FeaturedStars: React.FC = () => (
 
 export default FeaturedStars;
 
-const drift = keyframes`
-  0%, 100% { transform: translate(-50%, -50%); }
-  45% { transform: translate(-50%, -50%) translate(3px, -5px); }
-  75% { transform: translate(-50%, -50%) translate(-2px, 3px); }
-`;
-
 const Layer = styled.section`
   position: absolute;
   inset: 0;
@@ -52,91 +44,94 @@ const Layer = styled.section`
   pointer-events: none;
 `;
 
-const Star = styled.article<{ $central: boolean }>`
+const Star = styled.button<{ $central: boolean }>`
+  appearance: none;
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: var(--size);
-  height: var(--size);
+  width: ${({ $central }) => ($central ? '112px' : '96px')};
+  height: ${({ $central }) => ($central ? '88px' : '72px')};
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: help;
   pointer-events: auto;
-  outline: none;
-  animation: ${drift} var(--duration) ease-in-out var(--delay) infinite;
 
   &:focus-visible {
     outline: 1px dashed ${({ theme }) => theme.c3};
-    outline-offset: ${({ $central }) => ($central ? '20px' : '12px')};
+    outline-offset: 4px;
   }
 
   @media (max-width: 699px) {
     left: var(--mx);
     top: var(--my);
-    width: var(--msize);
-    height: var(--msize);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-    transform: translate(-50%, -50%);
+    width: 84px;
+    height: 62px;
   }
 `;
 
-const Mark = styled.span`
+const Point = styled.span<{ $central: boolean }>`
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: ${({ $central }) => ($central ? '7px' : '5px')};
+  height: ${({ $central }) => ($central ? '7px' : '5px')};
   border-radius: 50%;
-  background: radial-gradient(circle, #fff 0 10%, ${({ theme }) => theme.c4} 28%, ${({ theme }) => theme.c3} 52%, transparent 76%);
-  box-shadow: 0 0 14px ${({ theme }) => theme.c4}, 0 0 34px ${({ theme }) => theme.glow};
-  transition: transform 160ms ease, box-shadow 160ms ease;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    opacity: 0.28;
-    transform: translate(-50%, -50%);
-  }
-
-  &::before {
-    width: 1px;
-    height: 360%;
-    background: linear-gradient(to bottom, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
-  }
-
-  &::after {
-    width: 240%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, ${({ theme }) => theme.c3}, ${({ theme }) => theme.c4}, ${({ theme }) => theme.c3}, transparent);
-  }
+  background: ${({ theme }) => theme.c4};
+  box-shadow:
+    0 0 ${({ $central }) => ($central ? '9px' : '7px')} ${({ theme }) => theme.c4},
+    0 0 ${({ $central }) => ($central ? '19px' : '14px')} ${({ theme }) => theme.glow};
+  transform: translate(-50%, -50%);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  pointer-events: none;
 
   ${Star}:hover &,
   ${Star}:focus-visible & {
-    transform: scale(1.12);
-    box-shadow: 0 0 18px ${({ theme }) => theme.c4}, 0 0 44px ${({ theme }) => theme.glow};
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow:
+      0 0 ${({ $central }) => ($central ? '12px' : '10px')} ${({ theme }) => theme.c4},
+      0 0 ${({ $central }) => ($central ? '25px' : '19px')} ${({ theme }) => theme.glow};
   }
 `;
 
-const Label = styled.span<{ $central: boolean }>`
+const Label = styled.span`
   position: absolute;
   left: 50%;
-  top: ${({ $central }) => ($central ? 'calc(100% + 26px)' : 'calc(100% + 16px)')};
+  top: calc(100% + 4px);
   width: max-content;
-  max-width: ${({ $central }) => ($central ? '280px' : '210px')};
+  max-width: min(240px, 72vw);
+  padding: 7px 10px;
+  border: 1px solid ${({ theme }) => theme.c3};
+  border-radius: 4px;
+  background: ${({ theme }) => theme.c2};
   color: ${({ theme }) => theme.c4};
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
   font-family: "DM Mono", monospace;
-  font-size: ${({ $central }) => ($central ? 'clamp(18px, 2vw, 28px)' : '11px')};
-  font-weight: ${({ $central }) => ($central ? 800 : 600)};
+  font-size: 12px;
+  font-weight: 700;
   line-height: 1.3;
   text-align: center;
-  letter-spacing: ${({ $central }) => ($central ? '0.02em' : '0.01em')};
-  opacity: ${({ $central }) => ($central ? 1 : 0.82)};
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72);
-  transform: translateX(-50%);
+  white-space: normal;
+  opacity: 0;
+  transform: translate(-50%, -4px);
+  transition: opacity 150ms ease, transform 150ms ease;
+  pointer-events: none;
+
+  ${Star}:hover &,
+  ${Star}:focus-visible & {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 
   @media (max-width: 699px) {
-    top: ${({ $central }) => ($central ? 'calc(100% + 20px)' : 'calc(100% + 10px)')};
-    max-width: ${({ $central }) => ($central ? '220px' : '124px')};
-    font-size: ${({ $central }) => ($central ? '16px' : '8px')};
+    max-width: 170px;
+    padding: 5px 7px;
+    font-size: 9px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 `;
