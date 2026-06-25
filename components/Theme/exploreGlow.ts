@@ -1,3 +1,3 @@
-export const getExploreGlowFilter = (accentColor: string): string => (
-  `brightness(1.2) drop-shadow(0 0 20px ${accentColor})`
-);
+export const getThemeGlowFilter = (glowColor: string, blurRadius: number): string => {
+  return `drop-shadow(0 0 ${blurRadius}px ${glowColor})`;
+};
