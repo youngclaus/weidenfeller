@@ -10,7 +10,7 @@ type StarStyle = React.CSSProperties & {
 };
 
 const FeaturedStars: React.FC = () => (
-  <Layer aria-label="Featured profile stars">
+  <Layer aria-label="Featured profile objects">
     {featuredStars.map((star) => {
       const style: StarStyle = {
         '--x': `${star.x}%`,
@@ -18,16 +18,17 @@ const FeaturedStars: React.FC = () => (
         '--mx': `${star.mobileX}%`,
         '--my': `${star.mobileY}%`,
       };
+      const isCentral = Boolean(star.central);
 
       return (
         <Star
           key={star.id}
           type="button"
           style={style}
-          aria-label={`Reveal featured star: ${star.label}`}
-          $central={Boolean(star.central)}
+          aria-label={`Reveal featured ${isCentral ? 'planet' : 'star'}: ${star.label}`}
+          $central={isCentral}
         >
-          <Point $central={Boolean(star.central)} aria-hidden="true" />
+          <Point $central={isCentral} aria-hidden="true" />
           <Label>{star.label}</Label>
         </Star>
       );
@@ -76,23 +77,36 @@ const Point = styled.span<{ $central: boolean }>`
   position: absolute;
   left: 50%;
   top: 50%;
-  width: ${({ $central }) => ($central ? '7px' : '5px')};
-  height: ${({ $central }) => ($central ? '7px' : '5px')};
+  width: ${({ $central }) => ($central ? '24px' : '5px')};
+  height: ${({ $central }) => ($central ? '24px' : '5px')};
   border-radius: 50%;
-  background: ${({ theme }) => theme.c4};
-  box-shadow:
-    0 0 ${({ $central }) => ($central ? '9px' : '7px')} ${({ theme }) => theme.c4},
-    0 0 ${({ $central }) => ($central ? '19px' : '14px')} ${({ theme }) => theme.glow};
+  background: ${({ $central, theme }) => (
+    $central
+      ? `radial-gradient(circle at 31% 28%, rgba(255,255,255,.34) 0 7%, transparent 8%), radial-gradient(circle at 66% 36%, rgba(0,0,0,.14) 0 8%, transparent 9%), radial-gradient(circle at 42% 68%, rgba(0,0,0,.12) 0 10%, transparent 11%), radial-gradient(circle at 36% 34%, ${theme.c4}, ${theme.c3} 58%, ${theme.c2} 100%)`
+      : theme.c4
+  )};
+  box-shadow: ${({ $central, theme }) => (
+    $central
+      ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 6px ${theme.c3}, 0 0 14px ${theme.glow}`
+      : `0 0 7px ${theme.c4}, 0 0 14px ${theme.glow}`
+  )};
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease;
   pointer-events: none;
 
   ${Star}:hover &,
   ${Star}:focus-visible & {
-    transform: translate(-50%, -50%) scale(1.2);
-    box-shadow:
-      0 0 ${({ $central }) => ($central ? '12px' : '10px')} ${({ theme }) => theme.c4},
-      0 0 ${({ $central }) => ($central ? '25px' : '19px')} ${({ theme }) => theme.glow};
+    transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1.06 : 1.2)});
+    box-shadow: ${({ $central, theme }) => (
+      $central
+        ? `inset -5px -4px 7px rgba(0,0,0,.3), 0 0 8px ${theme.c3}, 0 0 18px ${theme.glow}`
+        : `0 0 10px ${theme.c4}, 0 0 19px ${theme.glow}`
+    )};
+  }
+
+  @media (max-width: 699px) {
+    width: ${({ $central }) => ($central ? '20px' : '5px')};
+    height: ${({ $central }) => ($central ? '20px' : '5px')};
   }
 `;
 
