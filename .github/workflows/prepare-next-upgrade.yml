@@ -1,0 +1,51 @@
+name: Prepare Next.js Security Upgrade
+
+on:
+  pull_request:
+    branches:
+      - security/remediation-2026-06-25
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+          cache: npm
+      - run: npm ci
+      - name: Install patched framework versions
+        run: npm install next@16.2.9 react@latest react-dom@latest @types/react@latest @types/react-dom@latest
+      - name: Verify production build
+        run: npm run build
+      - name: Capture post-upgrade audit
+        run: npm audit --json > npm-audit-after.json || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: next-16-upgrade
+          path: |
+            package.json
+            package-lock.json
+            npm-audit-after.json
+          retention-days: 7
+      - name: Commit upgraded dependency files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "No dependency changes generated."
+            exit 0
+          fi
+          git commit -m "fix: upgrade Next.js and React security baseline"
+          git push origin HEAD:${{ github.head_ref }}
