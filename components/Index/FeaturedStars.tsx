@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { featuredStars } from './featuredStars';
+import { featuredStars } from './featuredStarsData';
 
 type StarStyle = React.CSSProperties & {
   '--x': string;
@@ -53,7 +53,7 @@ const Star = styled.button<{ $central: boolean }>`
   height: ${({ $central }) => ($central ? '88px' : '72px')};
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 70%;
   background: transparent;
   transform: translate(-50%, -50%);
   cursor: help;
