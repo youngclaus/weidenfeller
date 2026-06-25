@@ -3,9 +3,10 @@ name: PR Build
 on:
   push:
     branches:
-      - ui-audit-2026-06-24
+      - security/**
   pull_request:
     branches:
+      - security/remediation-2026-06-25
       - master
 
 permissions:
