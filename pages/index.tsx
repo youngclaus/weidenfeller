@@ -2,18 +2,17 @@ import styled from 'styled-components';
 import React from 'react';
 import Player from '../components/Player/Player';
 import CommandLine from '../components/Index/Footer';
+import ConstellationBackground from '../components/Index/ConstellationBackground';
 import { homeContent } from '../components/Player/playerContent';
 
 const Index: React.FC = () => {
   return (
     <Container>
-      <BackgroundContainer className="background-container">
-        <img src="/Hero/code.png" alt="code" />
-      </BackgroundContainer>
+      <ConstellationBackground />
       <ContentContainer className="content-container">
         <PlayerContainer>
           <Player content={homeContent} visible={true} />
-        </PlayerContainer> 
+        </PlayerContainer>
         <TitleContainer>
           <Title>chris</Title>
           <Title>youngclaus</Title>
@@ -31,23 +30,12 @@ const Container = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: #222;
+  overflow: hidden;
+  background-color: ${({ theme }) => theme.c1};
+  isolation: isolate;
   z-index: 0;
   user-select: none;
   -webkit-user-drag: none;
-`;
-
-const BackgroundContainer = styled.div`
-  position: absolute;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/Hero/code.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  filter: blur(5px);
 `;
 
 const ContentContainer = styled.div`
@@ -72,15 +60,15 @@ const ContentContainer = styled.div`
     align-items: center;
     z-index: 5;
     justify-content: space-between;
-    flex-direction: row;  
+    flex-direction: row;
   }
 `;
 
 const TitleContainer = styled.div`
   @media (max-width: 949px) {
     display: none;
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
   }
 
   @media (min-width: 950px) {
