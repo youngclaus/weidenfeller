@@ -18,24 +18,24 @@ const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) 
     <HeaderContainer>
       <VinylContainer>
         <Vinyl onClick={() => setActiveComponent('index')} style={{ zIndex: 10 }} color={activeComponent === 'index' ? theme.c3 : theme.c1}>
-          <VinylImage src="/Header/vinyl.png" alt="Home Vinyl" />
+          <VinylImage src="/Header/vinyl-record.svg" alt="Home Vinyl" />
           <VinylText>home</VinylText>
         </Vinyl>
-        
+
         <Vinyl onClick={() => setActiveComponent('projects')} style={{ zIndex: 8 }} color={activeComponent === 'projects' ? theme.c3 : theme.c1}>
-          <VinylImage src="/Header/vinyl.png" alt="Projects Vinyl" />
+          <VinylImage src="/Header/vinyl-record.svg" alt="Projects Vinyl" />
           <VinylText>projects</VinylText>
         </Vinyl>
         <Vinyl onClick={() => setActiveComponent('about')} style={{ zIndex: 7 }} color={activeComponent === 'about' ? theme.c3 : theme.c1}>
-          <VinylImage src="/Header/vinyl.png" alt="About Vinyl" />
+          <VinylImage src="/Header/vinyl-record.svg" alt="About Vinyl" />
           <VinylText>explore</VinylText>
         </Vinyl>
         <Vinyl onClick={() => setActiveComponent('music')} style={{ zIndex: 6 }} color={activeComponent === 'music' ? theme.c3 : theme.c1}>
-          <VinylImage src="/Header/vinyl.png" alt="Music Vinyl" />
+          <VinylImage src="/Header/vinyl-record.svg" alt="Music Vinyl" />
           <VinylText>music</VinylText>
         </Vinyl>
-        <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1}} color={theme.c1}>
-          <VinylImage src="/Header/vinyl.png" alt="Theme Vinyl" />
+        <Vinyl onClick={handleThemeToggle} style={{ zIndex: 1 }} color={theme.c1}>
+          <VinylImage src="/Header/vinyl-record.svg" alt="Theme Vinyl" />
           <VinylText>{theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}</VinylText>
         </Vinyl>
       </VinylContainer>
@@ -63,7 +63,7 @@ const VinylContainer = styled.div`
   z-index: 100;
 
   @media (max-width: 550px) {
-    padding-left: 0px;
+    padding-left: 0;
     transform: translateY(-10%);
   }
 `;
@@ -72,7 +72,7 @@ const VinylImage = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
   overflow: hidden;
   transition: transform 0.6s ease;
   transform: rotate(-15deg);
@@ -85,18 +85,23 @@ const VinylImage = styled.img`
 
 const VinylText = styled.span`
   position: absolute;
-  bottom: 7%;
+  top: 50%;
   left: 50%;
-  transform: translate(-40%, 0%);
+  width: 48%;
+  transform: translate(-50%, -50%);
   font-family: "DM Mono", monospace;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1;
+  text-align: center;
   color: ${({ theme }) => theme.c4};
-  transition: transform 0.6s ease;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  transition: font-size 0.2s ease-in-out;
 
   @media (max-width: 550px) {
-    font-size: 9px;
-    transform: translateX(-45%);
+    font-size: 8px;
+  }
 `;
 
 const Vinyl = styled.div<{ color: string }>`
@@ -121,16 +126,13 @@ const Vinyl = styled.div<{ color: string }>`
   &:hover > ${VinylImage} {
     transform: rotate(280deg);
     transform-origin: center center;
-    transition: transform 0.6s ease;
   }
 
   &:hover > ${VinylText} {
-    font-size: 14px;
-    transition: font-size 0.2s ease-in-out;
+    font-size: 13px;
 
     @media (max-width: 550px) {
-      font-size: 10px;
-      transition: font-size 0.2s ease-in-out;
+      font-size: 9px;
     }
   }
 `;
