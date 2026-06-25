@@ -11,15 +11,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) => {
-  const { theme, switchTheme } = useTheme();
-
-  const handleThemeToggle = () => {
-    switchTheme(theme.mode === 'dark' ? 'light' : 'dark');
-  };
-
-  const themeActionLabel = theme.mode === 'dark'
-    ? 'Switch to light theme'
-    : 'Switch to dark theme';
+  const { theme } = useTheme();
 
   const renderNavigationVinyl = (
     component: ComponentName,
@@ -52,18 +44,6 @@ const Header: React.FC<HeaderProps> = ({ activeComponent, setActiveComponent }) 
         {renderNavigationVinyl('projects', 'projects', 8)}
         {renderNavigationVinyl('about', 'explore', 7)}
         {renderNavigationVinyl('music', 'music', 6)}
-
-        <VinylButton
-          type="button"
-          $zIndex={1}
-          onClick={handleThemeToggle}
-          aria-label={themeActionLabel}
-        >
-          <VinylGraphic accentColor={theme.c1} />
-          <VinylText>
-            {theme.mode === 'light' ? 'light' : theme.mode === 'dark' ? 'dark' : 'custom'}
-          </VinylText>
-        </VinylButton>
       </VinylContainer>
     </HeaderContainer>
   );
