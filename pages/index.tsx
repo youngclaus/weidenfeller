@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import ConstellationBackground from '../components/Index/ConstellationBackground';
-import PlanetProfile from '../components/Index/PlanetProfile';
+import FeaturedStars from '../components/Index/FeaturedStars';
 
 const Index: React.FC = () => {
   return (
     <Container>
       <ConstellationBackground />
-      <PlanetProfile />
+      <FeaturedStars />
     </Container>
   );
 };
