@@ -87,11 +87,16 @@ const Point = styled.span<{ $central: boolean }>`
   )};
   box-shadow: ${({ $central, theme }) => (
     $central
-      ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 6px ${theme.c3}, 0 0 14px ${theme.glow}`
+      ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
       : `0 0 7px ${theme.c4}, 0 0 14px ${theme.glow}`
   )};
+  filter: ${({ $central, theme }) => (
+    $central
+      ? `drop-shadow(0 0 4px ${theme.glow}) drop-shadow(0 0 9px ${theme.glow})`
+      : 'none'
+  )};
   transform: translate(-50%, -50%);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
   pointer-events: none;
 
   ${Star}:hover &,
@@ -99,8 +104,13 @@ const Point = styled.span<{ $central: boolean }>`
     transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1.06 : 1.2)});
     box-shadow: ${({ $central, theme }) => (
       $central
-        ? `inset -5px -4px 7px rgba(0,0,0,.3), 0 0 8px ${theme.c3}, 0 0 18px ${theme.glow}`
+        ? 'inset -5px -4px 7px rgba(0,0,0,.3)'
         : `0 0 10px ${theme.c4}, 0 0 19px ${theme.glow}`
+    )};
+    filter: ${({ $central, theme }) => (
+      $central
+        ? `drop-shadow(0 0 6px ${theme.glow}) drop-shadow(0 0 12px ${theme.glow})`
+        : 'none'
     )};
   }
 

@@ -66,47 +66,40 @@ const Moon = styled.span<{ $crescent: boolean }>`
     radial-gradient(circle at 66% 30%, rgba(0, 0, 0, 0.13) 0 7%, transparent 8%),
     radial-gradient(circle at 42% 68%, rgba(0, 0, 0, 0.12) 0 10%, transparent 11%),
     ${({ theme }) => theme.c3};
-  box-shadow:
-    inset -5px -4px 7px rgba(0, 0, 0, 0.32),
-    0 0 5px ${({ theme }) => theme.c3},
-    0 0 12px ${({ theme }) => theme.glow};
+  box-shadow: inset -5px -4px 7px rgba(0, 0, 0, 0.32);
+  filter:
+    drop-shadow(0 0 4px ${({ theme }) => theme.glow})
+    drop-shadow(0 0 9px ${({ theme }) => theme.glow});
+  -webkit-mask-image: ${({ $crescent }) => (
+    $crescent
+      ? 'radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%)'
+      : 'none'
+  )};
+  mask-image: ${({ $crescent }) => (
+    $crescent
+      ? 'radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%)'
+      : 'none'
+  )};
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   transform: translate(-50%, -50%);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
   pointer-events: none;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    display: ${({ $crescent }) => ($crescent ? 'block' : 'none')};
-    position: absolute;
-    top: -2px;
-    left: 8px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: ${({ theme }) => theme.c1};
-    box-shadow: -1px 0 2px rgba(0, 0, 0, 0.18);
-  }
 
   ${MoonButton}:hover &,
   ${MoonButton}:focus-visible & {
     transform: translate(-50%, -50%) scale(1.08);
-    box-shadow:
-      inset -5px -4px 7px rgba(0, 0, 0, 0.28),
-      0 0 7px ${({ theme }) => theme.c3},
-      0 0 16px ${({ theme }) => theme.glow};
+    box-shadow: inset -5px -4px 7px rgba(0, 0, 0, 0.28);
+    filter:
+      drop-shadow(0 0 6px ${({ theme }) => theme.glow})
+      drop-shadow(0 0 12px ${({ theme }) => theme.glow});
   }
 
   @media (max-width: 699px) {
     width: 20px;
     height: 20px;
-
-    &::after {
-      top: -2px;
-      left: 7px;
-      width: 20px;
-      height: 20px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
