@@ -36,36 +36,51 @@ jobs:
         shell: bash
         run: npm audit --json > npm-audit.json || true
 
-      - name: Summarize vulnerabilities
+      - name: Write vulnerability summary
         run: |
           node - <<'NODE'
           const fs = require('fs');
           const report = JSON.parse(fs.readFileSync('npm-audit.json', 'utf8'));
+          const lines = [];
           const totals = report.metadata?.vulnerabilities ?? {};
-          console.log(`TOTALS ${JSON.stringify(totals)}`);
+          lines.push(`TOTALS ${JSON.stringify(totals)}`);
 
           const vulnerabilities = Object.entries(report.vulnerabilities ?? {});
           if (vulnerabilities.length === 0) {
-            console.log('NO_VULNERABILITIES');
+            lines.push('NO_VULNERABILITIES');
           }
 
           for (const [name, item] of vulnerabilities) {
-            console.log(`PACKAGE ${name}`);
-            console.log(`SEVERITY ${item.severity}`);
-            console.log(`DIRECT ${item.isDirect}`);
-            console.log(`RANGE ${item.range}`);
-            console.log(`NODES ${(item.nodes ?? []).join(',')}`);
+            lines.push(`PACKAGE ${name}`);
+            lines.push(`SEVERITY ${item.severity}`);
+            lines.push(`DIRECT ${item.isDirect}`);
+            lines.push(`RANGE ${item.range}`);
+            lines.push(`NODES ${(item.nodes ?? []).join(',')}`);
             for (const via of item.via ?? []) {
               if (typeof via === 'object') {
-                console.log(`ADVISORY ${via.source}|${via.title}|${via.severity}|${via.range}|${via.url}`);
+                lines.push(`ADVISORY ${via.source}|${via.title}|${via.severity}|${via.range}|${via.url}`);
               } else {
-                console.log(`VIA ${via}`);
+                lines.push(`VIA ${via}`);
               }
             }
-            console.log(`FIX ${JSON.stringify(item.fixAvailable)}`);
-            console.log('END_PACKAGE');
+            lines.push(`FIX ${JSON.stringify(item.fixAvailable)}`);
+            lines.push('END_PACKAGE');
           }
+
+          fs.writeFileSync('npm-audit-summary.txt', `${lines.join('\n')}\n`);
+          console.log(lines.join('\n'));
           NODE
+
+      - name: Upload audit summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-summary
+          path: |
+            npm-audit-summary.txt
+            npm-audit.json
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Enforce audit gate
         run: npm audit --audit-level=high
