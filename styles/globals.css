@@ -12,3 +12,8 @@ html, body {
   background: #f8f9fa;
   color: #333;
 }
+
+button[aria-label^="Reveal constellation"]:focus > span {
+  opacity: 1 !important;
+  transform: translate(-50%, 0) !important;
+}
