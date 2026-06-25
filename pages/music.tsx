@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { getUserBits, addUserBits, Bit } from '../components/BlueprintMenu/bits';
+import { addUserBits } from '../components/BlueprintMenu/bits';
 
 const Music: React.FC = () => {
-  const [stash, setStash] = useState<Bit[]>([]);
   const [buttonText, setButtonText] = useState("Here's bits to play with for now");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -20,8 +19,7 @@ const Music: React.FC = () => {
     addUserBits('brown', 100);
     addUserBits('black', 100);
 
-    setStash(getUserBits());
-    setButtonText("Test Bits Added (go back to the explore page to use them)");
+    setButtonText('Test Bits Added (go back to the explore page to use them)');
     setIsButtonDisabled(true);
   };
 
