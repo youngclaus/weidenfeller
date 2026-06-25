@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import ConstellationBackground from '../components/Index/ConstellationBackground';
 import FeaturedStars from '../components/Index/FeaturedStars';
+import ThemeMoon from '../components/Index/ThemeMoon';
 
 const Index: React.FC = () => {
   return (
     <Container>
       <ConstellationBackground />
       <FeaturedStars />
+      <ThemeMoon />
     </Container>
   );
 };
