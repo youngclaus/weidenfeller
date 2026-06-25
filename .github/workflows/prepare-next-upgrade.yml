@@ -22,9 +22,8 @@ jobs:
         with:
           node-version: 24.x
           cache: npm
-      - run: npm ci
-      - name: Install patched framework versions
-        run: npm install next@16.2.9 react@latest react-dom@latest @types/react@latest @types/react-dom@latest
+      - name: Reconcile dependency lockfile
+        run: npm install
       - name: Verify production build
         run: npm run build
       - name: Capture post-upgrade audit
