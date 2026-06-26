@@ -35,10 +35,11 @@ const Container = styled.div`
 `;
 
 const Content = styled.div<{ $visible: boolean }>`
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 220ms ease;
+  transition: opacity 180ms ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 1ms;

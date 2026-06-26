@@ -43,11 +43,11 @@ const ThemedApp: React.FC = () => {
 
     timers.current.push(setTimeout(() => {
       setContentVisible(true);
-    }, 210));
+    }, 200));
 
     timers.current.push(setTimeout(() => {
       setIsTransitioning(false);
-    }, 440));
+    }, 380));
   }, [activeComponent, isTransitioning]);
 
   return (
@@ -83,7 +83,7 @@ const AppStage = React.memo(({ className, children, $contentVisible }: React.Pro
 
 const PageContent = styled.div<{ $visible: boolean }>`
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 220ms ease;
+  transition: opacity 180ms ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 1ms;
