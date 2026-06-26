@@ -60,7 +60,7 @@ export const useTheme = (): ThemeContextType => {
 };
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(lightTheme);
+  const [theme, setTheme] = useState<Theme>(darkTheme);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');

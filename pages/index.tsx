@@ -21,7 +21,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.c1};
+  background-color: #000;
   isolation: isolate;
   z-index: 0;
   user-select: none;

@@ -30,8 +30,8 @@ export default ThemeMoon;
 const MoonButton = styled.button`
   appearance: none;
   position: absolute;
-  left: 91%;
-  top: 84%;
+  right: clamp(22px, 4vw, 44px);
+  top: clamp(22px, 4vw, 44px);
   z-index: 4;
   width: 72px;
   height: 72px;
@@ -39,7 +39,6 @@ const MoonButton = styled.button`
   border: 0;
   border-radius: 50%;
   background: transparent;
-  transform: translate(-50%, -50%);
   cursor: pointer;
 
   &:focus-visible {
@@ -48,8 +47,8 @@ const MoonButton = styled.button`
   }
 
   @media (max-width: 699px) {
-    left: 92%;
-    top: 88%;
+    right: 16px;
+    top: 82px;
     width: 62px;
     height: 62px;
   }

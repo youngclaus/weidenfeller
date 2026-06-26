@@ -237,7 +237,7 @@ const ConstellationBackground: React.FC = () => {
 
 export default ConstellationBackground;
 
-const Background = styled.div`position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.045),transparent 58%),${({ theme }) => theme.c1};`;
+const Background = styled.div`position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.045),transparent 58%),#000;`;
 const Canvas = styled.canvas`position:absolute;inset:0;width:100%;height:100%;`;
 const Vignette = styled.div`position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.12),transparent 28%),radial-gradient(circle at center,transparent 42%,rgba(0,0,0,.38) 100%);`;
 const ConstellationLayer = styled.div`position:absolute;inset:0;z-index:2;pointer-events:none;`;
