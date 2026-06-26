@@ -5,7 +5,6 @@ import { getThemeGlowFilter } from '../Theme/exploreGlow';
 
 const ThemeMoon: React.FC = () => {
   const { theme, switchTheme } = useTheme();
-  const isCustom = theme.mode === 'toggled';
   const currentMode = theme.mode === 'light'
     ? 'light theme'
     : theme.mode === 'dark'
@@ -19,7 +18,7 @@ const ThemeMoon: React.FC = () => {
       onClick={() => switchTheme(nextTheme)}
       aria-label={`${currentMode}. Switch to ${nextTheme} theme`}
     >
-      <Moon $crescent={isCustom} aria-hidden="true" />
+      <Moon aria-hidden="true" />
       <MoonLabel>{currentMode}</MoonLabel>
     </MoonButton>
   );
@@ -55,7 +54,7 @@ const MoonButton = styled.button`
   }
 `;
 
-const Moon = styled.span<{ $crescent: boolean }>`
+const Moon = styled.span`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -69,16 +68,8 @@ const Moon = styled.span<{ $crescent: boolean }>`
     ${({ theme }) => theme.c3};
   box-shadow: inset -5px -4px 7px rgba(0, 0, 0, 0.32);
   filter: ${({ theme }) => getThemeGlowFilter(theme.glow, 8)};
-  -webkit-mask-image: ${({ $crescent }) => (
-    $crescent
-      ? 'radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%)'
-      : 'none'
-  )};
-  mask-image: ${({ $crescent }) => (
-    $crescent
-      ? 'radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%)'
-      : 'none'
-  )};
+  -webkit-mask-image: radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%);
+  mask-image: radial-gradient(circle at 72% 42%, transparent 0 44%, #000 46%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
