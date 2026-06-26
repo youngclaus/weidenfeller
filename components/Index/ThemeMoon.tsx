@@ -40,6 +40,7 @@ const MoonButton = styled.button`
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
 
   &:focus-visible {
     outline: 1px dashed ${({ theme }) => theme.c3};

@@ -375,16 +375,32 @@ const Page = styled.main`
   position: fixed;
   inset: 0;
   z-index: 10;
-  overflow-y: auto;
+  overflow-y: scroll;
+  scrollbar-color: var(--project-muted) rgba(0, 0, 0, 0.28);
+  scrollbar-width: thin;
   background: transparent;
   color: var(--project-ink);
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   transition: color 350ms ease;
 
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid rgba(0, 0, 0, 0.28);
+    border-radius: 999px;
+    background: var(--project-muted);
+    background-clip: content-box;
+  }
+
   @media (max-width: 840px) {
-    position: relative;
+    position: fixed;
     min-height: 100dvh;
-    max-height: 100dvh;
   }
 `;
 
