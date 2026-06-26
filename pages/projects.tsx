@@ -427,11 +427,35 @@ const Hero = styled.header`
   position: sticky;
   top: 42px;
   z-index: 30;
+  isolation: isolate;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
   padding: 56px 0 24px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -42px;
+    right: -24px;
+    bottom: -52px;
+    left: -24px;
+    z-index: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(0, 0, 0, 0.9) 42%,
+      rgba(0, 0, 0, 0.54) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   @media (max-width: 740px) {
     display: block;
@@ -441,6 +465,10 @@ const Hero = styled.header`
 
   @media (max-width: 550px) {
     top: 34px;
+
+    &::before {
+      top: -34px;
+    }
   }
 `;
 
