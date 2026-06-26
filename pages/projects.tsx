@@ -230,32 +230,32 @@ const Projects: React.FC<ProjectsProps> = ({ contentVisible = true }) => {
           <HeroCopy>
             <Title>Projects</Title>
           </HeroCopy>
+
+          <HeroControls>
+            <Stats aria-label="Project stats">
+              <Stat><strong>{cards.length}</strong> projects</Stat>
+              <Stat><strong>{liveCount}</strong> live</Stat>
+              <Stat>{getYearRange()}</Stat>
+            </Stats>
+
+            <FilterBar aria-label="Project filters">
+              {filters.map(filter => {
+                const isActive = selectedFilter === filter.key;
+                return (
+                  <FilterButton
+                    key={filter.key}
+                    type="button"
+                    $active={isActive}
+                    onClick={() => setSelectedFilter(filter.key)}
+                  >
+                    {filter.label}
+                    <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
+                  </FilterButton>
+                );
+              })}
+            </FilterBar>
+          </HeroControls>
         </Hero>
-
-        <StickyControls>
-          <Stats aria-label="Project stats">
-            <Stat><strong>{cards.length}</strong> projects</Stat>
-            <Stat><strong>{liveCount}</strong> live</Stat>
-            <Stat>{getYearRange()}</Stat>
-          </Stats>
-
-          <FilterBar aria-label="Project filters">
-            {filters.map(filter => {
-              const isActive = selectedFilter === filter.key;
-              return (
-                <FilterButton
-                  key={filter.key}
-                  type="button"
-                  $active={isActive}
-                  onClick={() => setSelectedFilter(filter.key)}
-                >
-                  {filter.label}
-                  <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
-                </FilterButton>
-              );
-            })}
-          </FilterBar>
-        </StickyControls>
 
         <FeaturedProject
           href={featuredUrl || undefined}
@@ -450,22 +450,18 @@ const Title = styled.h1`
   letter-spacing: -0.04em;
 `;
 
-const StickyControls = styled.div`
-  position: sticky;
-  top: 94px;
-  z-index: 20;
+const HeroControls = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 14px;
-  margin: 0 0 30px;
-  padding: 14px 0 16px;
-  pointer-events: none;
+  max-width: min(620px, 58%);
+  margin-left: auto;
 
   @media (max-width: 740px) {
-    top: 96px;
+    max-width: 100%;
+    margin-top: 24px;
     align-items: flex-end;
-    margin-bottom: 24px;
   }
 `;
 
@@ -484,7 +480,6 @@ const Stats = styled.aside`
     display: flex;
     justify-content: flex-end;
     gap: 16px;
-    margin-top: 24px;
     text-align: right;
   }
 `;
