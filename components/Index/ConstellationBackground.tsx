@@ -138,7 +138,7 @@ const ConstellationBackground: React.FC = () => {
         const glow = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, POINTER_INFLUENCE_DISTANCE * 1.35);
         glow.addColorStop(0, theme.glow);
         glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        context.globalAlpha = 0.24;
+        context.globalAlpha = 0.2;
         context.fillStyle = glow;
         context.fillRect(0, 0, width, height);
       }

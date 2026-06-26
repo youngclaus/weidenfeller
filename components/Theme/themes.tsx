@@ -15,7 +15,7 @@ export const lightTheme: Theme = {
   c3: '#F39F5A',
   c4: '#444',
   opacity: '1',
-  glow: 'rgb(255, 255, 255)',
+  glow: 'rgb(117, 117, 117)',
 };
 
 export const darkTheme: Theme = {
