@@ -183,15 +183,15 @@ const ExploreLayout = styled.div`
   &::before {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -8%;
     z-index: 0;
-    opacity: ${({ theme }) => theme.opacity};
+    opacity: 0.24;
     background-image: url('/About/background.png');
-    background-position: left bottom;
-    background-size: auto 100%;
+    background-position: center bottom;
+    background-size: auto 115%;
     background-repeat: repeat-x;
-    filter: blur(1px) saturate(0.92);
-    transform: scale(1.01);
+    filter: blur(10px) saturate(0.55) brightness(0.72);
+    transform: scale(1.04);
   }
 
   &::after {
@@ -199,7 +199,9 @@ const ExploreLayout = styled.div`
     position: absolute;
     inset: 0;
     z-index: 0;
-    background: rgba(0, 0, 0, 0.18);
+    background:
+      radial-gradient(circle at 50% 42%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.76) 72%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.24) 46%, rgba(0, 0, 0, 0.7));
     pointer-events: none;
   }
 
@@ -219,8 +221,8 @@ const ViewportFrame = styled.div`
   background: #000;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 24px 70px rgba(0, 0, 0, 0.42),
-    0 0 34px ${({ theme }) => theme.glow};
+    0 24px 70px rgba(0, 0, 0, 0.54),
+    0 0 22px ${({ theme }) => theme.glow};
 
   @media (max-width: 700px) {
     width: min(100%, 92vw);
