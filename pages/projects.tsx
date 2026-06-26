@@ -462,34 +462,10 @@ const StickyControls = styled.div`
   padding: 14px 0 16px;
   pointer-events: none;
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -24px;
-    bottom: 0;
-    width: min(640px, calc(100% + 48px));
-    border-radius: 22px 0 0 22px;
-    background:
-      linear-gradient(90deg, transparent 0%, var(--project-bg) 30%, var(--project-bg) 100%);
-    opacity: 0.94;
-    box-shadow: -24px 0 40px rgba(0, 0, 0, 0.06);
-    backdrop-filter: blur(12px);
-  }
-
   @media (max-width: 740px) {
     top: 96px;
     align-items: flex-end;
     margin-bottom: 24px;
-
-    &::before {
-      right: -16px;
-      left: -16px;
-      bottom: -24px;
-      width: auto;
-      border-radius: 0;
-      background: linear-gradient(180deg, var(--project-bg) 0%, var(--project-bg) 88%, transparent 100%);
-    }
   }
 `;
 
