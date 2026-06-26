@@ -84,12 +84,12 @@ const Point = styled.span<{ $central: boolean }>`
   background: ${({ $central, theme }) => (
     $central
       ? `radial-gradient(circle at 31% 28%, rgba(255,255,255,.18) 0 7%, transparent 8%), radial-gradient(circle at 66% 36%, rgba(0,0,0,.14) 0 8%, transparent 9%), radial-gradient(circle at 42% 68%, rgba(0,0,0,.12) 0 10%, transparent 11%), ${theme.c3}`
-      : theme.c4
+      : theme.c3
   )};
   box-shadow: ${({ $central, theme }) => (
     $central
       ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
-      : `0 0 7px ${theme.c4}, 0 0 14px ${theme.glow}`
+      : `0 0 7px ${theme.c3}, 0 0 14px ${theme.glow}`
   )};
   filter: ${({ $central, theme }) => (
     $central ? getThemeGlowFilter(theme.glow, 8) : 'none'
@@ -104,7 +104,7 @@ const Point = styled.span<{ $central: boolean }>`
     box-shadow: ${({ $central, theme }) => (
       $central
         ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
-        : `0 0 10px ${theme.c4}, 0 0 19px ${theme.glow}`
+        : `0 0 10px ${theme.c3}, 0 0 19px ${theme.glow}`
     )};
     filter: ${({ $central, theme }) => (
       $central ? getThemeGlowFilter(theme.glow, 20) : 'none'

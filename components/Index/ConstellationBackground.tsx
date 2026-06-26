@@ -136,7 +136,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
         });
         context.beginPath();
         points.forEach((point, index) => index === 0 ? context.moveTo(point.x, point.y) : context.lineTo(point.x, point.y));
-        context.strokeStyle = selected ? theme.c4 : theme.c3;
+        context.strokeStyle = theme.c3;
         context.globalAlpha = (selected ? 0.94 : 0.38) * constellationOpacity;
         context.lineWidth = selected ? 1.7 : 1;
         context.shadowColor = selected ? theme.glow : theme.c3;
@@ -146,7 +146,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
           const twinkle = reducedMotion ? 0 : Math.sin(time * 1.4 + constellationIndex * 0.8 + pointIndex) * 0.35;
           context.beginPath();
           context.arc(point.x, point.y, Math.max((selected ? 2.8 : 1.8) + twinkle, 1.2), 0, Math.PI * 2);
-          context.fillStyle = selected ? theme.c4 : theme.c3;
+          context.fillStyle = theme.c3;
           context.globalAlpha = (selected ? 1 : 0.74) * constellationOpacity;
           context.shadowColor = selected ? theme.glow : theme.c3;
           context.shadowBlur = selected ? 16 : 4;
