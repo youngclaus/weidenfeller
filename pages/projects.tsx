@@ -226,15 +226,7 @@ const Projects: React.FC = () => {
       <Shell>
         <Hero>
           <HeroCopy>
-            <Availability>
-              <AvailabilityDot aria-hidden="true" />
-              available for new work
-            </Availability>
             <Title>Projects</Title>
-            <Intro>
-              Things I&apos;ve built - apps, tools, and experiments across the web, AI,
-              hardware, and a few obsessions of mine.
-            </Intro>
           </HeroCopy>
 
           <Stats aria-label="Project stats">
@@ -430,25 +422,6 @@ const HeroCopy = styled.div`
   min-width: 0;
 `;
 
-const Availability = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-  color: var(--project-accent);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-`;
-
-const AvailabilityDot = styled.span`
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--project-accent);
-  box-shadow: 0 0 0 4px var(--project-accent-soft);
-`;
-
 const Title = styled.h1`
   margin: 0;
   color: var(--project-ink);
@@ -457,14 +430,6 @@ const Title = styled.h1`
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.04em;
-`;
-
-const Intro = styled.p`
-  max-width: 470px;
-  margin: 18px 0 0;
-  color: var(--project-muted);
-  font-size: 17px;
-  line-height: 1.5;
 `;
 
 const Stats = styled.aside`
@@ -496,8 +461,13 @@ const FilterBar = styled.nav`
   z-index: 5;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
   padding-bottom: 30px;
+
+  @media (max-width: 620px) {
+    justify-content: flex-start;
+  }
 `;
 
 const FilterButton = styled.button<{ $active: boolean }>`
