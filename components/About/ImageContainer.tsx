@@ -179,6 +179,34 @@ const ExploreLayout = styled.div`
   height: 100dvh;
   overflow: hidden;
   padding: clamp(70px, 10vh, 108px) clamp(18px, 4vw, 48px) clamp(26px, 5vh, 48px);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: ${({ theme }) => theme.opacity};
+    background-image: url('/About/background.png');
+    background-position: left bottom;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    filter: blur(1px) saturate(0.92);
+    transform: scale(1.01);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
 const ViewportFrame = styled.div`
