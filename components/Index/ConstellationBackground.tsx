@@ -69,7 +69,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.22,
         vy: (Math.random() - 0.5) * 0.22,
-        radius: Math.random() * 1.75 + 1,
+        radius: Math.random() * 0.9 + 0.75,
         brightness: Math.random() * 0.45 + 0.45,
       }));
     }
@@ -149,7 +149,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
           context.fillStyle = selected ? theme.c4 : theme.c3;
           context.globalAlpha = (selected ? 1 : 0.74) * constellationOpacity;
           context.shadowColor = selected ? theme.glow : theme.c3;
-          context.shadowBlur = selected ? 16 : 7;
+          context.shadowBlur = selected ? 16 : 4;
           context.fill();
         });
       });
@@ -201,7 +201,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
         context.fillStyle = boost > 0.2 ? theme.c3 : theme.c4;
         context.globalAlpha = clamp(particle.brightness + boost, 0.3, 1);
         context.shadowColor = boost > 0.2 ? theme.c3 : theme.c4;
-        context.shadowBlur = boost > 0.2 ? 12 : 7;
+        context.shadowBlur = boost > 0.2 ? 8 : 2;
         context.fill();
       });
       drawConstellations();
