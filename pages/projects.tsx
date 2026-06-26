@@ -425,7 +425,7 @@ const Shell = styled.div<{ $visible: boolean }>`
 
 const Hero = styled.header`
   position: sticky;
-  top: 42px;
+  top: 0px;
   z-index: 30;
   isolation: isolate;
   display: flex;
