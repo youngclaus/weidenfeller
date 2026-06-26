@@ -252,7 +252,8 @@ const Page = styled.main`
   overflow: hidden;
   box-sizing: border-box;
   padding: 94px clamp(18px, 3vw, 52px) 82px;
-  background: ${({ theme }) => theme.c1};
+  background:
+    radial-gradient(circle at 50% 45%, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c2} 120%);
   color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
 
@@ -268,13 +269,19 @@ const Ambient = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.72;
   background:
-    radial-gradient(circle at 18% 16%, ${({ theme }) => theme.glow} 0 1px, transparent 2px),
-    radial-gradient(circle at 77% 11%, ${({ theme }) => theme.c4} 0 1px, transparent 1.5px),
-    radial-gradient(circle at 64% 76%, ${({ theme }) => theme.c3} 0 1px, transparent 2px),
-    linear-gradient(to bottom, transparent 0 96%, ${({ theme }) => theme.c2} 96% 100%);
-  background-size: 280px 220px, 360px 300px, 410px 340px, 100% 48px;
+    radial-gradient(circle at 9% 36%, rgba(0, 0, 0, 0.24) 0 52px, rgba(255, 255, 255, 0.2) 53px 61px, ${({ theme }) => theme.c3} 62px 70px, transparent 71px),
+    radial-gradient(circle at 20% 82%, rgba(0, 0, 0, 0.28) 0 34px, rgba(255, 255, 255, 0.18) 35px 41px, ${({ theme }) => theme.c4} 42px 49px, transparent 50px),
+    radial-gradient(circle at 44% 23%, rgba(0, 0, 0, 0.22) 0 24px, rgba(255, 255, 255, 0.18) 25px 30px, ${({ theme }) => theme.c3} 31px 36px, transparent 37px),
+    radial-gradient(circle at 74% 18%, rgba(0, 0, 0, 0.24) 0 46px, rgba(255, 255, 255, 0.2) 47px 55px, ${({ theme }) => theme.c4} 56px 64px, transparent 65px),
+    radial-gradient(circle at 91% 55%, rgba(0, 0, 0, 0.26) 0 64px, rgba(255, 255, 255, 0.2) 65px 74px, ${({ theme }) => theme.c3} 75px 86px, transparent 87px),
+    radial-gradient(circle at 37% 67%, rgba(0, 0, 0, 0.2) 0 18px, rgba(255, 255, 255, 0.18) 19px 23px, ${({ theme }) => theme.c4} 24px 29px, transparent 30px),
+    radial-gradient(circle at 58% 90%, rgba(0, 0, 0, 0.22) 0 40px, rgba(255, 255, 255, 0.18) 41px 48px, ${({ theme }) => theme.c3} 49px 56px, transparent 57px),
+    radial-gradient(circle at 17% 14%, ${({ theme }) => theme.c4} 0 3px, transparent 4px),
+    radial-gradient(circle at 31% 46%, ${({ theme }) => theme.c3} 0 2px, transparent 3px),
+    radial-gradient(circle at 68% 62%, ${({ theme }) => theme.c4} 0 4px, transparent 5px),
+    radial-gradient(circle at 86% 28%, ${({ theme }) => theme.c3} 0 2px, transparent 3px);
 `;
 
 const PageHeader = styled.header`
