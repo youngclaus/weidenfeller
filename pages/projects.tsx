@@ -93,7 +93,7 @@ const bestContrast = (background: Rgb, candidates: Rgb[]) => (
   ), candidates[0])
 );
 
-const readableColor = (foreground: Rgb, background: Rgb, targetContrast = 3.2): Rgb => {
+const readableColor = (foreground: Rgb, background: Rgb, targetContrast = 4.5): Rgb => {
   if (contrast(foreground, background) >= targetContrast) return foreground;
 
   const anchor = luminance(background) > 0.5 ? namedColors.black : namedColors.white;
@@ -113,36 +113,34 @@ const projectPalette = (theme: Theme) => {
   const themeText = parseColor(theme.c4);
   const black = namedColors.black;
   const white = namedColors.white;
-  const baseIsLight = luminance(base) > 0.46;
-
-  const bg = baseIsLight ? mix(base, white, 0.76) : mix(base, black, 0.7);
-  const surface = baseIsLight ? mix(base, white, 0.3) : mix(base, black, 0.3);
-  const surface2 = baseIsLight ? mix(base, white, 0.52) : mix(base, black, 0.5);
-  const ink = bestContrast(surface, [themeText, secondary, black, white]);
-  const muted = mix(ink, surface, 0.52);
-  const faint = mix(ink, surface, 0.32);
-  const line = mix(ink, surface, 0.16);
-  const line2 = mix(ink, surface, 0.1);
-  const readableAccent = readableColor(accent, surface);
+  const surfaceBase = { r: 13, g: 15, b: 22 };
+  const surfaceAltBase = { r: 24, g: 26, b: 34 };
+  const surface = mix(surfaceBase, base, 0.88);
+  const surface2 = mix(surfaceAltBase, secondary, 0.84);
+  const ink = readableColor(bestContrast(surface, [themeText, secondary, accent, white]), surface, 7);
+  const muted = readableColor(mix(ink, surface, 0.68), surface, 4.8);
+  const faint = readableColor(mix(ink, surface, 0.5), surface, 3.8);
+  const line = mix(readableColor(secondary, surface, 3.2), surface, 0.42);
+  const line2 = mix(readableColor(accent, surface, 3.2), surface, 0.28);
+  const readableAccent = readableColor(accent, surface, 4.5);
+  const accentInk = bestContrast(readableAccent, [black, white]);
+  const controlInk = bestContrast(ink, [black, surface, surface2]);
 
   return {
     accent: toCss(readableAccent),
-    accentInk: toCss(bestContrast(readableAccent, [black, white, base])),
+    accentInk: toCss(accentInk),
     accentSoft: toCss(mix(readableAccent, surface, 0.14)),
-    bg: toCss(bg),
+    bg: 'rgba(0, 0, 0, 0.82)',
+    controlInk: toCss(controlInk),
     faint: toCss(faint),
     ink: toCss(ink),
     line: toCss(line),
     line2: toCss(line2),
     muted: toCss(muted),
-    shadow: baseIsLight
-      ? '0 1px 2px rgba(40, 34, 22, 0.04), 0 8px 24px -12px rgba(40, 34, 22, 0.12)'
-      : '0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 30px -14px rgba(0, 0, 0, 0.6)',
-    shadowLift: baseIsLight
-      ? '0 2px 4px rgba(40, 34, 22, 0.05), 0 20px 40px -16px rgba(40, 34, 22, 0.22)'
-      : '0 2px 4px rgba(0, 0, 0, 0.35), 0 26px 50px -18px rgba(0, 0, 0, 0.7)',
-    surface: toCss(surface),
-    surface2: toCss(surface2),
+    shadow: '0 1px 2px rgba(0, 0, 0, 0.45), 0 18px 42px -18px rgba(0, 0, 0, 0.86)',
+    shadowLift: '0 2px 5px rgba(0, 0, 0, 0.5), 0 28px 58px -20px rgba(0, 0, 0, 0.94)',
+    surface: `rgba(${surface.r}, ${surface.g}, ${surface.b}, 0.88)`,
+    surface2: `rgba(${surface2.r}, ${surface2.g}, ${surface2.b}, 0.74)`,
   };
 };
 
@@ -367,6 +365,7 @@ const Page = styled.main`
   --project-accent: ${({ theme }) => projectPalette(theme).accent};
   --project-accent-ink: ${({ theme }) => projectPalette(theme).accentInk};
   --project-accent-soft: ${({ theme }) => projectPalette(theme).accentSoft};
+  --project-control-ink: ${({ theme }) => projectPalette(theme).controlInk};
   --project-shadow: ${({ theme }) => projectPalette(theme).shadow};
   --project-shadow-lift: ${({ theme }) => projectPalette(theme).shadowLift};
   --project-lava-a: ${({ theme }) => theme.c3};
@@ -528,7 +527,7 @@ const FilterButton = styled.button<{ $active: boolean }>`
   border: 1px solid ${({ $active }) => ($active ? 'var(--project-ink)' : 'var(--project-line)')};
   border-radius: 999px;
   background: ${({ $active }) => ($active ? 'var(--project-ink)' : 'var(--project-surface)')};
-  color: ${({ $active }) => ($active ? 'var(--project-bg)' : 'var(--project-muted)')};
+  color: ${({ $active }) => ($active ? 'var(--project-control-ink)' : 'var(--project-muted)')};
   font: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -539,7 +538,7 @@ const FilterButton = styled.button<{ $active: boolean }>`
   &:hover,
   &:focus-visible {
     border-color: var(--project-accent);
-    color: ${({ $active }) => ($active ? 'var(--project-bg)' : 'var(--project-ink)')};
+    color: ${({ $active }) => ($active ? 'var(--project-control-ink)' : 'var(--project-ink)')};
     outline: none;
   }
 `;
@@ -632,8 +631,8 @@ const StatusDot = styled.span<{ $status: ProjectStatus }>`
   flex: 0 0 auto;
   border-radius: 50%;
   background: ${({ $status }) => {
-    if ($status === 'live') return '#3f9d63';
-    if ($status === 'wip') return '#cf8a1c';
+    if ($status === 'live') return '#67d391';
+    if ($status === 'wip') return '#f0a93a';
     return 'var(--project-faint)';
   }};
 `;
@@ -643,8 +642,8 @@ const StatusText = styled.span<{ $status: ProjectStatus }>`
   align-items: center;
   gap: 6px;
   color: ${({ $status }) => {
-    if ($status === 'live') return '#3f9d63';
-    if ($status === 'wip') return '#a46813';
+    if ($status === 'live') return '#67d391';
+    if ($status === 'wip') return '#f0a93a';
     return 'var(--project-faint)';
   }};
   font-size: 12px;
