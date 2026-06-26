@@ -1,22 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ThemeProvider as CustomThemeProvider, useTheme } from '../components/Theme/ThemeContext';
-import { createGlobalStyle, ThemeProvider as StyledThemeProvider } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Analytics } from '@vercel/analytics/react';
 import Header from '../components/Header';
-import PageZoomTransition, {
-  PageStage,
-  TransitionDirection,
-  TransitionPhase,
-} from '../components/PageZoomTransition';
 import Index from './index';
 import Projects from './projects';
 import About from './about';
 import Music from './music';
 import '../styles/globals.css';
 
-type ActiveComponent = PageStage;
-
-const stageOrder: ActiveComponent[] = ['index', 'projects', 'about', 'music'];
+type ActiveComponent = 'index' | 'projects' | 'about' | 'music';
 
 const App: React.FC = () => {
   return (
@@ -30,10 +23,8 @@ const App: React.FC = () => {
 const ThemedApp: React.FC = () => {
   const { theme } = useTheme();
   const [activeComponent, setActiveComponent] = useState<ActiveComponent>('index');
-  const [transitionPhase, setTransitionPhase] = useState<TransitionPhase>('idle');
-  const [transitionFrom, setTransitionFrom] = useState<ActiveComponent>('index');
-  const [transitionTo, setTransitionTo] = useState<ActiveComponent>('index');
-  const [transitionDirection, setTransitionDirection] = useState<TransitionDirection>('forward');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
   useEffect(() => () => {
@@ -41,60 +32,63 @@ const ThemedApp: React.FC = () => {
   }, []);
 
   const handleSetActiveComponent = useCallback((component: ActiveComponent) => {
-    if (component === activeComponent || transitionPhase !== 'idle') return;
+    if (component === activeComponent || isTransitioning) return;
 
-    const fromIndex = stageOrder.indexOf(activeComponent);
-    const toIndex = stageOrder.indexOf(component);
-    const distance = toIndex - fromIndex;
-    const direction: TransitionDirection = Math.abs(distance) > 1
-      ? 'jump'
-      : distance > 0
-        ? 'forward'
-        : 'backward';
-
-    setTransitionFrom(activeComponent);
-    setTransitionTo(component);
-    setTransitionDirection(direction);
-    setTransitionPhase('departing');
+    setIsTransitioning(true);
+    setContentVisible(false);
 
     timers.current.push(setTimeout(() => {
       setActiveComponent(component);
-      setTransitionPhase('arriving');
     }, 180));
 
     timers.current.push(setTimeout(() => {
-      setTransitionPhase('idle');
-    }, 560));
-  }, [activeComponent, transitionPhase]);
+      setContentVisible(true);
+    }, 210));
+
+    timers.current.push(setTimeout(() => {
+      setIsTransitioning(false);
+    }, 440));
+  }, [activeComponent, isTransitioning]);
 
   return (
     <StyledThemeProvider theme={theme}>
       <StageGlobals />
-      <AppStage className={`stage-${activeComponent}`}>
+      <AppStage className={`stage-${activeComponent}`} $contentVisible={contentVisible}>
         <Header
           activeComponent={activeComponent}
           setActiveComponent={handleSetActiveComponent}
         />
-        {activeComponent === 'projects' && <Projects />}
-        {activeComponent === 'about' && <About setActiveComponent={handleSetActiveComponent} />}
-        {activeComponent === 'music' && <Music />}
-        {activeComponent === 'index' && <Index />}
+        {activeComponent === 'projects' && <Projects contentVisible={contentVisible} />}
+        {activeComponent === 'about' && (
+          <PageContent $visible={contentVisible}>
+            <About setActiveComponent={handleSetActiveComponent} />
+          </PageContent>
+        )}
+        {activeComponent === 'music' && (
+          <PageContent $visible={contentVisible}>
+            <Music />
+          </PageContent>
+        )}
+        {activeComponent === 'index' && <Index contentVisible={contentVisible} />}
       </AppStage>
-      <PageZoomTransition
-        from={transitionFrom}
-        to={transitionTo}
-        direction={transitionDirection}
-        phase={transitionPhase}
-      />
     </StyledThemeProvider>
   );
 };
 
 export default App;
 
-const AppStage = React.memo(({ className, children }: React.PropsWithChildren<{ className: string }>) => (
-  <div className={className}>{children}</div>
+const AppStage = React.memo(({ className, children, $contentVisible }: React.PropsWithChildren<{ className: string; $contentVisible: boolean }>) => (
+  <div className={className} data-content-visible={$contentVisible}>{children}</div>
 ));
+
+const PageContent = styled.div<{ $visible: boolean }>`
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 220ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 1ms;
+  }
+`;
 
 const StageGlobals = createGlobalStyle`
   @media (prefers-reduced-motion: reduce) {

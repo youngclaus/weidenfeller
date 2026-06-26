@@ -197,7 +197,11 @@ const getTagPreview = (card: Card) => (
   (card.technologies.length > 0 ? card.technologies : card.tags).slice(0, 3)
 );
 
-const Projects: React.FC = () => {
+interface ProjectsProps {
+  contentVisible?: boolean;
+}
+
+const Projects: React.FC<ProjectsProps> = ({ contentVisible = true }) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('all');
   const [featuredCard, setFeaturedCard] = useState<Card>(
     cards.find(card => featuredTitles.has(card.title)) ?? cards[0],
@@ -223,7 +227,7 @@ const Projects: React.FC = () => {
 
   return (
     <Page>
-      <Shell>
+      <Shell $visible={contentVisible}>
         <Hero>
           <HeroCopy>
             <Title>Projects</Title>
@@ -351,18 +355,6 @@ const Projects: React.FC = () => {
 
 export default Projects;
 
-const fadeUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const lavaDrift = keyframes`
   0% {
     transform: translate3d(-3%, -2%, 0) scale(1);
@@ -469,16 +461,22 @@ const Page = styled.main`
   }
 `;
 
-const Shell = styled.div`
+const Shell = styled.div<{ $visible: boolean }>`
   position: relative;
   z-index: 1;
   width: min(1080px, calc(100% - 48px));
   margin: 0 auto;
   padding: 82px 0 80px;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 220ms ease;
 
   @media (max-width: 720px) {
     width: min(100% - 32px, 1080px);
     padding: 92px 0 56px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 1ms;
   }
 `;
 
@@ -488,7 +486,6 @@ const Hero = styled.header`
   justify-content: space-between;
   gap: 30px;
   padding: 56px 0 24px;
-  animation: ${fadeUp} 260ms ease both;
 
   @media (max-width: 740px) {
     display: block;
@@ -636,7 +633,6 @@ const FeaturedProject = styled.a`
   color: inherit;
   text-decoration: none;
   box-shadow: var(--project-shadow);
-  animation: ${fadeUp} 320ms ease both;
   transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
 
   &:hover,
@@ -829,7 +825,6 @@ const ProjectTile = styled.a`
   text-decoration: none;
   box-shadow: var(--project-shadow);
   cursor: pointer;
-  animation: ${fadeUp} 360ms ease both;
   transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
 
   &:hover,
