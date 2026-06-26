@@ -11,6 +11,8 @@ import Music from './music';
 import '../styles/globals.css';
 
 type ActiveComponent = 'index' | 'projects' | 'about' | 'music';
+const PAGE_FADE_MS = 500;
+const PAGE_FADE_GAP_MS = 1000;
 
 const App: React.FC = () => {
   return (
@@ -40,15 +42,15 @@ const ThemedApp: React.FC = () => {
 
     timers.current.push(setTimeout(() => {
       setActiveComponent(component);
-    }, 180));
+    }, PAGE_FADE_MS));
 
     timers.current.push(setTimeout(() => {
       setContentVisible(true);
-    }, 200));
+    }, PAGE_FADE_MS + PAGE_FADE_GAP_MS));
 
     timers.current.push(setTimeout(() => {
       setIsTransitioning(false);
-    }, 380));
+    }, (PAGE_FADE_MS * 2) + PAGE_FADE_GAP_MS));
   }, [activeComponent, isTransitioning]);
 
   const usesStarfield = activeComponent === 'index' || activeComponent === 'projects';
@@ -100,7 +102,7 @@ const SharedStarfield = styled.div`
 
 const PageContent = styled.div<{ $visible: boolean }>`
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 180ms ease;
+  transition: opacity ${PAGE_FADE_MS}ms ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 1ms;

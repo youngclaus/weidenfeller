@@ -30,6 +30,7 @@ const Container = styled.div`
   z-index: 0;
   user-select: none;
   -webkit-user-drag: none;
+  pointer-events: none;
 `;
 
 const Content = styled.div<{ $visible: boolean }>`
@@ -37,7 +38,8 @@ const Content = styled.div<{ $visible: boolean }>`
   inset: 0;
   z-index: 1;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 180ms ease;
+  pointer-events: none;
+  transition: opacity 500ms ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 1ms;

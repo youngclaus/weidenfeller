@@ -396,7 +396,7 @@ const Shell = styled.div<{ $visible: boolean }>`
   margin: 0 auto;
   padding: 82px 0 80px;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transition: opacity 180ms ease;
+  transition: opacity 500ms ease;
 
   @media (max-width: 720px) {
     width: min(100% - 32px, 1080px);
