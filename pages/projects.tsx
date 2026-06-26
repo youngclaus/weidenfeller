@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { Card, cards } from '../components/Projects/cards';
 
@@ -243,6 +243,16 @@ const Projects: React.FC = () => {
 
 export default Projects;
 
+const colorCrossfade = keyframes`
+  0%, 100% {
+    opacity: 0;
+  }
+
+  45%, 55% {
+    opacity: 1;
+  }
+`;
+
 const Page = styled.main`
   position: fixed;
   inset: 0;
@@ -252,8 +262,7 @@ const Page = styled.main`
   overflow: hidden;
   box-sizing: border-box;
   padding: 94px clamp(18px, 3vw, 52px) 82px;
-  background:
-    radial-gradient(circle at 50% 45%, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c2} 120%);
+  background: ${({ theme }) => theme.c1};
   color: ${({ theme }) => theme.c4};
   font-family: "DM Mono", monospace;
 
@@ -269,19 +278,42 @@ const Ambient = styled.div`
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.72;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 9% 36%, rgba(0, 0, 0, 0.24) 0 52px, rgba(255, 255, 255, 0.2) 53px 61px, ${({ theme }) => theme.c3} 62px 70px, transparent 71px),
-    radial-gradient(circle at 20% 82%, rgba(0, 0, 0, 0.28) 0 34px, rgba(255, 255, 255, 0.18) 35px 41px, ${({ theme }) => theme.c4} 42px 49px, transparent 50px),
-    radial-gradient(circle at 44% 23%, rgba(0, 0, 0, 0.22) 0 24px, rgba(255, 255, 255, 0.18) 25px 30px, ${({ theme }) => theme.c3} 31px 36px, transparent 37px),
-    radial-gradient(circle at 74% 18%, rgba(0, 0, 0, 0.24) 0 46px, rgba(255, 255, 255, 0.2) 47px 55px, ${({ theme }) => theme.c4} 56px 64px, transparent 65px),
-    radial-gradient(circle at 91% 55%, rgba(0, 0, 0, 0.26) 0 64px, rgba(255, 255, 255, 0.2) 65px 74px, ${({ theme }) => theme.c3} 75px 86px, transparent 87px),
-    radial-gradient(circle at 37% 67%, rgba(0, 0, 0, 0.2) 0 18px, rgba(255, 255, 255, 0.18) 19px 23px, ${({ theme }) => theme.c4} 24px 29px, transparent 30px),
-    radial-gradient(circle at 58% 90%, rgba(0, 0, 0, 0.22) 0 40px, rgba(255, 255, 255, 0.18) 41px 48px, ${({ theme }) => theme.c3} 49px 56px, transparent 57px),
-    radial-gradient(circle at 17% 14%, ${({ theme }) => theme.c4} 0 3px, transparent 4px),
-    radial-gradient(circle at 31% 46%, ${({ theme }) => theme.c3} 0 2px, transparent 3px),
-    radial-gradient(circle at 68% 62%, ${({ theme }) => theme.c4} 0 4px, transparent 5px),
-    radial-gradient(circle at 86% 28%, ${({ theme }) => theme.c3} 0 2px, transparent 3px);
+    linear-gradient(135deg, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c2} 48%, ${({ theme }) => theme.c3} 100%);
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    background-size: 140% 140%;
+    will-change: opacity;
+  }
+
+  &::before {
+    background:
+      radial-gradient(circle at 18% 22%, ${({ theme }) => theme.c3} 0%, transparent 38%),
+      radial-gradient(circle at 84% 18%, ${({ theme }) => theme.c4} 0%, transparent 34%),
+      linear-gradient(145deg, ${({ theme }) => theme.c2} 0%, ${({ theme }) => theme.c1} 58%, ${({ theme }) => theme.c3} 100%);
+    animation: ${colorCrossfade} 16s ease-in-out infinite;
+  }
+
+  &::after {
+    background:
+      radial-gradient(circle at 24% 82%, ${({ theme }) => theme.c4} 0%, transparent 35%),
+      radial-gradient(circle at 78% 72%, ${({ theme }) => theme.c3} 0%, transparent 40%),
+      linear-gradient(215deg, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c3} 52%, ${({ theme }) => theme.c2} 100%);
+    animation: ${colorCrossfade} 16s ease-in-out infinite reverse;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none;
+      opacity: 0.45;
+    }
+  }
 `;
 
 const PageHeader = styled.header`

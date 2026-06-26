@@ -98,25 +98,12 @@ const AppStage = React.memo(({ className, children }: React.PropsWithChildren<{ 
 
 const StageGlobals = createGlobalStyle`
   .stage-projects main {
-    background:
-      radial-gradient(ellipse at 14% 18%, transparent 0 7%, ${({ theme }) => theme.c2} 7.5% 9%, transparent 10%),
-      radial-gradient(ellipse at 82% 76%, transparent 0 11%, ${({ theme }) => theme.c2} 11.5% 13%, transparent 14%),
-      radial-gradient(circle at 58% 24%, ${({ theme }) => theme.glow} 0 1px, transparent 18%),
-      repeating-radial-gradient(circle at 54% 48%, ${({ theme }) => theme.c1} 0 46px, ${({ theme }) => theme.c2} 48px 50px, ${({ theme }) => theme.c1} 52px 94px) !important;
-    background-attachment: fixed !important;
+    background: ${({ theme }) => theme.c1} !important;
+    background-attachment: initial !important;
   }
 
   .stage-projects main::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: .42;
-    background:
-      linear-gradient(118deg, transparent 0 34%, ${({ theme }) => theme.c3} 34.2% 34.5%, transparent 34.8% 100%),
-      linear-gradient(64deg, transparent 0 68%, ${({ theme }) => theme.c2} 68.2% 68.8%, transparent 69% 100%);
-    filter: drop-shadow(0 0 12px ${({ theme }) => theme.glow});
+    content: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
