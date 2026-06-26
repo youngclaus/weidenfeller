@@ -223,7 +223,6 @@ const Projects: React.FC = () => {
 
   return (
     <Page>
-      <BlackReveal aria-hidden="true" />
       <Shell>
         <Hero>
           <HeroCopy>
@@ -396,17 +395,6 @@ const lavaFloat = keyframes`
   }
 `;
 
-const blackReveal = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-`;
-
 const Page = styled.main`
   --project-bg: ${({ theme }) => projectPalette(theme).bg};
   --project-surface: ${({ theme }) => projectPalette(theme).surface};
@@ -481,23 +469,9 @@ const Page = styled.main`
   }
 `;
 
-const BlackReveal = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: #000;
-  animation: ${blackReveal} 720ms cubic-bezier(.2, .8, .2, 1) 80ms both;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation-duration: 120ms;
-    animation-delay: 0ms;
-  }
-`;
-
 const Shell = styled.div`
   position: relative;
-  z-index: 3;
+  z-index: 1;
   width: min(1080px, calc(100% - 48px));
   margin: 0 auto;
   padding: 82px 0 80px;

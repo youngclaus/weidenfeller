@@ -60,11 +60,11 @@ const ThemedApp: React.FC = () => {
     timers.current.push(setTimeout(() => {
       setActiveComponent(component);
       setTransitionPhase('arriving');
-    }, 420));
+    }, 180));
 
     timers.current.push(setTimeout(() => {
       setTransitionPhase('idle');
-    }, 900));
+    }, 560));
   }, [activeComponent, transitionPhase]);
 
   return (
@@ -97,10 +97,6 @@ const AppStage = React.memo(({ className, children }: React.PropsWithChildren<{ 
 ));
 
 const StageGlobals = createGlobalStyle`
-  .stage-projects main::before {
-    content: none;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       scroll-behavior: auto !important;
