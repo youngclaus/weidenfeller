@@ -97,11 +97,6 @@ const AppStage = React.memo(({ className, children }: React.PropsWithChildren<{ 
 ));
 
 const StageGlobals = createGlobalStyle`
-  .stage-projects main {
-    background: ${({ theme }) => theme.c1} !important;
-    background-attachment: initial !important;
-  }
-
   .stage-projects main::before {
     content: none;
   }
