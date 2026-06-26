@@ -119,52 +119,93 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
   const displayText = hoveredText || (!hasCompleted ? defaultMessage : '');
 
   return (
-    <StyledImageContainer ref={imageContainerRef}>
-      {staticImages.map((image, idx) => (
-        <StaticImage key={idx} {...image} />
-      ))}
-      {objects
-        .filter(obj => blueprintPositions[obj.name]) // Only include prints with defined positions
-        .map(obj => {
-          const pos = blueprintPositions[obj.name];
+    <ExploreLayout>
+      <ViewportFrame>
+        <StyledImageContainer ref={imageContainerRef}>
+          {staticImages.map((image, idx) => (
+            <StaticImage key={idx} {...image} />
+          ))}
+          {objects
+            .filter(obj => blueprintPositions[obj.name])
+            .map(obj => {
+              const pos = blueprintPositions[obj.name];
 
-          return (
-            <GlowContainer
-              key={obj.name}
-              style={{ height: pos.height, transform: pos.transform, zIndex: pos.zIndex }}
-            >
-              <GlowImage
-                $active={obj.active}
-                src={getDynamicSrc(obj.name, obj.image)}
-                alt={obj.name}
-                onMouseEnter={() => obj.active && setHoveredText(obj.description)}
-                onMouseLeave={() => obj.active && setHoveredText(null)}
-                onClick={() => obj.active && obj.series === 'vinyl collection' && switchTheme(obj.name)}
-              />
-            </GlowContainer>
-          );
-        })}
-        <TextBox $visible={!!displayText}>{displayText}</TextBox>
-        <InventoryContainer>
-          <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory} setActiveComponent={setActiveComponent}/>
-        </InventoryContainer>
-        {showInventory && (
-            <InventoryOverlay id="inventory-overlay">
-                <InventoryManager />
-            </InventoryOverlay>
-        )}
-    </StyledImageContainer>
+              return (
+                <GlowContainer
+                  key={obj.name}
+                  style={{ height: pos.height, transform: pos.transform, zIndex: pos.zIndex }}
+                >
+                  <GlowImage
+                    $active={obj.active}
+                    src={getDynamicSrc(obj.name, obj.image)}
+                    alt={obj.name}
+                    onMouseEnter={() => obj.active && setHoveredText(obj.description)}
+                    onMouseLeave={() => obj.active && setHoveredText(null)}
+                    onClick={() => obj.active && obj.series === 'vinyl collection' && switchTheme(obj.name)}
+                  />
+                </GlowContainer>
+              );
+            })}
+          <TextBox $visible={!!displayText}>{displayText}</TextBox>
+        </StyledImageContainer>
+      </ViewportFrame>
+
+      <MenuDock>
+        <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory} setActiveComponent={setActiveComponent}/>
+      </MenuDock>
+
+      {showInventory && (
+        <InventoryOverlay id="inventory-overlay">
+          <InventoryManager />
+        </InventoryOverlay>
+      )}
+    </ExploreLayout>
   );
 };
 
 export default ImageContainer;
 
+const ExploreLayout = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.6vh, 26px);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  padding: clamp(70px, 10vh, 108px) clamp(18px, 4vw, 48px) clamp(26px, 5vh, 48px);
+`;
+
+const ViewportFrame = styled.div`
+  flex: 0 1 auto;
+  width: min(1000px, 86vw);
+  height: clamp(300px, 50vh, 540px);
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.c3};
+  border-radius: 8px;
+  background: #000;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 70px rgba(0, 0, 0, 0.42),
+    0 0 34px ${({ theme }) => theme.glow};
+
+  @media (max-width: 700px) {
+    width: min(100%, 92vw);
+    height: clamp(260px, 44vh, 420px);
+  }
+`;
+
 const StyledImageContainer = styled.div`
   display: flex;
-  position: absolute;
-  width: 100dvw;
-  height: 100dvh;
-  z-index: 10;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 
   opacity: ${({ theme }) => theme.opacity};
   overflow-x: auto;
@@ -173,7 +214,7 @@ const StyledImageContainer = styled.div`
 
   background-image: url('/About/background.png');
   background-position: left bottom;
-  background-size: auto calc(100vh);
+  background-size: auto 100%;
   background-repeat: repeat-x;
 
   &::-webkit-scrollbar {
@@ -221,12 +262,12 @@ const GlowImage = styled.img<{ $active: boolean }>`
 `;
 
 const TextBox = styled.div<{ $visible: boolean }>`
-  position: fixed;
+  position: absolute;
   left: 50%;
-  bottom: 12%;
+  bottom: 8%;
   transform: translateX(-50%);
   font-family: "DM Mono", monospace;
-  font-size: 2.5vh;
+  font-size: clamp(13px, 2vh, 22px);
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   visibility: ${({ $visible }) => ($visible ? 'visible' : 'hidden')};
   background: rgba(0, 0, 0, 0.9);
@@ -239,17 +280,20 @@ const TextBox = styled.div<{ $visible: boolean }>`
   z-index: 10000;
 `;
 
-const InventoryContainer = styled.div`
-  position: fixed;
-  left: 50%;
-  bottom: 100px;
-`
+const MenuDock = styled.div`
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  width: min(90vw, 360px);
+  height: 80px;
+`;
 
 const InventoryOverlay = styled.div`
   position: fixed;
-  top: 50%;
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -50%);
   width: auto;
   height: auto;
   display: flex;

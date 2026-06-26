@@ -60,10 +60,9 @@ const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryO
 export default InventoryButton;
 
 const Nav = styled.div<{ expanded: boolean; collapsed: boolean }>`
-  position: absolute;
+  position: relative;
   display: flex;
   justify-content: center;
-  transform: translate(-50%);
   align-items: center;
   width: ${({ expanded, collapsed }) => (expanded ? '300px' : collapsed ? '80px' : '80px')};
   height: 80px;
