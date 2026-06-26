@@ -228,30 +228,32 @@ const Projects: React.FC = () => {
           <HeroCopy>
             <Title>Projects</Title>
           </HeroCopy>
+        </Hero>
 
+        <StickyControls>
           <Stats aria-label="Project stats">
             <Stat><strong>{cards.length}</strong> projects</Stat>
             <Stat><strong>{liveCount}</strong> live</Stat>
             <Stat>{getYearRange()}</Stat>
           </Stats>
-        </Hero>
 
-        <FilterBar aria-label="Project filters">
-          {filters.map(filter => {
-            const isActive = selectedFilter === filter.key;
-            return (
-              <FilterButton
-                key={filter.key}
-                type="button"
-                $active={isActive}
-                onClick={() => setSelectedFilter(filter.key)}
-              >
-                {filter.label}
-                <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
-              </FilterButton>
-            );
-          })}
-        </FilterBar>
+          <FilterBar aria-label="Project filters">
+            {filters.map(filter => {
+              const isActive = selectedFilter === filter.key;
+              return (
+                <FilterButton
+                  key={filter.key}
+                  type="button"
+                  $active={isActive}
+                  onClick={() => setSelectedFilter(filter.key)}
+                >
+                  {filter.label}
+                  <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
+                </FilterButton>
+              );
+            })}
+          </FilterBar>
+        </StickyControls>
 
         <FeaturedProject
           href={featuredUrl || undefined}
@@ -390,6 +392,7 @@ const Page = styled.main`
   @media (max-width: 840px) {
     position: relative;
     min-height: 100dvh;
+    max-height: 100dvh;
   }
 `;
 
@@ -409,7 +412,7 @@ const Hero = styled.header`
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
-  padding: 56px 0 38px;
+  padding: 56px 0 24px;
   animation: ${fadeUp} 260ms ease both;
 
   @media (max-width: 740px) {
@@ -432,19 +435,66 @@ const Title = styled.h1`
   letter-spacing: -0.04em;
 `;
 
+const StickyControls = styled.div`
+  position: sticky;
+  top: 94px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  margin: 0 0 30px;
+  padding: 14px 0 16px;
+  pointer-events: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -24px;
+    bottom: 0;
+    width: min(640px, calc(100% + 48px));
+    border-radius: 22px 0 0 22px;
+    background:
+      linear-gradient(90deg, transparent 0%, var(--project-bg) 30%, var(--project-bg) 100%);
+    opacity: 0.94;
+    box-shadow: -24px 0 40px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(12px);
+  }
+
+  @media (max-width: 740px) {
+    top: 96px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+
+    &::before {
+      right: -16px;
+      left: -16px;
+      bottom: -24px;
+      width: auto;
+      border-radius: 0;
+      background: linear-gradient(180deg, var(--project-bg) 0%, var(--project-bg) 88%, transparent 100%);
+    }
+  }
+`;
+
 const Stats = styled.aside`
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
   color: var(--project-faint);
   font-family: "DM Mono", "JetBrains Mono", monospace;
   font-size: 13px;
   line-height: 1.7;
   text-align: right;
+  pointer-events: auto;
 
   @media (max-width: 740px) {
     display: flex;
+    justify-content: flex-end;
     gap: 16px;
     margin-top: 24px;
-    text-align: left;
+    text-align: right;
   }
 `;
 
@@ -456,17 +506,17 @@ const Stat = styled.div`
 `;
 
 const FilterBar = styled.nav`
-  position: sticky;
-  top: 0;
-  z-index: 5;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-  padding-bottom: 30px;
+  max-width: min(620px, 100%);
+  pointer-events: auto;
 
   @media (max-width: 620px) {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 `;
 
