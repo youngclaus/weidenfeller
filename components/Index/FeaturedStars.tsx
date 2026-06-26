@@ -88,11 +88,11 @@ const Point = styled.span<{ $central: boolean }>`
   )};
   box-shadow: ${({ $central, theme }) => (
     $central
-      ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
-      : `0 0 7px ${theme.c3}, 0 0 14px ${theme.glow}`
+      ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 16px ${theme.glow}`
+      : `0 0 9px ${theme.c3}, 0 0 18px ${theme.glow}, 0 0 34px ${theme.glow}`
   )};
   filter: ${({ $central, theme }) => (
-    $central ? getThemeGlowFilter(theme.glow, 8) : 'none'
+    getThemeGlowFilter(theme.glow, $central ? 12 : 10)
   )};
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
@@ -103,11 +103,11 @@ const Point = styled.span<{ $central: boolean }>`
     transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1 : 1.2)});
     box-shadow: ${({ $central, theme }) => (
       $central
-        ? 'inset -5px -4px 7px rgba(0,0,0,.34)'
-        : `0 0 10px ${theme.c3}, 0 0 19px ${theme.glow}`
+        ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 28px ${theme.glow}`
+        : `0 0 13px ${theme.c3}, 0 0 28px ${theme.glow}, 0 0 52px ${theme.glow}`
     )};
     filter: ${({ $central, theme }) => (
-      $central ? getThemeGlowFilter(theme.glow, 20) : 'none'
+      getThemeGlowFilter(theme.glow, $central ? 24 : 18)
     )};
   }
 

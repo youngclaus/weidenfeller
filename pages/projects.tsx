@@ -228,7 +228,7 @@ const Projects: React.FC<ProjectsProps> = ({ contentVisible = true }) => {
       <Shell $visible={contentVisible}>
         <Hero>
           <HeroCopy>
-            <Title>Projects</Title>
+            <Title>projects</Title>
           </HeroCopy>
 
           <HeroControls>
