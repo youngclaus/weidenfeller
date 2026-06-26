@@ -3,6 +3,7 @@ import { ThemeProvider as CustomThemeProvider, useTheme } from '../components/Th
 import styled, { createGlobalStyle, ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Analytics } from '@vercel/analytics/react';
 import Header from '../components/Header';
+import ConstellationBackground from '../components/Index/ConstellationBackground';
 import Index from './index';
 import Projects from './projects';
 import About from './about';
@@ -50,9 +51,17 @@ const ThemedApp: React.FC = () => {
     }, 380));
   }, [activeComponent, isTransitioning]);
 
+  const usesStarfield = activeComponent === 'index' || activeComponent === 'projects';
+  const showHomeObjects = activeComponent === 'index' && contentVisible;
+
   return (
     <StyledThemeProvider theme={theme}>
       <StageGlobals />
+      {usesStarfield && (
+        <SharedStarfield aria-hidden={activeComponent !== 'index'}>
+          <ConstellationBackground interactiveVisible={showHomeObjects} />
+        </SharedStarfield>
+      )}
       <AppStage className={`stage-${activeComponent}`} $contentVisible={contentVisible}>
         <Header
           activeComponent={activeComponent}
@@ -80,6 +89,14 @@ export default App;
 const AppStage = React.memo(({ className, children, $contentVisible }: React.PropsWithChildren<{ className: string; $contentVisible: boolean }>) => (
   <div className={className} data-content-visible={$contentVisible}>{children}</div>
 ));
+
+const SharedStarfield = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
+`;
 
 const PageContent = styled.div<{ $visible: boolean }>`
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};

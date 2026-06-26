@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { Card, cards } from '../components/Projects/cards';
 import { Theme } from '../components/Theme/themes';
@@ -355,38 +355,6 @@ const Projects: React.FC<ProjectsProps> = ({ contentVisible = true }) => {
 
 export default Projects;
 
-const lavaDrift = keyframes`
-  0% {
-    transform: translate3d(-3%, -2%, 0) scale(1);
-  }
-
-  33% {
-    transform: translate3d(4%, 3%, 0) scale(1.08);
-  }
-
-  66% {
-    transform: translate3d(-1%, 5%, 0) scale(.96);
-  }
-
-  100% {
-    transform: translate3d(-3%, -2%, 0) scale(1);
-  }
-`;
-
-const lavaFloat = keyframes`
-  0% {
-    transform: translate3d(4%, 5%, 0) scale(1.04) rotate(0deg);
-  }
-
-  50% {
-    transform: translate3d(-5%, -3%, 0) scale(.98) rotate(8deg);
-  }
-
-  100% {
-    transform: translate3d(4%, 5%, 0) scale(1.04) rotate(0deg);
-  }
-`;
-
 const Page = styled.main`
   --project-bg: ${({ theme }) => projectPalette(theme).bg};
   --project-surface: ${({ theme }) => projectPalette(theme).surface};
@@ -409,50 +377,10 @@ const Page = styled.main`
   inset: 0;
   z-index: 10;
   overflow-y: auto;
-  background: #000;
+  background: transparent;
   color: var(--project-ink);
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   transition: color 350ms ease;
-
-  &::before,
-  &::after {
-    content: "";
-    position: fixed;
-    inset: -24vmax;
-    z-index: 0;
-    pointer-events: none;
-    will-change: transform;
-  }
-
-  &::before {
-    background:
-      radial-gradient(ellipse at 18% 24%, var(--project-lava-a) 0 12%, transparent 34%),
-      radial-gradient(ellipse at 78% 20%, var(--project-accent) 0 10%, transparent 32%),
-      radial-gradient(ellipse at 44% 78%, var(--project-lava-c) 0 10%, transparent 34%),
-      radial-gradient(ellipse at 84% 74%, var(--project-lava-b) 0 8%, transparent 28%);
-    filter: blur(44px) saturate(1.34);
-    opacity: .38;
-    mix-blend-mode: screen;
-    animation: ${lavaDrift} 18s ease-in-out infinite;
-  }
-
-  &::after {
-    background:
-      radial-gradient(ellipse at 16% 76%, var(--project-accent) 0 9%, transparent 29%),
-      radial-gradient(ellipse at 62% 44%, var(--project-lava-a) 0 11%, transparent 35%),
-      radial-gradient(ellipse at 88% 54%, var(--project-lava-c) 0 8%, transparent 30%);
-    filter: blur(68px) saturate(1.18);
-    opacity: .25;
-    mix-blend-mode: screen;
-    animation: ${lavaFloat} 24s ease-in-out infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &::before,
-    &::after {
-      animation: none;
-    }
-  }
 
   @media (max-width: 840px) {
     position: relative;

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import ConstellationBackground from '../components/Index/ConstellationBackground';
 import FeaturedStars from '../components/Index/FeaturedStars';
 import ThemeMoon from '../components/Index/ThemeMoon';
 
@@ -11,7 +10,6 @@ interface IndexProps {
 const Index: React.FC<IndexProps> = ({ contentVisible = true }) => {
   return (
     <Container>
-      <ConstellationBackground />
       <Content $visible={contentVisible}>
         <FeaturedStars />
         <ThemeMoon />
@@ -27,7 +25,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #000;
+  background: transparent;
   isolation: isolate;
   z-index: 0;
   user-select: none;
