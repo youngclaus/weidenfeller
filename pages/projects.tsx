@@ -4,16 +4,15 @@ import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { Card, cards } from '../components/Projects/cards';
 import { Theme } from '../components/Theme/themes';
 
-type Category = 'All' | 'Product' | 'AI + Data' | 'Full-stack' | 'Systems' | 'Hardware' | 'Academic';
+type FilterKey = 'all' | 'ai' | 'web' | 'apis' | 'live';
+type ProjectStatus = 'live' | 'wip' | 'archived';
 
-const categories: Category[] = [
-  'All',
-  'Product',
-  'AI + Data',
-  'Full-stack',
-  'Systems',
-  'Hardware',
-  'Academic',
+const filters: Array<{ key: FilterKey; label: string }> = [
+  { key: 'all', label: 'All' },
+  { key: 'ai', label: 'AI / ML' },
+  { key: 'web', label: 'Web' },
+  { key: 'apis', label: 'APIs' },
+  { key: 'live', label: 'Live' },
 ];
 
 const featuredTitles = new Set([
@@ -22,237 +21,6 @@ const featuredTitles = new Set([
   'March Madness Predictor',
   'youngcla.us',
 ]);
-
-const getCategory = (card: Card): Exclude<Category, 'All'> => {
-  const text = [
-    card.title,
-    card.description,
-    card.longDescription,
-    ...card.tags,
-    ...card.technologies,
-  ].join(' ').toLowerCase();
-
-  if (card.tags.includes('Hardware') || /arduino|solidworks|autocad|pspice|robot|drone/.test(text)) {
-    return 'Hardware';
-  }
-
-  if (/machine learning|artificial intelligence|tensorflow|pytorch|scikit|matlab|data|predict/.test(text)) {
-    return 'AI + Data';
-  }
-
-  if (card.tags.includes('Academic') || card.tags.includes('Degree')) {
-    return 'Academic';
-  }
-
-  if (/next\.js|react|website|full-stack|frontend|backend|flask|fastapi/.test(text)) {
-    return card.title.includes('Allergenics') ? 'Product' : 'Full-stack';
-  }
-
-  if (/c\+\+|network|binary tree|queue|stack|simulation|software/.test(text)) {
-    return 'Systems';
-  }
-
-  return 'Product';
-};
-
-const Projects: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<Category>('All');
-  const [selectedCard, setSelectedCard] = useState<Card>(cards[0]);
-
-  const categorizedCards = useMemo(
-    () => cards.map(card => ({ card, category: getCategory(card) })),
-    [],
-  );
-
-  const filteredCards = useMemo(
-    () => categorizedCards.filter(({ category }) => (
-      selectedCategory === 'All' || category === selectedCategory
-    )),
-    [categorizedCards, selectedCategory],
-  );
-
-  const groupedCards = useMemo(() => {
-    const groups = new Map<number, Array<{ card: Card; category: Exclude<Category, 'All'> }>>();
-
-    filteredCards.forEach(item => {
-      const existing = groups.get(item.card.year) ?? [];
-      existing.push(item);
-      groups.set(item.card.year, existing);
-    });
-
-    return Array.from(groups.entries()).sort(([yearA], [yearB]) => yearB - yearA);
-  }, [filteredCards]);
-
-  useEffect(() => {
-    if (!filteredCards.some(({ card }) => card.title === selectedCard.title)) {
-      const firstVisible = filteredCards[0]?.card;
-      if (firstVisible) setSelectedCard(firstVisible);
-    }
-  }, [filteredCards, selectedCard.title]);
-
-  const selectedIndex = cards.findIndex(card => card.title === selectedCard.title);
-  const selectedCategoryName = getCategory(selectedCard);
-
-  const selectAdjacentProject = (direction: -1 | 1) => {
-    const currentIndex = filteredCards.findIndex(({ card }) => card.title === selectedCard.title);
-    const nextIndex = (currentIndex + direction + filteredCards.length) % filteredCards.length;
-    const nextCard = filteredCards[nextIndex]?.card;
-    if (nextCard) setSelectedCard(nextCard);
-  };
-
-  return (
-    <Page>
-      <Ambient aria-hidden="true" />
-      <PageHeader>
-        <HeadingGroup>
-          <Eyebrow>Selected work and archive</Eyebrow>
-          <PageTitle>Project Ledger</PageTitle>
-        </HeadingGroup>
-        <RangeLabel>2019 — present</RangeLabel>
-      </PageHeader>
-
-      <Workspace>
-        <Ledger aria-label="Project archive">
-          {groupedCards.map(([year, yearCards]) => (
-            <YearGroup key={year}>
-              <YearRail>
-                <Year>{year}</Year>
-                <RailLine aria-hidden="true" />
-              </YearRail>
-
-              <ProjectList>
-                {yearCards.map(({ card, category }) => {
-                  const isSelected = selectedCard.title === card.title;
-                  const isFeatured = featuredTitles.has(card.title);
-
-                  return (
-                    <ProjectRow
-                      key={card.title}
-                      type="button"
-                      $selected={isSelected}
-                      $featured={isFeatured}
-                      onMouseEnter={() => setSelectedCard(card)}
-                      onFocus={() => setSelectedCard(card)}
-                      onClick={() => setSelectedCard(card)}
-                      aria-pressed={isSelected}
-                    >
-                      <ProjectMarker aria-hidden="true" />
-                      <ProjectCopy>
-                        <ProjectName>{card.title}</ProjectName>
-                        <ProjectSubtitle>{card.description}</ProjectSubtitle>
-                      </ProjectCopy>
-                      <ProjectCategory>{category}</ProjectCategory>
-                    </ProjectRow>
-                  );
-                })}
-              </ProjectList>
-            </YearGroup>
-          ))}
-        </Ledger>
-
-        <PreviewColumn>
-          <PreviewHeader>
-            <Counter>
-              {String(selectedIndex + 1).padStart(2, '0')} / {String(cards.length).padStart(2, '0')}
-            </Counter>
-            <PreviewControls>
-              <ArrowButton
-                type="button"
-                onClick={() => selectAdjacentProject(-1)}
-                aria-label="Previous project"
-              >
-                ←
-              </ArrowButton>
-              <ArrowButton
-                type="button"
-                onClick={() => selectAdjacentProject(1)}
-                aria-label="Next project"
-              >
-                →
-              </ArrowButton>
-            </PreviewControls>
-          </PreviewHeader>
-
-          <PreviewCard key={selectedCard.title}>
-            <ImageFrame>
-              <ProjectImage src={selectedCard.image} alt={`${selectedCard.title} preview`} />
-              {featuredTitles.has(selectedCard.title) && <FeaturedBadge>Selected work</FeaturedBadge>}
-            </ImageFrame>
-
-            <PreviewBody>
-              <PreviewIntro>
-                <PreviewTitle>{selectedCard.title}</PreviewTitle>
-                <PreviewCategory>{selectedCategoryName}</PreviewCategory>
-                <PreviewDescription>{selectedCard.longDescription}</PreviewDescription>
-              </PreviewIntro>
-
-              <DetailsColumn>
-                <Detail>
-                  <DetailLabel>Role</DetailLabel>
-                  <DetailValue>{selectedCard.role || 'Developer'}</DetailValue>
-                </Detail>
-                <Detail>
-                  <DetailLabel>Duration</DetailLabel>
-                  <DetailValue>{selectedCard.duration || String(selectedCard.year)}</DetailValue>
-                </Detail>
-              </DetailsColumn>
-
-              <TechnologySection>
-                <DetailLabel>Technologies</DetailLabel>
-                <TechnologyList>
-                  {selectedCard.technologies.length > 0 ? selectedCard.technologies.map(technology => (
-                    <Technology key={technology}>{technology}</Technology>
-                  )) : <Technology>Project archive</Technology>}
-                </TechnologyList>
-              </TechnologySection>
-
-              <Links>
-                {selectedCard.githubLink && (
-                  <ProjectLink href={selectedCard.githubLink} target="_blank" rel="noopener noreferrer">
-                    <FaGithub aria-hidden="true" /> GitHub
-                  </ProjectLink>
-                )}
-                {selectedCard.website && (
-                  <ProjectLink href={selectedCard.website} target="_blank" rel="noopener noreferrer">
-                    <FaExternalLinkAlt aria-hidden="true" /> Live site
-                  </ProjectLink>
-                )}
-                {!selectedCard.githubLink && !selectedCard.website && (
-                  <ArchiveStatus>Archive entry · {selectedCard.year}</ArchiveStatus>
-                )}
-              </Links>
-            </PreviewBody>
-          </PreviewCard>
-        </PreviewColumn>
-      </Workspace>
-
-      <FilterBar aria-label="Project categories">
-        {categories.map(category => (
-          <FilterButton
-            key={category}
-            type="button"
-            $active={selectedCategory === category}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {category}
-          </FilterButton>
-        ))}
-      </FilterBar>
-    </Page>
-  );
-};
-
-export default Projects;
-
-const colorCrossfade = keyframes`
-  0%, 100% {
-    opacity: 0;
-  }
-
-  45%, 55% {
-    opacity: 1;
-  }
-`;
 
 type Rgb = { r: number; g: number; b: number };
 
@@ -325,13 +93,12 @@ const bestContrast = (background: Rgb, candidates: Rgb[]) => (
   ), candidates[0])
 );
 
-const readableColor = (foreground: Rgb, background: Rgb, targetContrast = 3): Rgb => {
+const readableColor = (foreground: Rgb, background: Rgb, targetContrast = 3.2): Rgb => {
   if (contrast(foreground, background) >= targetContrast) return foreground;
 
-  const backgroundIsLight = luminance(background) > 0.5;
-  const anchor = backgroundIsLight ? namedColors.black : namedColors.white;
+  const anchor = luminance(background) > 0.5 ? namedColors.black : namedColors.white;
 
-  for (let weight = 0.82; weight >= 0.28; weight -= 0.09) {
+  for (let weight = 0.82; weight >= 0.25; weight -= 0.08) {
     const candidate = mix(foreground, anchor, weight);
     if (contrast(candidate, background) >= targetContrast) return candidate;
   }
@@ -346,650 +113,716 @@ const projectPalette = (theme: Theme) => {
   const themeText = parseColor(theme.c4);
   const black = namedColors.black;
   const white = namedColors.white;
-  const baseIsLight = luminance(base) > 0.48;
+  const baseIsLight = luminance(base) > 0.46;
 
-  const page = mix(base, secondary, 0.76);
-  const surface = baseIsLight ? mix(base, white, 0.58) : mix(base, black, 0.58);
-  const panel = baseIsLight ? mix(base, white, 0.42) : mix(base, black, 0.38);
-  const selected = mix(accent, panel, 0.18);
-  const ink = bestContrast(panel, [themeText, secondary, accent, black, white]);
-  const pageInk = bestContrast(page, [themeText, secondary, accent, black, white]);
-  const readableAccent = readableColor(accent, panel);
-  const muted = mix(ink, panel, 0.62);
-  const soft = mix(ink, panel, 0.36);
-  const line = mix(ink, panel, 0.22);
+  const bg = baseIsLight ? mix(base, white, 0.76) : mix(base, black, 0.7);
+  const surface = baseIsLight ? mix(base, white, 0.3) : mix(base, black, 0.3);
+  const surface2 = baseIsLight ? mix(base, white, 0.52) : mix(base, black, 0.5);
+  const ink = bestContrast(surface, [themeText, secondary, black, white]);
+  const muted = mix(ink, surface, 0.52);
+  const faint = mix(ink, surface, 0.32);
+  const line = mix(ink, surface, 0.16);
+  const line2 = mix(ink, surface, 0.1);
+  const readableAccent = readableColor(accent, surface);
 
   return {
     accent: toCss(readableAccent),
-    accentInk: toCss(bestContrast(readableAccent, [base, themeText, black, white])),
+    accentInk: toCss(bestContrast(readableAccent, [black, white, base])),
+    accentSoft: toCss(mix(readableAccent, surface, 0.14)),
+    bg: toCss(bg),
+    faint: toCss(faint),
     ink: toCss(ink),
     line: toCss(line),
+    line2: toCss(line2),
     muted: toCss(muted),
-    page: toCss(page),
-    pageInk: toCss(pageInk),
-    panel: toCss(panel),
-    selected: toCss(selected),
-    selectedInk: toCss(bestContrast(selected, [ink, themeText, black, white])),
-    soft: toCss(soft),
+    shadow: baseIsLight
+      ? '0 1px 2px rgba(40, 34, 22, 0.04), 0 8px 24px -12px rgba(40, 34, 22, 0.12)'
+      : '0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 30px -14px rgba(0, 0, 0, 0.6)',
+    shadowLift: baseIsLight
+      ? '0 2px 4px rgba(40, 34, 22, 0.05), 0 20px 40px -16px rgba(40, 34, 22, 0.22)'
+      : '0 2px 4px rgba(0, 0, 0, 0.35), 0 26px 50px -18px rgba(0, 0, 0, 0.7)',
     surface: toCss(surface),
+    surface2: toCss(surface2),
   };
 };
 
+const getPrimaryUrl = (card: Card) => card.website || card.githubLink || '';
+
+const getStatus = (card: Card): ProjectStatus => {
+  if (card.website) return 'live';
+  if (/ongoing|current|w\.i\.p|maintained/i.test(`${card.title} ${card.description} ${card.duration ?? ''}`)) {
+    return 'wip';
+  }
+
+  return 'archived';
+};
+
+const getStatusLabel = (status: ProjectStatus) => {
+  if (status === 'live') return 'Live';
+  if (status === 'wip') return 'In progress';
+  return 'Archived';
+};
+
+const getProjectCategories = (card: Card): FilterKey[] => {
+  const text = [
+    card.title,
+    card.description,
+    card.longDescription,
+    ...card.tags,
+    ...card.technologies,
+  ].join(' ').toLowerCase();
+
+  const categories: FilterKey[] = [];
+  if (/ai|machine learning|tensorflow|pytorch|scikit|openai|matlab|predict|data/.test(text)) categories.push('ai');
+  if (/website|react|next|frontend|backend|full-stack|flask|fastapi|tailwind|styled-components/.test(text)) categories.push('web');
+  if (/api|spotify|yelp|openai|fastapi|swagger/.test(text)) categories.push('apis');
+  if (getStatus(card) === 'live') categories.push('live');
+  return categories;
+};
+
+const matchesFilter = (card: Card, filter: FilterKey) => (
+  filter === 'all' || getProjectCategories(card).includes(filter)
+);
+
+const getCountForFilter = (filter: FilterKey) => (
+  cards.filter(card => matchesFilter(card, filter)).length
+);
+
+const getYearRange = () => {
+  const years = cards.map(card => card.year);
+  return `${Math.min(...years)}-${Math.max(...years)}`;
+};
+
+const getTagPreview = (card: Card) => (
+  (card.technologies.length > 0 ? card.technologies : card.tags).slice(0, 3)
+);
+
+const Projects: React.FC = () => {
+  const [selectedFilter, setSelectedFilter] = useState<FilterKey>('all');
+  const [featuredCard, setFeaturedCard] = useState<Card>(
+    cards.find(card => featuredTitles.has(card.title)) ?? cards[0],
+  );
+
+  const visibleCards = useMemo(
+    () => cards.filter(card => matchesFilter(card, selectedFilter)),
+    [selectedFilter],
+  );
+
+  useEffect(() => {
+    if (!visibleCards.some(card => card.title === featuredCard.title)) {
+      setFeaturedCard(
+        visibleCards.find(card => featuredTitles.has(card.title)) ?? visibleCards[0] ?? cards[0],
+      );
+    }
+  }, [featuredCard.title, visibleCards]);
+
+  const gridCards = visibleCards.filter(card => card.title !== featuredCard.title);
+  const liveCount = cards.filter(card => getStatus(card) === 'live').length;
+  const featuredStatus = getStatus(featuredCard);
+  const featuredUrl = getPrimaryUrl(featuredCard);
+
+  return (
+    <Page>
+      <Shell>
+        <Hero>
+          <HeroCopy>
+            <Availability>
+              <AvailabilityDot aria-hidden="true" />
+              available for new work
+            </Availability>
+            <Title>Projects</Title>
+            <Intro>
+              Things I&apos;ve built - apps, tools, and experiments across the web, AI,
+              hardware, and a few obsessions of mine.
+            </Intro>
+          </HeroCopy>
+
+          <Stats aria-label="Project stats">
+            <Stat><strong>{cards.length}</strong> projects</Stat>
+            <Stat><strong>{liveCount}</strong> live</Stat>
+            <Stat>{getYearRange()}</Stat>
+          </Stats>
+        </Hero>
+
+        <FilterBar aria-label="Project filters">
+          {filters.map(filter => {
+            const isActive = selectedFilter === filter.key;
+            return (
+              <FilterButton
+                key={filter.key}
+                type="button"
+                $active={isActive}
+                onClick={() => setSelectedFilter(filter.key)}
+              >
+                {filter.label}
+                <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
+              </FilterButton>
+            );
+          })}
+        </FilterBar>
+
+        <FeaturedProject
+          href={featuredUrl || undefined}
+          as={featuredUrl ? 'a' : 'section'}
+          target={featuredUrl ? '_blank' : undefined}
+          rel={featuredUrl ? 'noopener noreferrer' : undefined}
+        >
+          <FeaturedImageWrap>
+            <ProjectImage src={featuredCard.image} alt={`${featuredCard.title} preview`} />
+            <FeaturedBadge>Featured</FeaturedBadge>
+          </FeaturedImageWrap>
+
+          <FeaturedBody>
+            <StatusLine>
+              <StatusDot $status={featuredStatus} aria-hidden="true" />
+              <StatusText $status={featuredStatus}>{getStatusLabel(featuredStatus)}</StatusText>
+              <YearText>{featuredCard.year}</YearText>
+            </StatusLine>
+
+            <FeaturedTitle>{featuredCard.title}</FeaturedTitle>
+            <FeaturedDescription>{featuredCard.longDescription}</FeaturedDescription>
+
+            <TagList>
+              {getTagPreview(featuredCard).map(tag => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
+            </TagList>
+
+            <ActionRow>
+              {featuredCard.website && (
+                <PrimaryAction>
+                  Live demo
+                  <FaExternalLinkAlt aria-hidden="true" />
+                </PrimaryAction>
+              )}
+              {featuredCard.githubLink && (
+                <SecondaryAction>
+                  GitHub
+                  <FaGithub aria-hidden="true" />
+                </SecondaryAction>
+              )}
+              {!featuredCard.website && !featuredCard.githubLink && (
+                <SecondaryAction>Archive entry</SecondaryAction>
+              )}
+            </ActionRow>
+          </FeaturedBody>
+        </FeaturedProject>
+
+        <Grid aria-label="Project grid">
+          {gridCards.map(card => {
+            const status = getStatus(card);
+            const url = getPrimaryUrl(card);
+
+            return (
+              <ProjectTile
+                key={card.title}
+                as={url ? 'a' : 'button'}
+                href={url || undefined}
+                target={url ? '_blank' : undefined}
+                rel={url ? 'noopener noreferrer' : undefined}
+                type={url ? undefined : 'button'}
+                onClick={() => setFeaturedCard(card)}
+              >
+                <TileImageWrap>
+                  <ProjectImage src={card.image} alt={`${card.title} preview`} />
+                  <TileStatus>
+                    <StatusDot $status={status} aria-hidden="true" />
+                    {getStatusLabel(status)}
+                  </TileStatus>
+                </TileImageWrap>
+
+                <TileBody>
+                  <TileHeader>
+                    <TileTitle>{card.title}</TileTitle>
+                    <YearText>{card.year}</YearText>
+                  </TileHeader>
+                  <TileDescription>{card.description}</TileDescription>
+                  <TileFooter>
+                    <InlineTags>
+                      {getTagPreview(card).slice(0, 2).map(tag => (
+                        <InlineTag key={tag}>{tag}</InlineTag>
+                      ))}
+                    </InlineTags>
+                    <TileArrow aria-hidden="true">↗</TileArrow>
+                  </TileFooter>
+                </TileBody>
+              </ProjectTile>
+            );
+          })}
+        </Grid>
+      </Shell>
+    </Page>
+  );
+};
+
+export default Projects;
+
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Page = styled.main`
+  --project-bg: ${({ theme }) => projectPalette(theme).bg};
+  --project-surface: ${({ theme }) => projectPalette(theme).surface};
+  --project-surface-2: ${({ theme }) => projectPalette(theme).surface2};
+  --project-ink: ${({ theme }) => projectPalette(theme).ink};
+  --project-muted: ${({ theme }) => projectPalette(theme).muted};
+  --project-faint: ${({ theme }) => projectPalette(theme).faint};
+  --project-line: ${({ theme }) => projectPalette(theme).line};
+  --project-line-2: ${({ theme }) => projectPalette(theme).line2};
+  --project-accent: ${({ theme }) => projectPalette(theme).accent};
+  --project-accent-ink: ${({ theme }) => projectPalette(theme).accentInk};
+  --project-accent-soft: ${({ theme }) => projectPalette(theme).accentSoft};
+  --project-shadow: ${({ theme }) => projectPalette(theme).shadow};
+  --project-shadow-lift: ${({ theme }) => projectPalette(theme).shadowLift};
+
   position: fixed;
   inset: 0;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 94px clamp(18px, 3vw, 52px) 82px;
-  --project-accent: ${({ theme }) => projectPalette(theme).accent};
-  --project-accent-ink: ${({ theme }) => projectPalette(theme).accentInk};
-  --project-ink: ${({ theme }) => projectPalette(theme).ink};
-  --project-line: ${({ theme }) => projectPalette(theme).line};
-  --project-muted: ${({ theme }) => projectPalette(theme).muted};
-  --project-page: ${({ theme }) => projectPalette(theme).page};
-  --project-page-ink: ${({ theme }) => projectPalette(theme).pageInk};
-  --project-panel: ${({ theme }) => projectPalette(theme).panel};
-  --project-selected: ${({ theme }) => projectPalette(theme).selected};
-  --project-selected-ink: ${({ theme }) => projectPalette(theme).selectedInk};
-  --project-soft: ${({ theme }) => projectPalette(theme).soft};
-  --project-surface: ${({ theme }) => projectPalette(theme).surface};
-  background: var(--project-page);
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 16% 8%, var(--project-accent-soft), transparent 32%),
+    var(--project-bg);
   color: var(--project-ink);
-  font-family: "DM Mono", monospace;
+  font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: background 350ms ease, color 350ms ease;
 
   @media (max-width: 840px) {
     position: relative;
     min-height: 100dvh;
-    padding: 92px 16px 86px;
-    overflow: visible;
   }
 `;
 
-const Ambient = styled.div`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0.34;
-  background:
-    linear-gradient(135deg, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c2} 48%, ${({ theme }) => theme.c3} 100%);
+const Shell = styled.div`
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 82px 0 80px;
 
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    inset: -12%;
-    background-size: 140% 140%;
-    filter: saturate(0.86);
-    will-change: opacity;
-  }
-
-  &::before {
-    background:
-      radial-gradient(circle at 18% 22%, ${({ theme }) => theme.c3} 0%, transparent 38%),
-      radial-gradient(circle at 84% 18%, ${({ theme }) => theme.c4} 0%, transparent 34%),
-      linear-gradient(145deg, ${({ theme }) => theme.c2} 0%, ${({ theme }) => theme.c1} 58%, ${({ theme }) => theme.c3} 100%);
-    animation: ${colorCrossfade} 16s ease-in-out infinite;
-  }
-
-  &::after {
-    background:
-      radial-gradient(circle at 24% 82%, ${({ theme }) => theme.c4} 0%, transparent 35%),
-      radial-gradient(circle at 78% 72%, ${({ theme }) => theme.c3} 0%, transparent 40%),
-      linear-gradient(215deg, ${({ theme }) => theme.c1} 0%, ${({ theme }) => theme.c3} 52%, ${({ theme }) => theme.c2} 100%);
-    animation: ${colorCrossfade} 16s ease-in-out infinite reverse;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &::before,
-    &::after {
-      animation: none;
-      opacity: 0.45;
-    }
+  @media (max-width: 720px) {
+    width: min(100% - 32px, 1080px);
+    padding: 92px 0 56px;
   }
 `;
 
-const PageHeader = styled.header`
-  position: relative;
-  z-index: 1;
+const Hero = styled.header`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--project-line);
-`;
+  gap: 30px;
+  padding: 56px 0 38px;
+  animation: ${fadeUp} 260ms ease both;
 
-const HeadingGroup = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: clamp(18px, 3vw, 48px);
-
-  @media (max-width: 620px) {
+  @media (max-width: 740px) {
     display: block;
+    padding-top: 42px;
   }
 `;
 
-const Eyebrow = styled.p`
-  margin: 0 0 6px;
-  color: var(--project-accent);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-`;
-
-const PageTitle = styled.h1`
-  margin: 0;
-  color: var(--project-page-ink);
-  font-size: clamp(1.35rem, 2.25vw, 2.3rem);
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-`;
-
-const RangeLabel = styled.p`
-  margin: 0 0 4px;
-  color: var(--project-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  white-space: nowrap;
-
-  @media (max-width: 520px) {
-    display: none;
-  }
-`;
-
-const Workspace = styled.div`
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(340px, 0.82fr) minmax(480px, 1.35fr);
-  gap: clamp(28px, 4vw, 72px);
-  flex: 1;
-  min-height: 0;
-  padding-top: 22px;
-
-  @media (max-width: 1040px) {
-    grid-template-columns: minmax(300px, 0.9fr) minmax(410px, 1.1fr);
-    gap: 28px;
-  }
-
-  @media (max-width: 840px) {
-    display: block;
-    padding-top: 12px;
-  }
-`;
-
-const Ledger = styled.section`
-  min-height: 0;
-  overflow-y: auto;
-  padding: 4px 16px 40px 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--project-accent) transparent;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--project-accent);
-  }
-
-  @media (max-width: 840px) {
-    overflow: visible;
-    padding: 0;
-  }
-`;
-
-const YearGroup = styled.section`
-  display: grid;
-  grid-template-columns: 82px 1fr;
-  gap: 18px;
-  margin-bottom: 20px;
-
-  @media (max-width: 520px) {
-    grid-template-columns: 58px 1fr;
-    gap: 10px;
-  }
-`;
-
-const YearRail = styled.div`
-  position: relative;
-  min-height: 100%;
-`;
-
-const Year = styled.h2`
-  position: sticky;
-  top: 0;
-  margin: 0;
-  color: var(--project-soft);
-  font-size: clamp(1.65rem, 3vw, 2.7rem);
-  font-weight: 300;
-  line-height: 1;
-`;
-
-const RailLine = styled.span`
-  position: absolute;
-  top: 42px;
-  right: 4px;
-  bottom: -18px;
-  width: 1px;
-  background: var(--project-line);
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--project-muted);
-    transform: translate(-50%, -50%);
-  }
-`;
-
-const ProjectList = styled.div`
-  border-top: 1px solid var(--project-line);
-`;
-
-const ProjectRow = styled.button<{ $selected: boolean; $featured: boolean }>`
-  appearance: none;
-  position: relative;
-  display: grid;
-  grid-template-columns: 12px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: ${({ $featured }) => ($featured ? '72px' : '62px')};
-  padding: 10px 4px 10px 0;
-  border: 0;
-  border-bottom: 1px solid var(--project-line);
-  background: ${({ $selected }) => ($selected ? 'var(--project-selected)' : 'transparent')};
-  color: ${({ $selected }) => ($selected ? 'var(--project-selected-ink)' : 'var(--project-ink)')};
-  text-align: left;
-  cursor: pointer;
-  transition: background 160ms ease, padding-left 160ms ease;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: ${({ $selected }) => ($selected ? 'var(--project-accent)' : 'transparent')};
-  }
-
-  &:hover,
-  &:focus-visible {
-    padding-left: 8px;
-    background: var(--project-surface);
-    outline: none;
-  }
-
-  @media (max-width: 520px) {
-    grid-template-columns: 10px minmax(0, 1fr);
-  }
-`;
-
-const ProjectMarker = styled.span`
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--project-muted);
-  border-radius: 50%;
-  background: transparent;
-
-  ${ProjectRow}[aria-pressed='true'] & {
-    border-color: var(--project-accent);
-    background: var(--project-accent);
-  }
-`;
-
-const ProjectCopy = styled.span`
-  display: block;
+const HeroCopy = styled.div`
   min-width: 0;
 `;
 
-const ProjectName = styled.span`
-  display: block;
-  margin-bottom: 4px;
-  overflow: hidden;
-  color: inherit;
-  font-size: clamp(0.82rem, 1vw, 1rem);
-  font-weight: 500;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  ${ProjectRow}[aria-pressed='true'] & {
-    color: var(--project-selected-ink);
-  }
-`;
-
-const ProjectSubtitle = styled.span`
-  display: -webkit-box;
-  overflow: hidden;
-  color: var(--project-muted);
-  font-size: 0.67rem;
-  line-height: 1.35;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-`;
-
-const ProjectCategory = styled.span`
-  color: var(--project-muted);
-  font-size: 0.64rem;
-  white-space: nowrap;
-
-  @media (max-width: 520px) {
-    display: none;
-  }
-`;
-
-const PreviewColumn = styled.aside`
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-
-  @media (max-width: 840px) {
-    position: sticky;
-    bottom: 74px;
-    z-index: 4;
-    margin-top: 28px;
-  }
-`;
-
-const PreviewHeader = styled.div`
+const Availability = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  min-height: 36px;
-  gap: 20px;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: var(--project-accent);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 `;
 
-const Counter = styled.span`
-  color: var(--project-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+const AvailabilityDot = styled.span`
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--project-accent);
+  box-shadow: 0 0 0 4px var(--project-accent-soft);
 `;
 
-const PreviewControls = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-const ArrowButton = styled.button`
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--project-line);
-  border-radius: 4px;
-  background: transparent;
+const Title = styled.h1`
+  margin: 0;
   color: var(--project-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(4.25rem, 9vw, 5.25rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+`;
+
+const Intro = styled.p`
+  max-width: 470px;
+  margin: 18px 0 0;
+  color: var(--project-muted);
+  font-size: 17px;
+  line-height: 1.5;
+`;
+
+const Stats = styled.aside`
+  flex: 0 0 auto;
+  color: var(--project-faint);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: right;
+
+  @media (max-width: 740px) {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    text-align: left;
+  }
+`;
+
+const Stat = styled.div`
+  strong {
+    color: var(--project-ink);
+    font-weight: 700;
+  }
+`;
+
+const FilterBar = styled.nav`
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 30px;
+`;
+
+const FilterButton = styled.button<{ $active: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border: 1px solid ${({ $active }) => ($active ? 'var(--project-ink)' : 'var(--project-line)')};
+  border-radius: 999px;
+  background: ${({ $active }) => ($active ? 'var(--project-ink)' : 'var(--project-surface)')};
+  color: ${({ $active }) => ($active ? 'var(--project-bg)' : 'var(--project-muted)')};
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
   cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
 
   &:hover,
   &:focus-visible {
     border-color: var(--project-accent);
-    color: var(--project-accent);
+    color: ${({ $active }) => ($active ? 'var(--project-bg)' : 'var(--project-ink)')};
     outline: none;
   }
 `;
 
-const PreviewCard = styled.article`
-  display: grid;
-  grid-template-rows: minmax(210px, 48%) 1fr;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  border: 1px solid var(--project-line);
-  border-radius: 8px;
-  background: var(--project-panel);
-  color: var(--project-ink);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
-  animation: preview-in 220ms ease both;
+const FilterCount = styled.span`
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  opacity: 0.66;
+`;
 
-  @keyframes preview-in {
-    from { opacity: 0.55; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+const FeaturedProject = styled.a`
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 1fr);
+  overflow: hidden;
+  margin-bottom: 22px;
+  border: 1px solid var(--project-line);
+  border-radius: 18px;
+  background: var(--project-surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--project-shadow);
+  animation: ${fadeUp} 320ms ease both;
+  transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--project-accent);
+    box-shadow: var(--project-shadow-lift);
+    transform: translateY(-2px);
+    outline: none;
   }
 
-  @media (max-width: 840px) {
-    grid-template-rows: 180px auto;
-    max-height: min(68dvh, 620px);
-    overflow-y: auto;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ImageFrame = styled.div`
+const FeaturedImageWrap = styled.div`
   position: relative;
-  min-height: 0;
-  overflow: hidden;
-  background: var(--project-surface);
+  min-height: 340px;
+  background: var(--project-surface-2);
+
+  @media (max-width: 620px) {
+    min-height: 240px;
+  }
 `;
 
 const ProjectImage = styled.img`
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(0.92) contrast(1.02);
 `;
 
 const FeaturedBadge = styled.span`
   position: absolute;
-  left: 18px;
-  top: 18px;
-  padding: 7px 9px;
-  border: 1px solid var(--project-accent);
-  border-radius: 3px;
-  background: var(--project-panel);
-  color: var(--project-accent);
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(20, 16, 10, 0.78);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  backdrop-filter: blur(6px);
 `;
 
-const PreviewBody = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.34fr);
-  grid-template-areas:
-    'intro details'
-    'tech links';
-  gap: 22px 30px;
-  min-height: 0;
-  overflow-y: auto;
-  padding: clamp(22px, 3vw, 38px);
-
-  @media (max-width: 1120px) {
-    grid-template-columns: 1fr;
-    grid-template-areas: 'intro' 'details' 'tech' 'links';
-    gap: 18px;
-  }
+const FeaturedBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: clamp(30px, 4vw, 42px) clamp(26px, 4vw, 40px);
 `;
 
-const PreviewIntro = styled.div`
-  grid-area: intro;
+const StatusLine = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
 `;
 
-const PreviewTitle = styled.h2`
-  margin: 0 0 8px;
+const StatusDot = styled.span<{ $status: ProjectStatus }>`
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: ${({ $status }) => {
+    if ($status === 'live') return '#3f9d63';
+    if ($status === 'wip') return '#cf8a1c';
+    return 'var(--project-faint)';
+  }};
+`;
+
+const StatusText = styled.span<{ $status: ProjectStatus }>`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: ${({ $status }) => {
+    if ($status === 'live') return '#3f9d63';
+    if ($status === 'wip') return '#a46813';
+    return 'var(--project-faint)';
+  }};
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+const YearText = styled.span`
+  color: var(--project-faint);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 12px;
+`;
+
+const FeaturedTitle = styled.h2`
+  margin: 6px 0 0;
   color: var(--project-ink);
-  font-size: clamp(1.35rem, 2.1vw, 2.45rem);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 5vw, 2.875rem);
   font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.025em;
 `;
 
-const PreviewCategory = styled.p`
-  margin: 0 0 18px;
-  color: var(--project-accent);
-  font-size: 0.72rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-`;
-
-const PreviewDescription = styled.p`
-  max-width: 70ch;
-  margin: 0;
+const FeaturedDescription = styled.p`
+  margin: 16px 0 0;
   color: var(--project-muted);
-  font-size: 0.78rem;
-  line-height: 1.72;
+  font-size: 16px;
+  line-height: 1.55;
 `;
 
-const DetailsColumn = styled.div`
-  grid-area: details;
-  display: grid;
-  align-content: start;
-  gap: 22px;
-  padding-left: 24px;
-  border-left: 1px solid var(--project-line);
-
-  @media (max-width: 1120px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 16px 0 0;
-    border-top: 1px solid var(--project-line);
-    border-left: 0;
-  }
-`;
-
-const Detail = styled.div``;
-
-const DetailLabel = styled.p`
-  margin: 0 0 8px;
-  color: var(--project-accent);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-`;
-
-const DetailValue = styled.p`
-  margin: 0;
-  color: var(--project-muted);
-  font-size: 0.72rem;
-  line-height: 1.5;
-`;
-
-const TechnologySection = styled.section`
-  grid-area: tech;
-  align-self: end;
-`;
-
-const TechnologyList = styled.div`
+const TagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+  margin-top: 22px;
 `;
 
-const Technology = styled.span`
-  padding: 6px 8px;
-  border: 1px solid var(--project-line);
-  border-radius: 3px;
-  color: var(--project-ink);
-  font-size: 0.58rem;
+const Tag = styled.span`
+  padding: 4px 10px;
+  border: 1px solid var(--project-line-2);
+  border-radius: 6px;
+  background: var(--project-surface-2);
+  color: var(--project-muted);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
 `;
 
-const Links = styled.div`
-  grid-area: links;
+const ActionRow = styled.div`
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
-  border-top: 1px solid var(--project-line);
-  padding-top: 18px;
+  margin-top: auto;
+  padding-top: 28px;
+`;
 
-  @media (max-width: 1120px) {
-    justify-content: flex-start;
+const PrimaryAction = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 18px;
+  border-radius: 10px;
+  background: var(--project-accent);
+  color: var(--project-accent-ink);
+  font-size: 13px;
+  font-weight: 700;
+`;
+
+const SecondaryAction = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 18px;
+  border: 1px solid var(--project-line);
+  border-radius: 10px;
+  color: var(--project-ink);
+  font-size: 13px;
+  font-weight: 700;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  padding-bottom: 80px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const ProjectLink = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 13px;
+const ProjectTile = styled.a`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  padding: 0;
   border: 1px solid var(--project-line);
-  border-radius: 4px;
-  color: var(--project-ink);
-  font-size: 0.64rem;
+  border-radius: 14px;
+  background: var(--project-surface);
+  color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
-  text-transform: uppercase;
-  transition: box-shadow 160ms ease, color 160ms ease;
+  box-shadow: var(--project-shadow);
+  cursor: pointer;
+  animation: ${fadeUp} 360ms ease both;
+  transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
 
   &:hover,
   &:focus-visible {
     border-color: var(--project-accent);
-    color: var(--project-accent);
+    box-shadow: var(--project-shadow-lift);
+    transform: translateY(-3px);
     outline: none;
   }
 `;
 
-const ArchiveStatus = styled.span`
-  color: var(--project-muted);
-  font-size: 0.62rem;
-  text-transform: uppercase;
+const TileImageWrap = styled.div`
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--project-surface-2);
 `;
 
-const FilterBar = styled.nav`
+const TileStatus = styled.span`
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 12;
+  top: 11px;
+  right: 11px;
+  z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: clamp(14px, 3vw, 42px);
-  height: 62px;
-  overflow-x: auto;
-  padding: 0 20px;
-  border-top: 1px solid var(--project-line);
-  background: var(--project-surface);
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (max-width: 840px) {
-    position: fixed;
-    justify-content: flex-start;
-  }
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(20, 16, 10, 0.72);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(6px);
 `;
 
-const FilterButton = styled.button<{ $active: boolean }>`
-  appearance: none;
-  position: relative;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: ${({ $active }) => ($active ? 'var(--project-accent)' : 'var(--project-ink)')};
-  opacity: ${({ $active }) => ($active ? 1 : 0.72)};
-  font-family: "DM Mono", monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  cursor: pointer;
+const TileBody = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 17px 17px 19px;
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 2px;
-    background: ${({ $active }) => ($active ? 'var(--project-accent)' : 'transparent')};
-  }
+const TileHeader = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+`;
 
-  &:hover,
-  &:focus-visible {
-    color: var(--project-accent);
-    opacity: 1;
-    outline: none;
-  }
+const TileTitle = styled.h3`
+  margin: 0;
+  color: var(--project-ink);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+`;
+
+const TileDescription = styled.p`
+  margin: 7px 0 0;
+  color: var(--project-muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+`;
+
+const TileFooter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--project-line-2);
+`;
+
+const InlineTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
+
+const InlineTag = styled.span`
+  color: var(--project-muted);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 10.5px;
+`;
+
+const TileArrow = styled.span`
+  margin-left: auto;
+  color: var(--project-faint);
+  font-size: 14px;
 `;
