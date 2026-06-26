@@ -22,10 +22,17 @@ const labels: Record<PageStage, string> = {
 const PageZoomTransition: React.FC<Props> = ({ from, to, direction, phase }) => {
   if (phase === 'idle') return null;
 
+  const projectTransition = from === 'index' && to === 'projects';
+  const projectReturn = from === 'projects' && to === 'index';
+
   return (
-    <Root $phase={phase} $direction={direction} aria-hidden="true">
-      <Space $show={from === 'index' || to === 'index'} />
-      <Surface $show={from === 'projects' || to === 'projects'} />
+    <Root $phase={phase} $direction={direction} $liquid={projectTransition || projectReturn} aria-hidden="true">
+      <Space $show={from === 'index' || to === 'index'} $dim={projectTransition} />
+      <Surface
+        $show={from === 'projects' || to === 'projects'}
+        $phase={phase}
+        $returning={projectReturn}
+      />
       <Interior $show={from === 'about' || to === 'about'}>
         <Door />
       </Interior>
@@ -59,9 +66,36 @@ const stars = keyframes`
   from { transform: scale(1); opacity: .9; }
   to { transform: scale(2.8); opacity: 0; }
 `;
-const rush = keyframes`
-  from { transform: scale(.9) rotate(-2deg); }
-  to { transform: scale(2.8) rotate(2deg); }
+const liquidIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(28px) saturate(1);
+  }
+
+  to {
+    opacity: .96;
+    transform: scale(1);
+    filter: blur(18px) saturate(1.28);
+  }
+`;
+const liquidOut = keyframes`
+  from {
+    opacity: .96;
+    transform: scale(1);
+    filter: blur(18px) saturate(1.28);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(32px) saturate(.95);
+  }
+`;
+const liquidDrift = keyframes`
+  0% { background-position: 0% 50%, 100% 40%, 50% 100%, 50% 50%; }
+  50% { background-position: 90% 45%, 10% 62%, 55% 15%, 50% 50%; }
+  100% { background-position: 0% 50%, 100% 40%, 50% 100%, 50% 50%; }
 `;
 const enterRoom = keyframes`
   from { transform: perspective(700px) translateZ(-420px) scale(.8); }
@@ -89,13 +123,13 @@ const animationFor = (phase: TransitionPhase, direction: TransitionDirection) =>
     : css`${backward} 470ms cubic-bezier(.2,.7,.2,1) reverse both`;
 };
 
-const Root = styled.div<{ $phase: TransitionPhase; $direction: TransitionDirection }>`
+const Root = styled.div<{ $phase: TransitionPhase; $direction: TransitionDirection; $liquid: boolean }>`
   position: fixed;
   inset: 0;
   z-index: 1000;
   overflow: hidden;
   pointer-events: all;
-  background: ${({ theme }) => theme.c1};
+  background: ${({ $liquid, theme }) => ($liquid ? '#000' : theme.c1)};
 
   &::after {
     content: '';
@@ -104,6 +138,7 @@ const Root = styled.div<{ $phase: TransitionPhase; $direction: TransitionDirecti
     border-radius: 50%;
     background: radial-gradient(circle, transparent 0 18%, ${({ theme }) => theme.glow} 34%, ${({ theme }) => theme.c3} 49%, ${({ theme }) => theme.c2} 72%, ${({ theme }) => theme.c1} 100%);
     mix-blend-mode: screen;
+    opacity: ${({ $liquid }) => ($liquid ? 0 : 1)};
     animation: ${({ $phase, $direction }) => animationFor($phase, $direction)};
   }
 
@@ -112,10 +147,10 @@ const Root = styled.div<{ $phase: TransitionPhase; $direction: TransitionDirecti
   }
 `;
 
-const Space = styled.div<{ $show: boolean }>`
+const Space = styled.div<{ $show: boolean; $dim: boolean }>`
   position: absolute;
   inset: -20%;
-  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  opacity: ${({ $show, $dim }) => ($show ? ($dim ? .52 : 1) : 0)};
   background:
     radial-gradient(circle at 12% 18%, ${({ theme }) => theme.c4} 0 1px, transparent 2px),
     radial-gradient(circle at 72% 23%, ${({ theme }) => theme.c3} 0 1px, transparent 2px),
@@ -125,17 +160,28 @@ const Space = styled.div<{ $show: boolean }>`
   animation: ${stars} 900ms ease-in both;
 `;
 
-const Surface = styled.div<{ $show: boolean }>`
+const Surface = styled.div<{ $show: boolean; $phase: TransitionPhase; $returning: boolean }>`
   position: absolute;
-  inset: -18%;
-  opacity: ${({ $show }) => ($show ? .95 : 0)};
+  inset: -12%;
+  opacity: ${({ $show }) => ($show ? .96 : 0)};
   background:
-    radial-gradient(ellipse at 24% 38%, transparent 0 8%, ${({ theme }) => theme.c2} 9% 11%, transparent 12%),
-    radial-gradient(ellipse at 72% 64%, transparent 0 10%, ${({ theme }) => theme.c2} 11% 13%, transparent 14%),
-    radial-gradient(circle at 48% 44%, ${({ theme }) => theme.c3} 0 7%, transparent 8%),
-    repeating-radial-gradient(circle at 50% 50%, ${({ theme }) => theme.c1} 0 18px, ${({ theme }) => theme.c2} 20px 22px, ${({ theme }) => theme.c1} 24px 42px);
-  filter: contrast(1.08) saturate(.9) drop-shadow(0 0 22px ${({ theme }) => theme.glow});
-  animation: ${rush} 900ms cubic-bezier(.55,0,.2,1) both;
+    radial-gradient(ellipse at 18% 28%, ${({ theme }) => theme.c3} 0 14%, transparent 34%),
+    radial-gradient(ellipse at 78% 36%, ${({ theme }) => theme.c2} 0 12%, transparent 31%),
+    radial-gradient(ellipse at 46% 78%, ${({ theme }) => theme.c4} 0 13%, transparent 33%),
+    radial-gradient(circle at 50% 50%, ${({ theme }) => theme.c1} 0 22%, #000 76%);
+  background-size: 120% 120%, 115% 115%, 130% 130%, 100% 100%;
+  mix-blend-mode: screen;
+  animation:
+    ${({ $phase, $returning }) => (
+      $returning || $phase === 'arriving'
+        ? css`${liquidOut} 470ms cubic-bezier(.2,.7,.2,1) both`
+        : css`${liquidIn} 430ms cubic-bezier(.55,0,.25,1) both`
+    )},
+    ${liquidDrift} 5200ms ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 120ms, 1ms;
+  }
 `;
 
 const Interior = styled.div<{ $show: boolean }>`

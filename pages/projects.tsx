@@ -223,6 +223,7 @@ const Projects: React.FC = () => {
 
   return (
     <Page>
+      <BlackReveal aria-hidden="true" />
       <Shell>
         <Hero>
           <HeroCopy>
@@ -363,6 +364,49 @@ const fadeUp = keyframes`
   }
 `;
 
+const lavaDrift = keyframes`
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+
+  33% {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+  }
+
+  66% {
+    transform: translate3d(-1%, 5%, 0) scale(.96);
+  }
+
+  100% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+`;
+
+const lavaFloat = keyframes`
+  0% {
+    transform: translate3d(4%, 5%, 0) scale(1.04) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(-5%, -3%, 0) scale(.98) rotate(8deg);
+  }
+
+  100% {
+    transform: translate3d(4%, 5%, 0) scale(1.04) rotate(0deg);
+  }
+`;
+
+const blackReveal = keyframes`
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+`;
+
 const Page = styled.main`
   --project-bg: ${({ theme }) => projectPalette(theme).bg};
   --project-surface: ${({ theme }) => projectPalette(theme).surface};
@@ -377,17 +421,58 @@ const Page = styled.main`
   --project-accent-soft: ${({ theme }) => projectPalette(theme).accentSoft};
   --project-shadow: ${({ theme }) => projectPalette(theme).shadow};
   --project-shadow-lift: ${({ theme }) => projectPalette(theme).shadowLift};
+  --project-lava-a: ${({ theme }) => theme.c3};
+  --project-lava-b: ${({ theme }) => theme.c2};
+  --project-lava-c: ${({ theme }) => theme.c4};
 
   position: fixed;
   inset: 0;
   z-index: 10;
   overflow-y: auto;
-  background:
-    radial-gradient(circle at 16% 8%, var(--project-accent-soft), transparent 32%),
-    var(--project-bg);
+  background: var(--project-bg);
   color: var(--project-ink);
   font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   transition: background 350ms ease, color 350ms ease;
+
+  &::before,
+  &::after {
+    content: "";
+    position: fixed;
+    inset: -24vmax;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  &::before {
+    background:
+      radial-gradient(ellipse at 18% 24%, var(--project-lava-a) 0 12%, transparent 34%),
+      radial-gradient(ellipse at 78% 20%, var(--project-accent) 0 10%, transparent 32%),
+      radial-gradient(ellipse at 44% 78%, var(--project-lava-c) 0 10%, transparent 34%),
+      radial-gradient(ellipse at 84% 74%, var(--project-lava-b) 0 8%, transparent 28%);
+    filter: blur(44px) saturate(1.34);
+    opacity: .38;
+    mix-blend-mode: screen;
+    animation: ${lavaDrift} 18s ease-in-out infinite;
+  }
+
+  &::after {
+    background:
+      radial-gradient(ellipse at 16% 76%, var(--project-accent) 0 9%, transparent 29%),
+      radial-gradient(ellipse at 62% 44%, var(--project-lava-a) 0 11%, transparent 35%),
+      radial-gradient(ellipse at 88% 54%, var(--project-lava-c) 0 8%, transparent 30%);
+    filter: blur(68px) saturate(1.18);
+    opacity: .25;
+    mix-blend-mode: screen;
+    animation: ${lavaFloat} 24s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none;
+    }
+  }
 
   @media (max-width: 840px) {
     position: relative;
@@ -396,7 +481,23 @@ const Page = styled.main`
   }
 `;
 
+const BlackReveal = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: #000;
+  animation: ${blackReveal} 720ms cubic-bezier(.2, .8, .2, 1) 80ms both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 120ms;
+    animation-delay: 0ms;
+  }
+`;
+
 const Shell = styled.div`
+  position: relative;
+  z-index: 3;
   width: min(1080px, calc(100% - 48px));
   margin: 0 auto;
   padding: 82px 0 80px;
