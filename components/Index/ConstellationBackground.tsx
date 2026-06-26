@@ -69,7 +69,7 @@ const ConstellationBackground: React.FC<ConstellationBackgroundProps> = ({ inter
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.22,
         vy: (Math.random() - 0.5) * 0.22,
-        radius: Math.random() * 1.35 + 0.65,
+        radius: Math.random() * 1.55 + 0.85,
         brightness: Math.random() * 0.45 + 0.45,
       }));
     }
