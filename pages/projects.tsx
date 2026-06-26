@@ -425,7 +425,7 @@ const Shell = styled.div<{ $visible: boolean }>`
 
 const Hero = styled.header`
   position: sticky;
-  top: 54px;
+  top: 42px;
   z-index: 30;
   display: flex;
   align-items: flex-end;
@@ -435,8 +435,12 @@ const Hero = styled.header`
 
   @media (max-width: 740px) {
     display: block;
-    top: 78px;
+    top: 42px;
     padding-top: 42px;
+  }
+
+  @media (max-width: 550px) {
+    top: 34px;
   }
 `;
 
