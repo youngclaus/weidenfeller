@@ -35,7 +35,7 @@ const FeaturedStars: React.FC = () => {
             $central={isCentral}
           >
             <Point $central={isCentral} aria-hidden="true">
-              {isCentral && <RingedPlanet color={theme.c3} size={54} glow={false} />}
+              {isCentral && <RingedPlanet color={theme.c3} size={40} glow={false} />}
             </Point>
             <Label>{star.label}</Label>
           </Star>
@@ -97,11 +97,11 @@ const Point = styled.span<{ $central: boolean }>`
   )};
   box-shadow: ${({ $central, theme }) => (
     $central
-      ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 16px ${theme.glow}`
+      ? 'none'
       : `0 0 9px ${theme.c3}, 0 0 18px ${theme.glow}, 0 0 34px ${theme.glow}`
   )};
   filter: ${({ $central, theme }) => (
-    getThemeGlowFilter(theme.glow, $central ? 12 : 10)
+    $central ? 'none' : getThemeGlowFilter(theme.glow, 10)
   )};
   transform: translate(-50%, -50%);
   transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
@@ -112,17 +112,17 @@ const Point = styled.span<{ $central: boolean }>`
     transform: translate(-50%, -50%) scale(${({ $central }) => ($central ? 1 : 1.2)});
     box-shadow: ${({ $central, theme }) => (
       $central
-        ? `inset -5px -4px 7px rgba(0,0,0,.34), 0 0 28px ${theme.glow}`
+        ? 'none'
         : `0 0 13px ${theme.c3}, 0 0 28px ${theme.glow}, 0 0 52px ${theme.glow}`
     )};
     filter: ${({ $central, theme }) => (
-      getThemeGlowFilter(theme.glow, $central ? 24 : 18)
+      $central ? 'none' : getThemeGlowFilter(theme.glow, 18)
     )};
   }
 
   @media (max-width: 699px) {
-    width: ${({ $central }) => ($central ? '46px' : '5px')};
-    height: ${({ $central }) => ($central ? '46px' : '5px')};
+    width: ${({ $central }) => ($central ? '40px' : '5px')};
+    height: ${({ $central }) => ($central ? '40px' : '5px')};
   }
 `;
 
