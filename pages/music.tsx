@@ -36,7 +36,7 @@ export default Music;
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${({theme}) => theme.c1};
+  background: transparent;
   font-family: Arial, sans-serif;
   user-select: none;
   -webkit-user-drag: none;
@@ -49,7 +49,7 @@ const Text = styled.h3`
   transform: translate(-50%, 0);
   font-family: "DM Mono", monospace;
   font-size: 2rem;
-  color: ${({ theme }) => theme.c4};
+  color: ${({ theme }) => theme.c3};
   margin: 0;
   z-index: 3;
   white-space: nowrap;

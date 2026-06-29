@@ -53,17 +53,14 @@ const ThemedApp: React.FC = () => {
     }, (PAGE_FADE_MS * 2) + PAGE_FADE_GAP_MS));
   }, [activeComponent, isTransitioning]);
 
-  const usesStarfield = activeComponent === 'index' || activeComponent === 'projects';
   const showHomeObjects = activeComponent === 'index' && contentVisible;
 
   return (
     <StyledThemeProvider theme={theme}>
       <StageGlobals />
-      {usesStarfield && (
-        <SharedStarfield aria-hidden={activeComponent !== 'index'}>
-          <ConstellationBackground interactiveVisible={showHomeObjects} />
-        </SharedStarfield>
-      )}
+      <SharedStarfield aria-hidden={activeComponent !== 'index'}>
+        <ConstellationBackground interactiveVisible={showHomeObjects} />
+      </SharedStarfield>
       <AppStage className={`stage-${activeComponent}`} $contentVisible={contentVisible}>
         <Header
           activeComponent={activeComponent}

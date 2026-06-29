@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { featuredStars } from './featuredStarsData';
 import { getThemeGlowFilter } from '../Theme/exploreGlow';
+import RingedPlanet from './RingedPlanet';
+import { useTheme } from '../Theme/ThemeContext';
 
 type StarStyle = React.CSSProperties & {
   '--x': string;
@@ -10,32 +12,38 @@ type StarStyle = React.CSSProperties & {
   '--my': string;
 };
 
-const FeaturedStars: React.FC = () => (
-  <Layer aria-label="Featured profile objects">
-    {featuredStars.map((star) => {
-      const style: StarStyle = {
-        '--x': `${star.x}%`,
-        '--y': `${star.y}%`,
-        '--mx': `${star.mobileX}%`,
-        '--my': `${star.mobileY}%`,
-      };
-      const isCentral = Boolean(star.central);
+const FeaturedStars: React.FC = () => {
+  const { theme } = useTheme();
 
-      return (
-        <Star
-          key={star.id}
-          type="button"
-          style={style}
-          aria-label={`Reveal featured ${isCentral ? 'planet' : 'star'}: ${star.label}`}
-          $central={isCentral}
-        >
-          <Point $central={isCentral} aria-hidden="true" />
-          <Label>{star.label}</Label>
-        </Star>
-      );
-    })}
-  </Layer>
-);
+  return (
+    <Layer aria-label="Featured profile objects">
+      {featuredStars.map((star) => {
+        const style: StarStyle = {
+          '--x': `${star.x}%`,
+          '--y': `${star.y}%`,
+          '--mx': `${star.mobileX}%`,
+          '--my': `${star.mobileY}%`,
+        };
+        const isCentral = Boolean(star.central);
+
+        return (
+          <Star
+            key={star.id}
+            type="button"
+            style={style}
+            aria-label={`Reveal featured ${isCentral ? 'planet' : 'star'}: ${star.label}`}
+            $central={isCentral}
+          >
+            <Point $central={isCentral} aria-hidden="true">
+              {isCentral && <RingedPlanet color={theme.c3} size={54} glow={false} />}
+            </Point>
+            <Label>{star.label}</Label>
+          </Star>
+        );
+      })}
+    </Layer>
+  );
+};
 
 export default FeaturedStars;
 
@@ -81,9 +89,10 @@ const Point = styled.span<{ $central: boolean }>`
   width: ${({ $central }) => ($central ? '24px' : '5px')};
   height: ${({ $central }) => ($central ? '24px' : '5px')};
   border-radius: 50%;
+  color: ${({ theme }) => theme.c3};
   background: ${({ $central, theme }) => (
     $central
-      ? `radial-gradient(circle at 31% 28%, rgba(255,255,255,.18) 0 7%, transparent 8%), radial-gradient(circle at 66% 36%, rgba(0,0,0,.14) 0 8%, transparent 9%), radial-gradient(circle at 42% 68%, rgba(0,0,0,.12) 0 10%, transparent 11%), ${theme.c3}`
+      ? 'transparent'
       : theme.c3
   )};
   box-shadow: ${({ $central, theme }) => (
@@ -112,8 +121,8 @@ const Point = styled.span<{ $central: boolean }>`
   }
 
   @media (max-width: 699px) {
-    width: ${({ $central }) => ($central ? '20px' : '5px')};
-    height: ${({ $central }) => ($central ? '20px' : '5px')};
+    width: ${({ $central }) => ($central ? '46px' : '5px')};
+    height: ${({ $central }) => ($central ? '46px' : '5px')};
   }
 `;
 

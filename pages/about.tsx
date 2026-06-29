@@ -22,7 +22,7 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     position: relative;
-    background-color: ${({ theme }) => theme.c2};
+    background-color: transparent;
     user-select: none;
     -webkit-user-drag: none;
     z-index: 1;

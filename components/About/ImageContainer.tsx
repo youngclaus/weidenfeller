@@ -180,28 +180,14 @@ const ExploreLayout = styled.div`
   overflow: hidden;
   padding: clamp(70px, 10vh, 108px) clamp(18px, 4vw, 48px) clamp(26px, 5vh, 48px);
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -8%;
-    z-index: 0;
-    opacity: 0.24;
-    background-image: url('/About/background.png');
-    background-position: center bottom;
-    background-size: auto 115%;
-    background-repeat: repeat-x;
-    filter: blur(10px) saturate(0.55) brightness(0.72);
-    transform: scale(1.04);
-  }
-
   &::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
     background:
-      radial-gradient(circle at 50% 42%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.76) 72%),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.24) 46%, rgba(0, 0, 0, 0.7));
+      radial-gradient(circle at 50% 42%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.22) 76%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.24));
     pointer-events: none;
   }
 
