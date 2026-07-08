@@ -16,13 +16,26 @@ export interface Card {
 export const cards: Card[] = [
   //2025
   {
+    title: 'Lead Cloud Engineer @ MoFlo',
+    description: 'Multi-tenant marketing SaaS. Social, blogs, and email in one workspace.',
+    longDescription: 'MoFlo Cloud is a multi-tenant SaaS platform that unifies social media, blogging, and email marketing into three modules: MoSocial, MoBlogs, and MoMail. As Lead Cloud Engineer, I oversee the platform end-to-end — architecting the multi-tenant foundation on Supabase with feature-flagged rollouts and expand-contract migrations, building the product modules in Next.js and Tailwind CSS, and designing Stripe subscription billing with lookup-key-based pricing for zero-downtime price changes. I also lead a small team of developers, run code reviews, and manage our environments, deployment pipelines, and third-party integrations with event-driven and scheduled workloads orchestrated through Trigger.dev and Hookdeck.',
+    image: '/Projects/2025_moflo_cloud.png',
+    year: 2025,
+    technologies: ['Cursor IDE', 'React', 'Next.js', 'Typescript', 'Tailwind CSS', 'PostCSS', 'Supabase', 'PostgreSQL', 'Stripe', 'Hookdeck', 'Trigger.dev', 'Zernio', 'Vercel', 'Jira API', 'Slack API', 'N8N'],
+    tags: ['Work Experience', 'Website', 'SaaS', 'Software', 'Leadership', 'API', 'Data Structures'],
+    githubLink: '',
+    website: 'https://moflo.ai',
+    role: 'Lead Cloud Engineer',
+    duration: 'Ongoing',
+  },
+  {
     title: 'Allergenics V2',
     description: 'Current W.I.P. Complete rework from the ground-up. Allergy-proof eating out.',
     longDescription: 'Allergenics V2 is a complete overhaul of the original senior project. The goal is to create a more robust and scalable application by migrating to Next.js for server-side rendering and improved performance. I\'m also integrating a custom-trained AI model to provide more accurate and personalized allergy warnings. The user interface is being redesigned with Tailwind CSS for a modern and responsive experience.',
     image:'/Projects/2025_allergenics.png',
     year: 2025,
     technologies: ['React', 'Next.js', 'Tailwind CSS', 'PostCSS', 'Typescript', 'Python', 'Flask', 'OpenAI'],
-    tags: ['Website'],
+    tags: ['Website', 'Data Structures', 'API'],
     githubLink: 'https://github.com/youngclaus/achraf',
     website: '',
     role: 'Passion Project',
@@ -31,7 +44,7 @@ export const cards: Card[] = [
   {
     title: 'Banking Application',
     description: 'Brief trial contract with a startup in NYC.',
-    longDescription: 'As part of a trial with a New York-based fintech startup, I was tasked with developing a full-stack banking application. The backend was built with Python and FastAPI, utilizing both an ORM and raw SQL for optimized database interactions with PostgreSQL. The frontend was developed using React. Observability was a key focus, with Grafana, Prometheus, and Tempo integrated for monitoring. The entire application was containerized using Docker for easy deployment and scalability.',
+    longDescription: 'As part of a trial with a New York-based fintech startup, I was tasked with developing a full-stack banking application while learning about the company and their day-to-day dev processes. The backend was built with Python and FastAPI, utilizing both an ORM and raw SQL for optimized database interactions with PostgreSQL. The frontend was developed using React. Observability was a key focus, with Grafana, Prometheus, and Tempo integrated for monitoring. The entire application was containerized using Docker for easy deployment and scalability.',
     image: '/Projects/2025_banking_application.png',
     year: 2025,
     technologies: ['Python', 'Flask', 'PostgreSQL', 'SQLAlchemy', 'Celery', 'Redis', 'Swagger', 'JWT', 'Prometheus', 'React', 'Tailwind CSS', 'Vite', 'React Router', 'OpenTelemetry', 'JavaScript', 'Docker', 'Grafana'],
@@ -42,6 +55,16 @@ export const cards: Card[] = [
   },
   //2024
   {
+    title: 'Bartender/Bouncer @ Schmitty\'s Hoboken',
+    description: 'Family establishment in Hoboken, NJ.',
+    longDescription: 'The owners of the new Hoboken bar "Schmitty\'s" were a new addition to my family at the time I was in school, and I offered to help out at the bar that they opened since I lived in Hoboken at the time and my class schedule was lighter. I worked day/night shifts during the week/weekends on an unfixed schedule, working behind the bar and on the other side helping other bartenders as well. Tasks range from cleaning tables to managing parties to serving patrons while adhering to strict Hoboken policies and entertaining crowds of new and old faces no matter what my role was each shift.',
+    image: '/Projects/2024_schmittys.png',
+    year: 2024,
+    technologies: [],
+    tags: ['Work Experience'],
+    duration: 'April 2024 - September 2025'
+  },
+  {
     title: 'March Madness Predictor',
     description: 'Used AI/ML to predict March Madness.',
     longDescription: 'Used machine learning techniques to develop a model that predicts the outcome of the NCAA March Madness tournaments. Our thesis was that teams that closer to the paint are generally more successful.',
@@ -49,7 +72,18 @@ export const cards: Card[] = [
     year: 2024,
     technologies: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'LaTeX'],
     tags: ['Academic', 'Software', 'Data Structures'],
-    duration: 'Spring 2024'
+    duration: 'January - June 2024'
+  },
+  {
+    title: 'Intro to C++ Instructor',
+    description: 'Spent my last grad semester as part-time instructor in entry-level C++ class',
+    longDescription: 'All computer science students are expected to take the entry-level C++ class in their first year, and I remembered how much the TA\'s at the time were of help to me. I knew going into my last semester of grad school that I would have a light schedule, so I decided to carry the torch from my own experience as a freshman to the new generation. Although I was a tough grader on projects, my two classes produced the highest project and final submission grades on average out of 10 separate sections, and I found myself helping students after hours from not only my sections, but other sections as well. It was a valuable leadership experience that helps me now in my current role at MoFlo.',
+    image:'Projects/2024_soccer.jpg',
+    year: 2024,
+    technologies: ['C++', 'Visual Studio Code', 'Canvas', 'Google Suite'],
+    tags: ['Academic', 'Leadership', 'Work Experience'],
+    role: 'Instructor',
+    duration: 'January - June 2024',
   },
   {
     title: 'youngcla.us',
@@ -67,11 +101,11 @@ export const cards: Card[] = [
   {
     title: 'Stevens Institute of Technology',
     description: 'Master of Engineering in Applied Artificial Intelligence',
-    longDescription: 'Completed a Master\'s of Engineering with a specialization in Applied Artificial Intelligence. Coursework focused on machine learning, deep learning, natural language processing, and computer vision. Gained hands-on experience in developing and deploying AI models for real-world applications. Worked part-time as C++ development instructor during my studies.',
+    longDescription: 'Completed a Master\'s of Engineering with a specialization in Applied Artificial Intelligence. Coursework focused on machine learning, deep learning, natural language processing, and computer vision. Gained hands-on experience in developing and deploying AI models for real-world applications.',
     image:'/Projects/2024_soccer.jpg',
     year: 2024,
     technologies: [],
-    tags: ['Academic', 'Degree', 'Work Experience'],
+    tags: ['Academic', 'Degree'],
     githubLink: '',
     role: 'Student',
     duration: 'Sep 2023 - May 2024',

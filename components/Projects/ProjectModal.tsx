@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Card } from './cards';
 import { FaGithub, FaExternalLinkAlt, FaSearch, FaTimes } from 'react-icons/fa';
 
+type ImageFit = 'vertical' | 'horizontal';
+
 interface ProjectModalProps {
   card: Card;
   onClose: () => void;
@@ -10,15 +12,27 @@ interface ProjectModalProps {
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ card, onClose }) => {
   const [isImagePoppedOut, setIsImagePoppedOut] = useState(false);
+  const [imageFit, setImageFit] = useState<ImageFit>('horizontal');
 
   const handleImagePopOut = () => setIsImagePoppedOut(true);
   const handleCloseImagePopOut = () => setIsImagePoppedOut(false);
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const image = event.currentTarget;
+    setImageFit(image.naturalHeight > image.naturalWidth ? 'vertical' : 'horizontal');
+  };
 
   return (
     <>
       <ModalOverlay onClick={onClose}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
-          <Image src={card.image} alt={card.title} />
+          <ImageFrame>
+            <Image
+              src={card.image}
+              alt={card.title}
+              $fit={imageFit}
+              onLoad={handleImageLoad}
+            />
+          </ImageFrame>
           <Content>
             <MagnifyButton onClick={handleImagePopOut}>
               <FaSearch />
@@ -27,18 +41,34 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ card, onClose }) => {
             <Title>{card.title}</Title>
             <Year>{card.year}</Year>
             <Description>{card.longDescription}</Description>
-            <Details>
-              <DetailItem><strong>Role:</strong> {card.role}</DetailItem>
-              <DetailItem><strong>Duration:</strong> {card.duration}</DetailItem>
-            </Details>
-            <Technologies>
-              <strong>Technologies:</strong>
+
+            {(card.role || card.duration) && (
+              <Details>
+                {card.role && <DetailItem><strong>Role:</strong> {card.role}</DetailItem>}
+                {card.duration && <DetailItem><strong>Duration:</strong> {card.duration}</DetailItem>}
+              </Details>
+            )}
+
+            <MetaSection>
+              <strong>Tags:</strong>
               <Tags>
-                {card.technologies.map(tech => (
-                  <Tag key={tech}>{tech}</Tag>
+                {card.tags.map(tag => (
+                  <Tag key={tag}>{tag}</Tag>
                 ))}
               </Tags>
-            </Technologies>
+            </MetaSection>
+
+            {card.technologies.length > 0 && (
+              <MetaSection>
+                <strong>Technologies:</strong>
+                <Tags>
+                  {card.technologies.map(tech => (
+                    <Tag key={tech}>{tech}</Tag>
+                  ))}
+                </Tags>
+              </MetaSection>
+            )}
+
             <Links>
               {card.githubLink && (
                 <Link href={card.githubLink} target="_blank" rel="noopener noreferrer">
@@ -77,7 +107,7 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   font-family: "DM Mono", monospace;
-  z-index: 100;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
@@ -143,13 +173,25 @@ const MagnifyButton = styled.button`
   z-index: 100;
 `;
 
-const Image = styled.img`
+const ImageFrame = styled.div`
+  position: relative;
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  overflow: hidden;
   background: #000;
   border-top-left-radius: 15px;
   border-top-right-radius: 0px;
+`;
+
+const Image = styled.img<{ $fit: ImageFit }>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: ${({ $fit }) => ($fit === 'vertical' ? '100%' : 'auto')};
+  height: ${({ $fit }) => ($fit === 'horizontal' ? '100%' : 'auto')};
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
 `;
 
 const ImagePopOutOverlay = styled.div`
@@ -214,7 +256,7 @@ const DetailItem = styled.p`
   }
 `;
 
-const Technologies = styled.div`
+const MetaSection = styled.div`
   margin-bottom: 20px;
   strong {
     font-weight: 700;

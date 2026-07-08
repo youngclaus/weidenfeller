@@ -1,26 +1,22 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { Card, cards } from '../components/Projects/cards';
 import { Theme } from '../components/Theme/themes';
+import ProjectModal from '../components/Projects/ProjectModal';
 
-type FilterKey = 'all' | 'ai' | 'web' | 'apis' | 'live';
+type FilterKey = 'all' | 'career' | 'ai' | 'web' | 'apis' | 'live';
 type ProjectStatus = 'live' | 'wip' | 'archived';
+type ImageFit = 'vertical' | 'horizontal';
 
 const filters: Array<{ key: FilterKey; label: string }> = [
   { key: 'all', label: 'All' },
+  { key: 'career', label: 'Career' },
   { key: 'ai', label: 'AI / ML' },
   { key: 'web', label: 'Web' },
   { key: 'apis', label: 'APIs' },
   { key: 'live', label: 'Live' },
 ];
-
-const featuredTitles = new Set([
-  'Allergenics V2',
-  'Banking Application',
-  'March Madness Predictor',
-  'youngcla.us',
-]);
 
 type Rgb = { r: number; g: number; b: number };
 
@@ -144,8 +140,6 @@ const projectPalette = (theme: Theme) => {
   };
 };
 
-const getPrimaryUrl = (card: Card) => card.website || card.githubLink || '';
-
 const getStatus = (card: Card): ProjectStatus => {
   if (card.website) return 'live';
   if (/ongoing|current|w\.i\.p|maintained/i.test(`${card.title} ${card.description} ${card.duration ?? ''}`)) {
@@ -171,6 +165,7 @@ const getProjectCategories = (card: Card): FilterKey[] => {
   ].join(' ').toLowerCase();
 
   const categories: FilterKey[] = [];
+  if (card.tags.some(tag => tag.toLowerCase() === 'work experience')) categories.push('career');
   if (/ai|machine learning|tensorflow|pytorch|scikit|openai|matlab|predict|data/.test(text)) categories.push('ai');
   if (/website|react|next|frontend|backend|full-stack|flask|fastapi|tailwind|styled-components/.test(text)) categories.push('web');
   if (/api|spotify|yelp|openai|fastapi|swagger/.test(text)) categories.push('apis');
@@ -191,163 +186,191 @@ const getYearRange = () => {
   return `${Math.min(...years)}-${Math.max(...years)}`;
 };
 
-const getTagPreview = (card: Card) => (
-  (card.technologies.length > 0 ? card.technologies : card.tags).slice(0, 3)
-);
-
 interface ProjectsProps {
   contentVisible?: boolean;
 }
 
+interface ProjectImageProps {
+  src: string;
+  alt: string;
+  mode?: 'cover' | 'contain';
+}
+
+const ProjectImage: React.FC<ProjectImageProps> = ({ src, alt, mode = 'cover' }) => {
+  const [imageFit, setImageFit] = useState<ImageFit>('horizontal');
+
+  const handleLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const image = event.currentTarget;
+    setImageFit(image.naturalHeight > image.naturalWidth ? 'vertical' : 'horizontal');
+  };
+
+  return (
+    <ProjectImageElement
+      src={src}
+      alt={alt}
+      $fit={imageFit}
+      $mode={mode}
+      onLoad={handleLoad}
+    />
+  );
+};
+
 const Projects: React.FC<ProjectsProps> = ({ contentVisible = true }) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterKey>('all');
-  const [featuredCard, setFeaturedCard] = useState<Card>(
-    cards.find(card => featuredTitles.has(card.title)) ?? cards[0],
-  );
+  const [modalCard, setModalCard] = useState<Card | null>(null);
+  const featuredCard = cards[0];
 
   const visibleCards = useMemo(
     () => cards.filter(card => matchesFilter(card, selectedFilter)),
     [selectedFilter],
   );
 
-  useEffect(() => {
-    if (!visibleCards.some(card => card.title === featuredCard.title)) {
-      setFeaturedCard(
-        visibleCards.find(card => featuredTitles.has(card.title)) ?? visibleCards[0] ?? cards[0],
-      );
-    }
-  }, [featuredCard.title, visibleCards]);
-
   const gridCards = visibleCards.filter(card => card.title !== featuredCard.title);
   const liveCount = cards.filter(card => getStatus(card) === 'live').length;
   const featuredStatus = getStatus(featuredCard);
-  const featuredUrl = getPrimaryUrl(featuredCard);
 
   return (
-    <Page>
-      <Shell $visible={contentVisible}>
-        <Hero>
-          <HeroCopy>
-            <Title>projects</Title>
-          </HeroCopy>
+    <>
+      <Page>
+        <Shell $visible={contentVisible}>
+          <Hero>
+            <HeroCopy>
+              <Title>projects</Title>
+            </HeroCopy>
 
-          <HeroControls>
-            <Stats aria-label="Project stats">
-              <Stat><strong>{cards.length}</strong> projects</Stat>
-              <Stat><strong>{liveCount}</strong> live</Stat>
-              <Stat>{getYearRange()}</Stat>
-            </Stats>
+            <HeroControls>
+              <Stats aria-label="Project stats">
+                <Stat><strong>{cards.length}</strong> projects</Stat>
+                <Stat><strong>{liveCount}</strong> live</Stat>
+                <Stat>{getYearRange()}</Stat>
+              </Stats>
 
-            <FilterBar aria-label="Project filters">
-              {filters.map(filter => {
-                const isActive = selectedFilter === filter.key;
-                return (
-                  <FilterButton
-                    key={filter.key}
-                    type="button"
-                    $active={isActive}
-                    onClick={() => setSelectedFilter(filter.key)}
-                  >
-                    {filter.label}
-                    <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
-                  </FilterButton>
-                );
-              })}
-            </FilterBar>
-          </HeroControls>
-        </Hero>
+              <FilterBar aria-label="Project filters">
+                {filters.map(filter => {
+                  const isActive = selectedFilter === filter.key;
+                  return (
+                    <FilterButton
+                      key={filter.key}
+                      type="button"
+                      $active={isActive}
+                      onClick={() => setSelectedFilter(filter.key)}
+                    >
+                      {filter.label}
+                      <FilterCount>{getCountForFilter(filter.key)}</FilterCount>
+                    </FilterButton>
+                  );
+                })}
+              </FilterBar>
+            </HeroControls>
+          </Hero>
 
-        <FeaturedProject
-          href={featuredUrl || undefined}
-          as={featuredUrl ? 'a' : 'section'}
-          target={featuredUrl ? '_blank' : undefined}
-          rel={featuredUrl ? 'noopener noreferrer' : undefined}
-        >
-          <FeaturedImageWrap>
-            <ProjectImage src={featuredCard.image} alt={`${featuredCard.title} preview`} />
-            <FeaturedBadge>Featured</FeaturedBadge>
-          </FeaturedImageWrap>
+          <FeaturedProject>
+            <FeaturedImageWrap>
+              <ProjectImage
+                src={featuredCard.image}
+                alt={`${featuredCard.title} preview`}
+                mode="contain"
+              />
+              <FeaturedBadge>Featured</FeaturedBadge>
+            </FeaturedImageWrap>
 
-          <FeaturedBody>
-            <StatusLine>
-              <StatusDot $status={featuredStatus} aria-hidden="true" />
-              <StatusText $status={featuredStatus}>{getStatusLabel(featuredStatus)}</StatusText>
-              <YearText>{featuredCard.year}</YearText>
-            </StatusLine>
+            <FeaturedBody>
+              <FeaturedHeader>
+                <StatusLine>
+                  <StatusDot $status={featuredStatus} aria-hidden="true" />
+                  <StatusText $status={featuredStatus}>{getStatusLabel(featuredStatus)}</StatusText>
+                  <YearText>{featuredCard.year}</YearText>
+                </StatusLine>
 
-            <FeaturedTitle>{featuredCard.title}</FeaturedTitle>
-            <FeaturedDescription>{featuredCard.longDescription}</FeaturedDescription>
+                <FeaturedTitle>{featuredCard.title}</FeaturedTitle>
+              </FeaturedHeader>
 
-            <TagList>
-              {getTagPreview(featuredCard).map(tag => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </TagList>
+              <FeaturedScrollArea>
+                <FeaturedDescription>{featuredCard.longDescription}</FeaturedDescription>
 
-            <ActionRow>
-              {featuredCard.website && (
-                <PrimaryAction>
-                  Live demo
-                  <FaExternalLinkAlt aria-hidden="true" />
-                </PrimaryAction>
-              )}
-              {featuredCard.githubLink && (
-                <SecondaryAction>
-                  GitHub
-                  <FaGithub aria-hidden="true" />
-                </SecondaryAction>
-              )}
-              {!featuredCard.website && !featuredCard.githubLink && (
-                <SecondaryAction>Archive entry</SecondaryAction>
-              )}
-            </ActionRow>
-          </FeaturedBody>
-        </FeaturedProject>
+                <MetaGroup>
+                  <MetaLabel>Tags</MetaLabel>
+                  <TagList>
+                    {featuredCard.tags.map(tag => (
+                      <Tag key={tag}>{tag}</Tag>
+                    ))}
+                  </TagList>
+                </MetaGroup>
 
-        <Grid aria-label="Project grid">
-          {gridCards.map(card => {
-            const status = getStatus(card);
-            const url = getPrimaryUrl(card);
-
-            return (
-              <ProjectTile
-                key={card.title}
-                as={url ? 'a' : 'button'}
-                href={url || undefined}
-                target={url ? '_blank' : undefined}
-                rel={url ? 'noopener noreferrer' : undefined}
-                type={url ? undefined : 'button'}
-                onClick={() => setFeaturedCard(card)}
-              >
-                <TileImageWrap>
-                  <ProjectImage src={card.image} alt={`${card.title} preview`} />
-                  <TileStatus>
-                    <StatusDot $status={status} aria-hidden="true" />
-                    {getStatusLabel(status)}
-                  </TileStatus>
-                </TileImageWrap>
-
-                <TileBody>
-                  <TileHeader>
-                    <TileTitle>{card.title}</TileTitle>
-                    <YearText>{card.year}</YearText>
-                  </TileHeader>
-                  <TileDescription>{card.description}</TileDescription>
-                  <TileFooter>
-                    <InlineTags>
-                      {getTagPreview(card).slice(0, 2).map(tag => (
-                        <InlineTag key={tag}>{tag}</InlineTag>
+                {featuredCard.technologies.length > 0 && (
+                  <MetaGroup>
+                    <MetaLabel>Technologies</MetaLabel>
+                    <TagList>
+                      {featuredCard.technologies.map(technology => (
+                        <Tag key={technology}>{technology}</Tag>
                       ))}
-                    </InlineTags>
-                    <TileArrow aria-hidden="true">↗</TileArrow>
-                  </TileFooter>
-                </TileBody>
-              </ProjectTile>
-            );
-          })}
-        </Grid>
-      </Shell>
-    </Page>
+                    </TagList>
+                  </MetaGroup>
+                )}
+              </FeaturedScrollArea>
+
+              <ActionRow>
+                {featuredCard.website && (
+                  <PrimaryAction href={featuredCard.website} target="_blank" rel="noopener noreferrer">
+                    Live demo
+                    <FaExternalLinkAlt aria-hidden="true" />
+                  </PrimaryAction>
+                )}
+                {featuredCard.githubLink && (
+                  <SecondaryAction href={featuredCard.githubLink} target="_blank" rel="noopener noreferrer">
+                    GitHub
+                    <FaGithub aria-hidden="true" />
+                  </SecondaryAction>
+                )}
+                {!featuredCard.website && !featuredCard.githubLink && (
+                  <ArchiveAction>Archive entry</ArchiveAction>
+                )}
+              </ActionRow>
+            </FeaturedBody>
+          </FeaturedProject>
+
+          <Grid aria-label="Project grid">
+            {gridCards.map(card => {
+              const status = getStatus(card);
+
+              return (
+                <ProjectTile
+                  key={card.title}
+                  type="button"
+                  onClick={() => setModalCard(card)}
+                >
+                  <TileImageWrap>
+                    <ProjectImage src={card.image} alt={`${card.title} preview`} />
+                    <TileStatus>
+                      <StatusDot $status={status} aria-hidden="true" />
+                      {getStatusLabel(status)}
+                    </TileStatus>
+                  </TileImageWrap>
+
+                  <TileBody>
+                    <TileHeader>
+                      <TileTitle>{card.title}</TileTitle>
+                      <YearText>{card.year}</YearText>
+                    </TileHeader>
+                    <TileDescription>{card.description}</TileDescription>
+                    <TileFooter>
+                      <InlineTags>
+                        {card.tags.map(tag => (
+                          <InlineTag key={tag}>{tag}</InlineTag>
+                        ))}
+                      </InlineTags>
+                    </TileFooter>
+                  </TileBody>
+                </ProjectTile>
+              );
+            })}
+          </Grid>
+        </Shell>
+      </Page>
+      {modalCard && (
+        <ProjectModal card={modalCard} onClose={() => setModalCard(null)} />
+      )}
+    </>
   );
 };
 
@@ -572,10 +595,11 @@ const FilterCount = styled.span`
   opacity: 0.66;
 `;
 
-const FeaturedProject = styled.a`
+const FeaturedProject = styled.section`
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(340px, 1fr);
   overflow: hidden;
+  height: min(680px, calc(100vh - 220px));
   margin-bottom: 22px;
   border: 1px solid var(--project-line);
   border-radius: 18px;
@@ -595,12 +619,21 @@ const FeaturedProject = styled.a`
 
   @media (max-width: 860px) {
     grid-template-columns: 1fr;
+    height: auto;
   }
 `;
 
 const FeaturedImageWrap = styled.div`
   position: relative;
-  min-height: 340px;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 100%;
+  min-height: 0;
   background: var(--project-surface-2);
 
   @media (max-width: 620px) {
@@ -608,12 +641,13 @@ const FeaturedImageWrap = styled.div`
   }
 `;
 
-const ProjectImage = styled.img`
-  position: absolute;
-  inset: 0;
+const ProjectImageElement = styled.img<{ $fit: ImageFit; $mode: 'cover' | 'contain' }>`
+  position: ${({ $mode }) => ($mode === 'cover' ? 'absolute' : 'relative')};
+  inset: ${({ $mode }) => ($mode === 'cover' ? 0 : 'auto')};
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: ${({ $mode }) => ($mode === 'cover' ? 'cover' : 'contain')};
+  object-position: center;
 `;
 
 const FeaturedBadge = styled.span`
@@ -638,7 +672,43 @@ const FeaturedBadge = styled.span`
 const FeaturedBody = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
   padding: clamp(30px, 4vw, 42px) clamp(26px, 4vw, 40px);
+`;
+
+const FeaturedHeader = styled.div`
+  flex: 0 0 auto;
+`;
+
+const FeaturedScrollArea = styled.div`
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 16px;
+  padding-right: 10px;
+  scrollbar-color: var(--project-muted) transparent;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--project-muted);
+  }
+
+  @media (max-width: 860px) {
+    overflow: visible;
+    padding-right: 0;
+  }
 `;
 
 const StatusLine = styled.div`
@@ -690,17 +760,30 @@ const FeaturedTitle = styled.h2`
 `;
 
 const FeaturedDescription = styled.p`
-  margin: 16px 0 0;
+  margin: 0;
   color: var(--project-muted);
   font-size: 16px;
   line-height: 1.55;
+`;
+
+const MetaGroup = styled.div`
+  margin-top: 22px;
+`;
+
+const MetaLabel = styled.span`
+  display: block;
+  margin-bottom: 8px;
+  color: var(--project-faint);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
 `;
 
 const TagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 22px;
 `;
 
 const Tag = styled.span`
@@ -714,14 +797,14 @@ const Tag = styled.span`
 `;
 
 const ActionRow = styled.div`
+  flex: 0 0 auto;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: auto;
-  padding-top: 28px;
+  margin-top: 22px;
 `;
 
-const PrimaryAction = styled.span`
+const PrimaryAction = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -731,9 +814,23 @@ const PrimaryAction = styled.span`
   color: var(--project-accent-ink);
   font-size: 13px;
   font-weight: 700;
+  text-decoration: none;
 `;
 
-const SecondaryAction = styled.span`
+const SecondaryAction = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 18px;
+  border: 1px solid var(--project-line);
+  border-radius: 10px;
+  color: var(--project-ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+`;
+
+const ArchiveAction = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -760,7 +857,7 @@ const Grid = styled.div`
   }
 `;
 
-const ProjectTile = styled.a`
+const ProjectTile = styled.button`
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -788,6 +885,7 @@ const ProjectTile = styled.a`
 
 const TileImageWrap = styled.div`
   position: relative;
+  overflow: hidden;
   aspect-ratio: 16 / 10;
   background: var(--project-surface-2);
 `;
@@ -853,16 +951,15 @@ const InlineTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  min-width: 0;
 `;
 
 const InlineTag = styled.span`
+  padding: 3px 7px;
+  border: 1px solid var(--project-line-2);
+  border-radius: 6px;
   color: var(--project-muted);
   font-family: "DM Mono", "JetBrains Mono", monospace;
   font-size: 10.5px;
-`;
-
-const TileArrow = styled.span`
-  margin-left: auto;
-  color: var(--project-faint);
-  font-size: 14px;
+  line-height: 1.2;
 `;
