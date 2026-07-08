@@ -1,94 +1,144 @@
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { FaExternalLinkAlt, FaGithub, FaSearch, FaTimes } from 'react-icons/fa';
 import { Card } from './cards';
-import { FaGithub, FaExternalLinkAlt, FaSearch, FaTimes } from 'react-icons/fa';
 
-type ImageFit = 'vertical' | 'horizontal';
+type ProjectStatus = 'live' | 'wip' | 'archived';
 
 interface ProjectModalProps {
   card: Card;
   onClose: () => void;
 }
 
+const getStatus = (card: Card): ProjectStatus => {
+  if (card.website) return 'live';
+  if (/ongoing|current|w\.i\.p|maintained/i.test(`${card.title} ${card.description} ${card.duration ?? ''}`)) {
+    return 'wip';
+  }
+
+  return 'archived';
+};
+
+const getStatusLabel = (status: ProjectStatus) => {
+  if (status === 'live') return 'Live';
+  if (status === 'wip') return 'In progress';
+  return 'Archived';
+};
+
 const ProjectModal: React.FC<ProjectModalProps> = ({ card, onClose }) => {
   const [isImagePoppedOut, setIsImagePoppedOut] = useState(false);
-  const [imageFit, setImageFit] = useState<ImageFit>('horizontal');
+  const status = useMemo(() => getStatus(card), [card]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const handleImagePopOut = () => setIsImagePoppedOut(true);
   const handleCloseImagePopOut = () => setIsImagePoppedOut(false);
-  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const image = event.currentTarget;
-    setImageFit(image.naturalHeight > image.naturalWidth ? 'vertical' : 'horizontal');
-  };
 
   return (
     <>
       <ModalOverlay onClick={onClose}>
-        <ModalContent onClick={(e) => e.stopPropagation()}>
-          <ImageFrame>
-            <Image
-              src={card.image}
-              alt={card.title}
-              $fit={imageFit}
-              onLoad={handleImageLoad}
-            />
-          </ImageFrame>
-          <Content>
-            <MagnifyButton onClick={handleImagePopOut}>
-              <FaSearch />
-            </MagnifyButton>
-            <CloseButton onClick={onClose}><FaTimes /></CloseButton>
-            <Title>{card.title}</Title>
-            <Year>{card.year}</Year>
-            <Description>{card.longDescription}</Description>
+        <ModalShell
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <MediaPanel>
+            <Image src={card.image} alt={card.title} />
+            <MediaShade />
+            <MediaButton type="button" onClick={handleImagePopOut} aria-label="Open larger image">
+              <FaSearch aria-hidden="true" />
+            </MediaButton>
+          </MediaPanel>
+
+          <ContentPanel>
+            <Header>
+              <StatusLine>
+                <StatusDot $status={status} aria-hidden="true" />
+                <StatusText $status={status}>{getStatusLabel(status)}</StatusText>
+                <YearText>{card.year}</YearText>
+              </StatusLine>
+              <CloseButton type="button" onClick={onClose} aria-label="Close project details">
+                <FaTimes aria-hidden="true" />
+              </CloseButton>
+            </Header>
+
+            <Title id="project-modal-title">{card.title}</Title>
 
             {(card.role || card.duration) && (
-              <Details>
-                {card.role && <DetailItem><strong>Role:</strong> {card.role}</DetailItem>}
-                {card.duration && <DetailItem><strong>Duration:</strong> {card.duration}</DetailItem>}
-              </Details>
+              <FactRow>
+                {card.role && (
+                  <Fact>
+                    <FactLabel>Role</FactLabel>
+                    <FactValue>{card.role}</FactValue>
+                  </Fact>
+                )}
+                {card.duration && (
+                  <Fact>
+                    <FactLabel>Duration</FactLabel>
+                    <FactValue>{card.duration}</FactValue>
+                  </Fact>
+                )}
+              </FactRow>
             )}
 
-            <MetaSection>
-              <strong>Tags:</strong>
-              <Tags>
-                {card.tags.map(tag => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </Tags>
-            </MetaSection>
+            <ScrollableContent>
+              <Description>{card.longDescription}</Description>
 
-            {card.technologies.length > 0 && (
               <MetaSection>
-                <strong>Technologies:</strong>
+                <MetaLabel>Tags</MetaLabel>
                 <Tags>
-                  {card.technologies.map(tech => (
-                    <Tag key={tech}>{tech}</Tag>
+                  {card.tags.map(tag => (
+                    <Tag key={tag}>{tag}</Tag>
                   ))}
                 </Tags>
               </MetaSection>
-            )}
 
-            <Links>
-              {card.githubLink && (
-                <Link href={card.githubLink} target="_blank" rel="noopener noreferrer">
-                  <FaGithub /> GitHub
-                </Link>
+              {card.technologies.length > 0 && (
+                <MetaSection>
+                  <MetaLabel>Technologies</MetaLabel>
+                  <Tags>
+                    {card.technologies.map(tech => (
+                      <Tag key={tech}>{tech}</Tag>
+                    ))}
+                  </Tags>
+                </MetaSection>
               )}
+            </ScrollableContent>
+
+            <Footer>
               {card.website && (
-                <Link href={card.website} target="_blank" rel="noopener noreferrer">
-                  <FaExternalLinkAlt /> Live Site
-                </Link>
+                <PrimaryLink href={card.website} target="_blank" rel="noopener noreferrer">
+                  Live site
+                  <FaExternalLinkAlt aria-hidden="true" />
+                </PrimaryLink>
               )}
-            </Links>
-          </Content>
-        </ModalContent>
+              {card.githubLink && (
+                <SecondaryLink href={card.githubLink} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                  <FaGithub aria-hidden="true" />
+                </SecondaryLink>
+              )}
+              {!card.website && !card.githubLink && (
+                <ArchiveLabel>Archive entry</ArchiveLabel>
+              )}
+            </Footer>
+          </ContentPanel>
+        </ModalShell>
       </ModalOverlay>
+
       {isImagePoppedOut && (
-          <ImagePopOutOverlay onClick={handleCloseImagePopOut}>
-            <PoppedImage src={card.image} alt={card.title} />
-          </ImagePopOutOverlay>
-        )}
+        <ImagePopOutOverlay onClick={handleCloseImagePopOut}>
+          <PoppedImage src={card.image} alt={card.title} />
+        </ImagePopOutOverlay>
+      )}
     </>
   );
 };
@@ -97,207 +147,337 @@ export default ProjectModal;
 
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 50px 10px 10px 10px;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "DM Mono", monospace;
-  z-index: 1000;
+  padding: clamp(18px, 3vw, 34px);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.08), transparent 34%),
+    rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(10px);
+  font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 `;
 
-const ModalContent = styled.div`
-  background: ${({ theme }) => theme.c1};
-  width: 90%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+const ModalShell = styled.div`
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(380px, 1.05fr);
+  width: min(1120px, 94vw);
+  max-height: min(780px, 88vh);
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.c3};
+  border-radius: 18px;
+  background: rgba(12, 13, 18, 0.94);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.72);
+  color: ${({ theme }) => theme.c4};
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    width: min(620px, 94vw);
+    max-height: 90vh;
+  }
+`;
+
+const MediaPanel = styled.div`
   position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.68);
+
+  @media (max-width: 860px) {
+    min-height: 260px;
+    aspect-ratio: 16 / 10;
+  }
+`;
+
+const Image = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`;
+
+const MediaShade = styled.div`
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent 42%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.28), transparent 46%);
+  pointer-events: none;
+`;
+
+const MediaButton = styled.button`
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.58);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color 180ms ease, transform 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: ${({ theme }) => theme.c3};
+    outline: none;
+    transform: translateY(-1px);
+  }
+`;
+
+const ContentPanel = styled.div`
   display: flex;
+  min-height: 0;
   flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 15px;
+  padding: clamp(26px, 4vw, 42px);
+`;
 
-  &::-webkit-scrollbar {
-    height: 10px;
-  }
+const Header = styled.div`
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+`;
 
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c3};
-  }
+const StatusLine = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+`;
 
-  &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c4};
-  }
+const StatusDot = styled.span<{ $status: ProjectStatus }>`
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: ${({ $status, theme }) => {
+    if ($status === 'live') return '#67d391';
+    if ($status === 'wip') return '#f0a93a';
+    return theme.c4;
+  }};
+`;
+
+const StatusText = styled.span<{ $status: ProjectStatus }>`
+  color: ${({ $status, theme }) => {
+    if ($status === 'live') return '#67d391';
+    if ($status === 'wip') return '#f0a93a';
+    return theme.c4;
+  }};
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+const YearText = styled.span`
+  color: rgba(255, 255, 255, 0.56);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 12px;
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  background: ${({ theme }) => theme.c3};
-  color: ${({ theme }) => theme.c1};
-  border: none;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 100;
-`;
-
-const MagnifyButton = styled.button`
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background: ${({ theme }) => theme.c3};
-  color: ${({ theme }) => theme.c1};
-  border: none;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 100;
-`;
-
-const ImageFrame = styled.div`
-  position: relative;
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  background: #000;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 0px;
-`;
-
-const Image = styled.img<{ $fit: ImageFit }>`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: ${({ $fit }) => ($fit === 'vertical' ? '100%' : 'auto')};
-  height: ${({ $fit }) => ($fit === 'horizontal' ? '100%' : 'auto')};
-  max-width: none;
-  max-height: none;
-  transform: translate(-50%, -50%);
-`;
-
-const ImagePopOutOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  cursor: pointer;
-`;
-
-const PoppedImage = styled.img`
-  max-width: 90vw;
-  max-height: 90vh;
-  object-fit: contain;
-`;
-
-const Content = styled.div`
-  padding: 30px;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
   color: ${({ theme }) => theme.c4};
-  width: 100%;
-  box-sizing: border-box;
-  word-break: break-word;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: ${({ theme }) => theme.c3};
+    color: ${({ theme }) => theme.c3};
+    outline: none;
+    transform: translateY(-1px);
+  }
 `;
 
 const Title = styled.h2`
-  font-weight: bold;
-  font-size: 2.5rem;
-  font-weight: 900;
-  margin-bottom: 5px;
-  color: ${({ theme }) => theme.c3};
+  flex: 0 0 auto;
+  margin: 10px 0 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.15rem, 4vw, 3.65rem);
+  font-weight: 400;
+  line-height: 0.98;
 `;
 
-const Year = styled.p`
-  font-weight: bold;
-  font-size: 1rem;
-  font-weight: 500;
+const FactRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Fact = styled.div`
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+`;
+
+const FactLabel = styled.span`
+  display: block;
+  color: rgba(255, 255, 255, 0.52);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+`;
+
+const FactValue = styled.span`
+  display: block;
+  margin-top: 5px;
   color: ${({ theme }) => theme.c4};
-  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+`;
+
+const ScrollableContent = styled.div`
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 22px;
+  padding-right: 10px;
+  scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.36);
+  }
 `;
 
 const Description = styled.p`
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 15.5px;
+  line-height: 1.65;
 `;
 
-const Details = styled.div`
-  margin-bottom: 20px;
+const MetaSection = styled.section`
+  margin-top: 24px;
 `;
 
-const DetailItem = styled.p`
-  font-size: 1rem;
-  margin-bottom: 5px;
-  strong {
-    font-weight: 700;
-  }
-`;
-
-const MetaSection = styled.div`
-  margin-bottom: 20px;
-  strong {
-    font-weight: 700;
-    display: block;
-    margin-bottom: 10px;
-  }
+const MetaLabel = styled.span`
+  display: block;
+  margin-bottom: 9px;
+  color: rgba(255, 255, 255, 0.52);
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
 `;
 
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 7px;
 `;
 
 const Tag = styled.span`
-  background-color: ${({ theme }) => theme.c3};
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.055);
   color: ${({ theme }) => theme.c4};
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
+  font-family: "DM Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  line-height: 1.2;
 `;
 
-const Links = styled.div`
+const Footer = styled.div`
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 `;
 
-const Link = styled.a`
+const PrimaryLink = styled.a`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  background-color: ${({ theme }) => theme.c3};
+  gap: 7px;
+  padding: 11px 17px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.c3};
   color: ${({ theme }) => theme.c1};
+  font-size: 13px;
+  font-weight: 800;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+`;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.c4};
-  }
-`; 
+const SecondaryLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 17px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  color: ${({ theme }) => theme.c4};
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+`;
+
+const ArchiveLabel = styled.span`
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 17px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  color: ${({ theme }) => theme.c4};
+  font-size: 13px;
+  font-weight: 800;
+`;
+
+const ImagePopOutOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.88);
+  cursor: pointer;
+`;
+
+const PoppedImage = styled.img`
+  max-width: 94vw;
+  max-height: 92vh;
+  object-fit: contain;
+`;
