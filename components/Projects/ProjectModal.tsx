@@ -164,7 +164,7 @@ const ModalShell = styled.div`
   display: grid;
   grid-template-columns: minmax(320px, 0.95fr) minmax(380px, 1.05fr);
   width: min(1120px, 94vw);
-  max-height: min(780px, 88vh);
+  height: min(780px, 88vh);
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.c3};
   border-radius: 18px;
@@ -174,8 +174,9 @@ const ModalShell = styled.div`
 
   @media (max-width: 860px) {
     grid-template-columns: 1fr;
+    grid-template-rows: minmax(220px, 34vh) minmax(0, 1fr);
     width: min(620px, 94vw);
-    max-height: 90vh;
+    height: 90vh;
   }
 `;
 
@@ -186,8 +187,8 @@ const MediaPanel = styled.div`
   background: rgba(0, 0, 0, 0.68);
 
   @media (max-width: 860px) {
-    min-height: 260px;
-    aspect-ratio: 16 / 10;
+    min-height: 0;
+    aspect-ratio: auto;
   }
 `;
 
@@ -196,7 +197,7 @@ const Image = styled.img`
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 `;
 
@@ -237,6 +238,9 @@ const MediaButton = styled.button`
 
 const ContentPanel = styled.div`
   display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
   min-height: 0;
   flex-direction: column;
   padding: clamp(26px, 4vw, 42px);

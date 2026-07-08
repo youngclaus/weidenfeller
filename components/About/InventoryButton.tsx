@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useTheme } from '../Theme/ThemeContext';
 
 interface InventoryButtonProps {
   onClick: () => void;
   isInventoryOpen: boolean;
-  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
 }
 
-const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryOpen, setActiveComponent }) => {
-  const { theme } = useTheme();
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // Collapse navbar when inventory is open
-  useEffect(() => {
-    if (isInventoryOpen) {
-      setMenuOpen(false); // Force close the menu when inventory opens
-    }
-  }, [isInventoryOpen]);
-
-  const toggleMenu = () => {
-    if (isInventoryOpen) {
-      onClick();
-    } else {
-      setMenuOpen((prev) => !prev);
-    }
-  };
-
+const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryOpen }) => {
   return (
-    <Nav expanded={menuOpen && !isInventoryOpen} collapsed={isInventoryOpen}>
-      <HamburgerButton onClick={toggleMenu}>
+    <Nav expanded={true} collapsed={false}>
+      {/* <HamburgerButton onClick={toggleMenu}>
         <Span
           style={{
             backgroundColor: theme.c3,
@@ -42,17 +22,17 @@ const InventoryButton: React.FC<InventoryButtonProps> = ({ onClick, isInventoryO
             transform: menuOpen || isInventoryOpen ? 'rotate(-45deg)' : 'translateY(6px)',
           }}
         />
-      </HamburgerButton>
-      {!isInventoryOpen && menuOpen && (
-        <Menu>
-          <MenuItem>
-            <MenuLink onClick={onClick}>Create</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink onClick={() => setActiveComponent('music')}>Earn</MenuLink>
-          </MenuItem>
-        </Menu>
-      )}
+      </HamburgerButton> */}
+      <Menu>
+        <MenuItem>
+          <MenuLink as="button" type="button" onClick={() => isInventoryOpen && onClick()}>
+            Room
+          </MenuLink>
+        </MenuItem>
+        <MenuItem>
+          <MenuLink as="button" type="button" onClick={() => !isInventoryOpen && onClick()}>Create</MenuLink>
+        </MenuItem>
+      </Menu>
     </Nav>
   );
 };
@@ -73,24 +53,24 @@ const Nav = styled.div<{ expanded: boolean; collapsed: boolean }>`
   transition: width 0.5s ease-in-out;
 `;
 
-const HamburgerButton = styled.div`
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 101;
-`;
+// const HamburgerButton = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   position: absolute;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   cursor: pointer;
+//   z-index: 101;
+// `;
 
-const Span = styled.span`
-  position: absolute;
-  width: 30px;
-  height: 4px;
-  border-radius: 50px;
-  transition: all 0.5s ease-in-out;
-`;
+// const Span = styled.span`
+//   position: absolute;
+//   width: 30px;
+//   height: 4px;
+//   border-radius: 50px;
+//   transition: all 0.5s ease-in-out;
+// `;
 
 const Menu = styled.div`
   display: flex;
@@ -111,6 +91,11 @@ const MenuItem = styled.div`
 `;
 
 const MenuLink = styled.a`
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
   text-decoration: none;
   color: ${({theme}) => theme.c1};
   cursor: pointer;

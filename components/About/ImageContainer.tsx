@@ -49,23 +49,35 @@ const staticImages = [
   },
 ];
 
-interface ImageContainerProps {
-  setActiveComponent: (component: 'index' | 'projects' | 'about' | 'music') => void;
-}
-
-const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) => {
+const ImageContainer: React.FC = () => {
   const { theme, switchTheme } = useTheme();
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const [objects, setObjects] = useState<ObjectWithState[]>([]);
   const [hoveredText, setHoveredText] = useState<string | null>(null);
   const [showInventory, setShowInventory] = useState(false);
+  const [renderInventory, setRenderInventory] = useState(false);
+  const [isViewVisible, setIsViewVisible] = useState(true);
+  const [isSwappingView, setIsSwappingView] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const toggleInventory = () => {
-    if (showInventory) {
-        setRefreshKey((prevKey) => prevKey + 1);
-    }
-    setShowInventory(!showInventory);
+    if (isSwappingView) return;
+
+    setIsSwappingView(true);
+    setIsViewVisible(false);
+
+    window.setTimeout(() => {
+      setRenderInventory((currentValue) => !currentValue);
+      setShowInventory((currentValue) => {
+        if (currentValue) {
+          setRefreshKey((prevKey) => prevKey + 1);
+        }
+
+        return !currentValue;
+      });
+      setIsViewVisible(true);
+      setIsSwappingView(false);
+    }, 180);
   };
 
   useEffect(() => {
@@ -77,14 +89,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
   
     const handleScroll = (event: WheelEvent) => {
       if (showInventory) {
-        const inventoryElement = document.querySelector('#inventory-overlay');
-        if (inventoryElement && inventoryElement.contains(event.target as Node)) {
-          // vertical scrolling within the inventory
-          return;
-        }
-  
-        // Prevent scrolling outside the inventory
-        event.preventDefault();
+        return;
       } else {
         // horizontal scrolling with the wheel
         if (imageContainer) {
@@ -121,44 +126,46 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
   return (
     <ExploreLayout>
       <ViewportFrame>
-        <StyledImageContainer ref={imageContainerRef}>
-          {staticImages.map((image, idx) => (
-            <StaticImage key={idx} {...image} />
-          ))}
-          {objects
-            .filter(obj => blueprintPositions[obj.name])
-            .map(obj => {
-              const pos = blueprintPositions[obj.name];
+        {renderInventory ? (
+          <ViewPane $visible={isViewVisible} $view="create">
+            <InventoryManager />
+          </ViewPane>
+        ) : (
+          <ViewPane $visible={isViewVisible} $view="room">
+            <StyledImageContainer ref={imageContainerRef}>
+            {staticImages.map((image, idx) => (
+              <StaticImage key={idx} {...image} />
+            ))}
+            {objects
+              .filter(obj => blueprintPositions[obj.name])
+              .map(obj => {
+                const pos = blueprintPositions[obj.name];
 
-              return (
-                <GlowContainer
-                  key={obj.name}
-                  style={{ height: pos.height, transform: pos.transform, zIndex: pos.zIndex }}
-                >
-                  <GlowImage
-                    $active={obj.active}
-                    src={getDynamicSrc(obj.name, obj.image)}
-                    alt={obj.name}
-                    onMouseEnter={() => obj.active && setHoveredText(obj.description)}
-                    onMouseLeave={() => obj.active && setHoveredText(null)}
-                    onClick={() => obj.active && obj.series === 'vinyl collection' && switchTheme(obj.name)}
-                  />
-                </GlowContainer>
-              );
-            })}
-          <TextBox $visible={!!displayText}>{displayText}</TextBox>
-        </StyledImageContainer>
+                return (
+                  <GlowContainer
+                    key={obj.name}
+                    style={{ height: pos.height, transform: pos.transform, zIndex: pos.zIndex }}
+                  >
+                    <GlowImage
+                      $active={obj.active}
+                      src={getDynamicSrc(obj.name, obj.image)}
+                      alt={obj.name}
+                      onMouseEnter={() => obj.active && setHoveredText(obj.description)}
+                      onMouseLeave={() => obj.active && setHoveredText(null)}
+                      onClick={() => obj.active && obj.series === 'vinyl collection' && switchTheme(obj.name)}
+                    />
+                  </GlowContainer>
+                );
+              })}
+            <TextBox $visible={!!displayText}>{displayText}</TextBox>
+            </StyledImageContainer>
+          </ViewPane>
+        )}
       </ViewportFrame>
 
       <MenuDock>
-        <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory} setActiveComponent={setActiveComponent}/>
+        <InventoryButton onClick={toggleInventory} isInventoryOpen={showInventory}/>
       </MenuDock>
-
-      {showInventory && (
-        <InventoryOverlay id="inventory-overlay">
-          <InventoryManager />
-        </InventoryOverlay>
-      )}
     </ExploreLayout>
   );
 };
@@ -166,6 +173,12 @@ const ImageContainer: React.FC<ImageContainerProps> = ({ setActiveComponent }) =
 export default ImageContainer;
 
 const ExploreLayout = styled.div`
+  --explore-top-space: clamp(72px, 11vh, 112px);
+  --explore-side-space: clamp(14px, 3vw, 36px);
+  --explore-bottom-space: clamp(14px, 3vh, 28px);
+  --explore-menu-height: 80px;
+  --explore-gap: clamp(12px, 2vh, 22px);
+
   position: fixed;
   inset: 0;
   z-index: 10;
@@ -173,12 +186,12 @@ const ExploreLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(16px, 2.6vh, 26px);
+  gap: var(--explore-gap);
   box-sizing: border-box;
   width: 100%;
   height: 100dvh;
   overflow: hidden;
-  padding: clamp(70px, 10vh, 108px) clamp(18px, 4vw, 48px) clamp(26px, 5vh, 48px);
+  padding: var(--explore-top-space) var(--explore-side-space) var(--explore-bottom-space);
 
   &::after {
     content: "";
@@ -199,8 +212,12 @@ const ExploreLayout = styled.div`
 
 const ViewportFrame = styled.div`
   flex: 0 1 auto;
-  width: min(1000px, 86vw);
-  height: clamp(300px, 50vh, 540px);
+  width: min(
+    calc(100vw - (var(--explore-side-space) * 2)),
+    calc((100dvh - var(--explore-top-space) - var(--explore-menu-height) - var(--explore-gap) - var(--explore-bottom-space)) * 2)
+  );
+  max-height: calc(100dvh - var(--explore-top-space) - var(--explore-menu-height) - var(--explore-gap) - var(--explore-bottom-space));
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.c3};
   border-radius: 8px;
@@ -211,8 +228,26 @@ const ViewportFrame = styled.div`
     0 0 22px ${({ theme }) => theme.glow};
 
   @media (max-width: 700px) {
-    width: min(100%, 92vw);
-    height: clamp(260px, 44vh, 420px);
+    width: min(
+      calc(100vw - (var(--explore-side-space) * 2)),
+      calc((100dvh - var(--explore-top-space) - var(--explore-menu-height) - var(--explore-gap) - var(--explore-bottom-space)) * 2)
+    );
+  }
+`;
+
+const ViewPane = styled.div<{ $visible: boolean; $view: 'room' | 'create' }>`
+  width: 100%;
+  height: 100%;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transform: translateY(${({ $visible, $view }) => {
+    if ($visible) return '0';
+    return $view === 'room' ? '-10px' : '10px';
+  }});
+  transition: opacity 180ms ease, transform 180ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: 1ms;
+    transform: none;
   }
 `;
 
@@ -302,18 +337,5 @@ const MenuDock = styled.div`
   display: flex;
   justify-content: center;
   width: min(90vw, 360px);
-  height: 80px;
-`;
-
-const InventoryOverlay = styled.div`
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
+  height: var(--explore-menu-height);
 `;

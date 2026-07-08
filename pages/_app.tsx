@@ -69,7 +69,7 @@ const ThemedApp: React.FC = () => {
         {activeComponent === 'projects' && <Projects contentVisible={contentVisible} />}
         {activeComponent === 'about' && (
           <PageContent $visible={contentVisible}>
-            <About setActiveComponent={handleSetActiveComponent} />
+            <About />
           </PageContent>
         )}
         {activeComponent === 'music' && (

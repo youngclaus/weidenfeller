@@ -92,13 +92,12 @@ const BlueprintContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c2}; 
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.32);
+    border-radius: 999px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c1};
-    border-radius: 4px;
+    background: transparent;
   }
 `;
 
@@ -118,7 +117,8 @@ const HoverOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,16 +142,19 @@ const BlueprintItem = styled.div`
   align-items: center;
   text-align: center;
   padding: 15px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.c3};
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: calc(100% - 30px);
   max-width: 100%;
   height: 175px;
   position: relative;
 
   &:hover {
+    border-color: ${({ theme }) => theme.c3};
+
     ${BlueprintImage} {
       opacity: 0;
     }
@@ -176,7 +179,7 @@ const ColorBox = styled.div<{ color: string }>`
   height: 15px;
   margin-right: 5px;
   border-radius: 3px;
-  border: 1px solid #000;
+  border: 1px solid rgba(255, 255, 255, 0.54);
   background-color: ${({color}) => color};
 `;
 
@@ -188,11 +191,11 @@ const BlueprintName = styled.p`
 `;
 
 const CompleteButton = styled.button`
-  padding: 5px 10px;
+  padding: 7px 11px;
   color: ${({theme}) => theme.c4};
-  background-color: ${({theme}) => theme.c1};
-  border: none;
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: "DM Mono", monospace;
@@ -200,10 +203,12 @@ const CompleteButton = styled.button`
   font-size: 10px;
 
   &:hover:not(:disabled) {
-    background-color: ${({theme}) => theme.c2};
+    border-color: ${({theme}) => theme.c3};
+    color: ${({theme}) => theme.c3};
   }
 
   &:disabled {
     cursor: not-allowed;
+    opacity: 0.58;
   }
 `;

@@ -82,14 +82,15 @@ export default InventoryManager;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80vw;
-  height: 70vh;
-  min-width: 250px;
-  max-width: 1000px;
-  margin: auto;
-  backdrop-filter: blur(15px);
-  border-radius: 15px;
-  box-shadow: 0px 0px 10px -5px black;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: rgba(12, 13, 18, 0.92);
+  box-shadow: none;
+  backdrop-filter: none;
   overflow: hidden;
   font-family: "DM Mono", monospace;
   font-weight: bold;
@@ -98,17 +99,23 @@ const Container = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${({theme}) => theme.c3};
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(0, 0, 0, 0.34);
   color: ${({theme}) => theme.c4};
   text-align: center;
-  border-bottom: 2px solid ${({theme}) => theme.c1};
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   flex-shrink: 0;
 `;
 
 const Title = styled.h3`
   flex: 1;
   margin: 0;
-  padding: 10px;
+  padding: 14px 10px;
+  color: ${({ theme }) => theme.c4};
+  font-size: clamp(12px, 1.2vw, 15px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 `;
 
 const ContentWrapper = styled.div`
@@ -134,8 +141,10 @@ const SeriesNavigator = styled.div`
   justify-content: center;
   height: 50px;
   width: 100%;
-  border-top: 2px solid ${({theme}) => theme.c1};
-  background-color: ${({theme}) => theme.c3};
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+    rgba(0, 0, 0, 0.34);
   position: absolute;
   bottom: 0;
   gap: 10px;
@@ -143,29 +152,39 @@ const SeriesNavigator = styled.div`
 `;
 
 const ScrollButton = styled.button`
-  background-color: ${({theme}) => theme.c1};
-  color: ${({theme}) => theme.c3};
-  border: none;
-  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  color: ${({theme}) => theme.c4};
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    transform: scale(1.1);
+    border-color: ${({ theme }) => theme.c3};
+    color: ${({ theme }) => theme.c3};
+    transform: translateY(-1px);
   }
 `;
 
 const SeriesTitle = styled.div`
   font-weight: bold;
-  font-size: 1.2em;
+  min-width: min(44vw, 280px);
+  font-size: clamp(13px, 1.35vw, 18px);
   color: ${({theme}) => theme.c4};
+  text-align: center;
+  text-transform: lowercase;
 `;
 
 const StashSeparator = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: ${({theme}) => theme.c3};
+  background: rgba(255, 255, 255, 0.035);
   overflow: hidden;
   min-width: 0;
 `;
@@ -176,7 +195,9 @@ const BlueprintSeparator = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: ${({theme}) => theme.c1};
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.055);
   overflow: hidden;
   min-width: 0;
 `;
@@ -185,7 +206,7 @@ const PrintSeparator = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: ${({theme}) => theme.c3};
+  background: rgba(255, 255, 255, 0.035);
   overflow: hidden;
   min-width: 0;
 `;

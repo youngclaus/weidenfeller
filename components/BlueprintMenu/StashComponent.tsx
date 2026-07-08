@@ -45,13 +45,12 @@ const Container = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c2}; 
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.32);
+    border-radius: 999px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c1};
-    border-radius: 4px;
+    background: transparent;
   }
 `;
 
@@ -60,9 +59,10 @@ const BitContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 5px 5px 2px rgba(0, 0, 0, 0.1);
-  background-color: ${({theme}) => theme.c1};
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
   width: 80%;
   height: 60px;
   flex-shrink: 0;
@@ -76,7 +76,8 @@ const ColorBox = styled.div<{ color: string }>`
   max-height: 20px;
   border-radius: 3px;
   background-color: ${({ color }) => color};
-  border: 1px solid #000;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
 `;
 
 const BitName = styled.p`

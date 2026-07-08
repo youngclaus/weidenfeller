@@ -51,13 +51,12 @@ const PrintsContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.c2}; 
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.32);
+    border-radius: 999px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.c1};
-    border-radius: 4px;
+    background: transparent;
   }
 `;
 
@@ -78,6 +77,8 @@ const HoverOverlay = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(12px);
   opacity: 0;
   transition: opacity 0.3s ease;
   overflow-y: auto;
@@ -89,18 +90,20 @@ const PrintItem = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #fff;
   padding: 15px;
-  border-radius: 10px;
-  background-color: ${({theme}) => theme.c1};
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: calc(100% - 30px);
   max-width: 100%;
   height: 175px;
   position: relative;
 
   &:hover {
+    border-color: ${({ theme }) => theme.c3};
+
     ${PrintImage} {
       opacity: 0;
     }
